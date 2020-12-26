@@ -1,0 +1,11 @@
+body {
+    margin: 0px;
+    height: 100%;
+    zoom: 1.25; 
+    -moz-transform: scale(1.25); 
+    -moz-transform-origin: 0 0;
+}
+
+.btn-margin-left {
+    margin-left: .25em;
+}

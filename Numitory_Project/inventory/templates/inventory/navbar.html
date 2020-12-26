@@ -1,0 +1,69 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="{% url 'home' %}">Numitory</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarColor03">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Inventory</a>
+            <div class="dropdown-menu">
+            <a class="dropdown-item" href="{% url 'inventory:inventory_home' %}">My Inventory</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Types</a>
+            <a class="dropdown-item" href="#">Collections</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Recycle Bin</a>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Marketplace</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'about' %}">About</a>
+        </li>
+    </ul>
+    <div class="navbar-collapse collapse dual-nav w-50 order-2">
+        <ul class="nav navbar-nav ml-auto">
+            {% if user.is_authenticated %}
+                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                    <button type="button" class="btn btn-success btn-sm">Create</button>
+                    <div class="btn-group" role="group">
+                        <button id="btnGroupDrop2" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop2" style="">
+                        <a class="dropdown-item" href="{% url 'inventory:itemcreate' %}">Item</a>
+                        <a class="dropdown-item" href="#">Type</a>
+                        <a class="dropdown-item" href="#">Collection</a>
+                        </div>
+                    </div>
+                </div>
+                <li class="nav-item">
+                    <a href="#">
+                        <button type="submit" class="btn btn-outline-secondary btn-margin-left">{{ user }}</button>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <form action="{% url 'logoutuser' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-warning btn-margin-left">Logout</button>
+                        {% comment %} <input type="submit" name="logout_button" value="Logout"> {% endcomment %}
+                        {% comment %} <a class="nav-link" href="{% url 'logoutuser' %}">Logout</a> {% endcomment %}
+                    </form>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a href="{% url 'signupuser' %}">
+                        <button class="btn btn-primary">Sign Up</button>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'loginuser' %}">
+                        <button class="btn btn-secondary btn-margin-left">Login</button>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+  </div>
+</nav>
