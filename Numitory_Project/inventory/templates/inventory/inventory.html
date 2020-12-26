@@ -1,0 +1,28 @@
+{% extends 'inventory/base.html' %}
+
+{% block content %}
+
+    <h1>{{ user.username|pluralize }} Inventory Page</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Collection</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.item_name }}</td>
+                <td>{{ item.item_desc }}</td>
+                <td>{{ item.type.type_name }}</td>
+                <td>{{ item.collection.coll_name }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock content %}

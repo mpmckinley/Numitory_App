@@ -1,0 +1,22 @@
+{% extends 'inventory/base.html' %}
+
+{% block content %}
+
+    <h1>COLLECTION Create</h1>
+
+    {% if error %}
+        <div class="alert alert-dismissible alert-warning">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <h4 class="alert-heading">Warning!</h4>
+            <p class="mb-0"><a class="alert-link">{{ error }}</a> - please try again.</p>
+        </div>
+    {% endif %}
+
+    <br>
+    <form method="POST">
+    {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Create</button>
+    </form>
+
+{% endblock content %}

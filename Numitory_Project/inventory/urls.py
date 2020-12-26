@@ -5,8 +5,10 @@ app_name = 'inventory'
 
 urlpatterns = [
     # ITEMS
-    path('', views.inventory_home, name='inventory_home'),
-    path('itemcreate/', views.itemcreate, name='itemcreate'),
+    path('', views.inventory, name='inventory'),
+    path('item/create/', views.itemcreate, name='itemcreate'),
+    path('type/create/', views.typecreate, name='typecreate'),
+    path('collection/create/', views.collectioncreate, name='collectioncreate'),
 
     # TYPES
 

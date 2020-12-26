@@ -9,8 +9,20 @@ class ItemCreateForm(ModelForm):
         fields = [
             'item_name',
             'item_desc',
+            'collection',
+            'type'
         ]
-    type_id = forms.ChoiceField(
-        choices=[(type.id, type.type_name) for type in Type.objects.all()])
-    collection_id = forms.ChoiceField(
-        choices=[(collection.id, collection.coll_name) for collection in Collection.objects.all()])
+class TypeCreateForm(ModelForm):
+    class Meta:
+        model = Type
+        fields = [
+            'type_name',
+            'type_desc',
+        ]
+class CollectionCreateForm(ModelForm):
+    class Meta:
+        model = Collection
+        fields = [
+            'coll_name',
+            'coll_desc',
+        ]

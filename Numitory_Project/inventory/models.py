@@ -2,13 +2,13 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Type(models.Model):
-    type_name = models.CharField(max_length=100)
+    type_name = models.CharField(max_length=100, unique=True)
     type_desc = models.CharField(max_length=250)
     created = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.type_name + ' ->  ' + self.type_desc
+        return self.type_name
 
 class Item(models.Model):
     item_name = models.CharField(max_length=100)
@@ -22,10 +22,10 @@ class Item(models.Model):
         return self.item_name + ' ->  ' + self.item_desc
 
 class Collection(models.Model):
-    coll_name = models.CharField(max_length=100)
+    coll_name = models.CharField(max_length=100, unique=True)
     coll_desc = models.CharField(max_length=250)
     created = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.coll_name + ' ->  ' + self.coll_desc
+        return self.coll_name

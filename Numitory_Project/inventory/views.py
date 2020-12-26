@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
-from .forms import ItemCreateForm
+from .forms import ItemCreateForm, TypeCreateForm, CollectionCreateForm
 from .models import Type, Collection, Item
 
 def home(request):
@@ -15,21 +15,51 @@ def about(request):
     return render(request, 'inventory/about.html')
 
 #APPLICATION
-def inventory_home(request):
-    return render(request, 'inventory/inventory_home.html')
+def inventory(request):
+    items = Item.objects.filter(user=request.user).select_related('type', 'collection')
+    return render(request, 'inventory/inventory.html', {'items': items})
 
 def itemcreate(request):
     if request.method == 'GET':
         return render(request, 'inventory/itemcreate.html', {'form':ItemCreateForm()})
     else:
-        form = ItemCreateForm(request.POST)
-        newitem = form.save(commit=False)
-        newitem.user = request.user
-        # newitem.type_id = request.type_id['type_id']
-        # newitem.collection_id = form.get(Collection.id)
-        newitem.save()
-        return render(request, 'inventory/inventory_home.html')
-    
+        try:
+            form = ItemCreateForm(request.POST)
+            newitem = form.save(commit=False)
+            newitem.user = request.user
+            newitem.save()
+            return redirect('inventory:inventory')
+        except ValueError:
+            return render(request, 'inventory/itemcreate.html', {'form':ItemCreateForm(), 'error':"Field validation error"})
+
+def typecreate(request):
+    if request.method == 'GET':
+        return render(request, 'inventory/typecreate.html', {'form':TypeCreateForm()})
+    else:
+        try:
+            form = TypeCreateForm(request.POST)
+            newtype = form.save(commit=False)
+            newtype.user = request.user
+            newtype.save()
+            return redirect('inventory:inventory')
+        except ValueError:
+            return render(request, 'inventory/typecreate.html', {'form':TypeCreateForm(), 'error':"Data validation error"})
+
+def collectioncreate(request):
+    if request.method == 'GET':
+        return render(request, 'inventory/collectioncreate.html', {'form':CollectionCreateForm()})
+    else:
+        try:
+            form = CollectionCreateForm(request.POST)
+            newtype = form.save(commit=False)
+            newtype.user = request.user
+            newtype.save()
+            return redirect('inventory:inventory')
+        # except IntegrityError:
+        #     return render(request, 'inventory/collectioncreate.html', {'form':CollectionCreateForm(), 'error':"Data duplication error."})
+        except ValueError:
+            return render(request, 'inventory/collectioncreate.html', {'form':CollectionCreateForm(), 'error':"Data validation error."})
+
 #AUTH
 def signupuser(request):
     if request.method == 'GET':
