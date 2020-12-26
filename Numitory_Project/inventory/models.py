@@ -6,6 +6,7 @@ class Type(models.Model):
     type_desc = models.CharField(max_length=250)
     created = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    recycled = models.BooleanField(default=False)
 
     def __str__(self):
         return self.type_name
@@ -14,6 +15,7 @@ class Item(models.Model):
     item_name = models.CharField(max_length=100)
     item_desc = models.CharField(max_length=250)
     created = models.DateTimeField(auto_now_add=True)
+    recycled = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     type = models.ForeignKey("inventory.Type", on_delete=models.RESTRICT)
     collection = models.ForeignKey("inventory.Collection", on_delete=models.RESTRICT)
@@ -24,6 +26,7 @@ class Item(models.Model):
 class Collection(models.Model):
     coll_name = models.CharField(max_length=100, unique=True)
     coll_desc = models.CharField(max_length=250)
+    recycled = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 

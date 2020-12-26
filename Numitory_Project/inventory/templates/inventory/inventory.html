@@ -11,6 +11,7 @@
                 <th>Description</th>
                 <th>Type</th>
                 <th>Collection</th>
+                <th>Edit</th>
             </tr>
         </thead>
         <tbody>
@@ -20,6 +21,11 @@
                 <td>{{ item.item_desc }}</td>
                 <td>{{ item.type.type_name }}</td>
                 <td>{{ item.collection.coll_name }}</td>
+                <td>
+                    <a href="{% url 'inventory:itemdetail' item.id %}">
+                        Edit
+                    </a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>

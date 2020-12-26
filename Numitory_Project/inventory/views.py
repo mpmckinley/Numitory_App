@@ -1,6 +1,6 @@
 from django.contrib import auth
 from django.http import response
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
@@ -16,7 +16,8 @@ def about(request):
 
 #APPLICATION
 def inventory(request):
-    items = Item.objects.filter(user=request.user).select_related('type', 'collection')
+    items = Item.objects.filter(user=request.user, recycled=False)
+    #REMOVED AS UNECSSARY ABOVE ".select_related('type', 'collection')"
     return render(request, 'inventory/inventory.html', {'items': items})
 
 def itemcreate(request):
@@ -32,6 +33,19 @@ def itemcreate(request):
         except ValueError:
             return render(request, 'inventory/itemcreate.html', {'form':ItemCreateForm(), 'error':"Field validation error"})
 
+def itemdetail(request, item_pk):
+    item = get_object_or_404(Item, pk=item_pk, user=request.user)
+    if request.method == 'GET':
+        form = ItemCreateForm(instance=item)
+        return render(request, 'inventory/itemdetail.html', {'item': item, 'form':form})
+    else:
+        try:
+            form = ItemCreateForm(request.POST, instance=item)
+            form.save()
+            return redirect('inventory:inventory')
+        except ValueError:
+            return render(request, 'inventory/itemdetail.html', {'item': item, 'error':'You have some bad data in there, try again'})
+            
 def typecreate(request):
     if request.method == 'GET':
         return render(request, 'inventory/typecreate.html', {'form':TypeCreateForm()})
