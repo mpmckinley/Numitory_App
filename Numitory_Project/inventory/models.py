@@ -15,7 +15,7 @@ class Item(models.Model):
     item_name = models.CharField(max_length=100)
     item_desc = models.CharField(max_length=250)
     created = models.DateTimeField(auto_now_add=True)
-    recycled = models.BooleanField(default=False)
+    sold = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     type = models.ForeignKey("inventory.Type", on_delete=models.RESTRICT)
     collection = models.ForeignKey("inventory.Collection", on_delete=models.RESTRICT)

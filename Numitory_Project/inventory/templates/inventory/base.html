@@ -18,9 +18,9 @@
     <title>Numitory</title>
 </head>
 
-{% include 'inventory/navbar.html' %}
-
 <body>
+
+{% include 'inventory/navbar.html' %}
     
     <div class="container-fluid">
         {% block content %}
@@ -31,6 +31,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.min.js"></script>
+
+{% include 'inventory/navfooter.html' %}
+
 </body>
+
 
 </html>

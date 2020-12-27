@@ -10,7 +10,8 @@ class ItemCreateForm(ModelForm):
             'item_name',
             'item_desc',
             'collection',
-            'type'
+            'type',
+            'sold',
         ]
 class TypeCreateForm(ModelForm):
     class Meta:
