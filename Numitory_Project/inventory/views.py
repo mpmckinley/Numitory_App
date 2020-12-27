@@ -60,7 +60,7 @@ def typecreate(request):
             newtype = form.save(commit=False)
             newtype.user = request.user
             newtype.save()
-            return redirect('inventory:typecreate')
+            return redirect('inventory:typeinv')
         except ValueError:
             return render(request, 'inventory/typecreate.html', {'form':TypeCreateForm(), 'error':"Data validation error"})
 
