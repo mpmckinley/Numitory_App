@@ -32,31 +32,34 @@ def recycle(request):
 
 @login_required
 def itemcreate(request):
+    heading = 'Item'
+    button = 'Create'
     if request.method == 'GET':
-        return render(request, 'inventory/itemcreate.html', {'form':ItemCreateForm()})
+        return render(request, 'inventory/create.html', {'form':ItemCreateForm(user=request.user), 'heading':heading, 'button':button})
+        print(user)
     else:
         try:
-            form = ItemCreateForm(request.POST)
+            form = ItemCreateForm(data=request.POST, user=request.user)
             newitem = form.save(commit=False)
             newitem.user = request.user
             newitem.save()
             return redirect('inventory:inventory')
         except ValueError:
-            return render(request, 'inventory/itemcreate.html', {'form':ItemCreateForm(), 'error':"Field validation error"})
+            return render(request, 'inventory/create.html', {'form':ItemCreateForm(user=request.user), 'error':"Field validation error"})
 
 @login_required
 def itemdetail(request, item_pk):
     item = get_object_or_404(Item, pk=item_pk, user=request.user)
     if request.method == 'GET':
-        form = ItemCreateForm(instance=item)
+        form = ItemCreateForm(user=request.user, instance=item)
         return render(request, 'inventory/itemdetail.html', {'item': item, 'form':form})
     else:
         try:
-            form = ItemCreateForm(request.POST, instance=item)
+            form = ItemCreateForm(data=request.POST, user=request.user, instance=item)
             form.save()
             return redirect('inventory:inventory')
         except ValueError:
-            return render(request, 'inventory/itemdetail.html', {'item': item, 'form': ItemCreateForm(), 'error':'You have some bad data in there, try again'})
+            return render(request, 'inventory/itemdetail.html', {'item': item, 'form': ItemCreateForm(user=request.user), 'error':'You have some bad data in there, try again'})
 
 @login_required
 def typeinv(request):
@@ -66,8 +69,10 @@ def typeinv(request):
 
 @login_required
 def typecreate(request):
+    heading = 'Type'
+    button = 'Create'
     if request.method == 'GET':
-        return render(request, 'inventory/typecreate.html', {'form':TypeCreateForm()})
+        return render(request, 'inventory/create.html', {'form':TypeCreateForm(), 'heading':heading, 'button':button})
     else:
         try:
             form = TypeCreateForm(request.POST)
@@ -76,7 +81,7 @@ def typecreate(request):
             newtype.save()
             return redirect('inventory:typeinv')
         except ValueError:
-            return render(request, 'inventory/typecreate.html', {'form':TypeCreateForm(), 'error':"Data validation error"})
+            return render(request, 'inventory/create.html', {'form':TypeCreateForm(), 'error':"Data validation error"})
 
 @login_required
 def typedetail(request, type_pk):
@@ -107,8 +112,10 @@ def collinv(request):
 
 @login_required
 def collcreate(request):
+    heading = 'Collection'
+    button = 'Create'
     if request.method == 'GET':
-        return render(request, 'inventory/collcreate.html', {'form':CollectionCreateForm()})
+        return render(request, 'inventory/create.html', {'form':CollectionCreateForm(), 'heading':heading, 'button':button})
     else:
         try:
             form = CollectionCreateForm(request.POST)
@@ -119,7 +126,7 @@ def collcreate(request):
         # except IntegrityError:
         #     return render(request, 'inventory/collectioncreate.html', {'form':CollectionCreateForm(), 'error':"Data duplication error."})
         except ValueError:
-            return render(request, 'inventory/collcreate.html', {'form':CollectionCreateForm(), 'error':"Data validation error."})
+            return render(request, 'inventory/create.html', {'form':CollectionCreateForm(), 'error':"Data validation error."})
 
 @login_required
 def colldetail(request, coll_pk):

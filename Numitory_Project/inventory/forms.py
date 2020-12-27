@@ -17,11 +17,11 @@ class UserChangeForm(UserChangeForm):
 class ItemCreateForm(ModelForm):
     class Meta:
         model = Item
-        collection = forms.ChoiceField(
-            choices=[(x.id, x.coll_name) for x in Collection.objects.all()])
-            # choices=[(x.id, x.type_name) for x in Collection.objects.filter(user_id=User.id)])
-        type = forms.ChoiceField(
-            choices=[(x.id, x.type_name) for x in Type.objects.all()])
+        # collection = forms.ChoiceField(
+        #     choices=[(x.id, x.coll_name) for x in Collection.objects.all()])
+        #     # choices=[(x.id, x.type_name) for x in Collection.objects.filter(user_id=User.id)])
+        # type = forms.ChoiceField(
+        #     choices=[(x.id, x.type_name) for x in Type.objects.all()])
         fields = [
             'item_name',
             'item_desc',
@@ -29,7 +29,10 @@ class ItemCreateForm(ModelForm):
             'type',
             'status',
         ]
-
+    def __init__(self, user, **kwargs):
+        super(ItemCreateForm, self).__init__(**kwargs)
+        self.fields['type'].queryset = Type.objects.filter(user=user)
+        self.fields['collection'].queryset = Collection.objects.filter(user=user)
 
 class TypeCreateForm(ModelForm):
     class Meta:
