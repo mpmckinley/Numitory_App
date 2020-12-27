@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <h1>Inventory Page</h1>
+    <h1>{{ heading }} Inventory</h1>
 
     <table class="table">
         <thead>
@@ -24,14 +24,22 @@
                 </td>
                 <td>{{ item.item_desc }}</td>
                 <td>
-                    <a href="{% url 'inventory:typeitems' item.type.id %}">
+                    {% if heading == item.type.type_name %}
                         {{ item.type.type_name }}
-                    </a>
+                    {% else %}
+                        <a href="{% url 'inventory:typeitems' item.type.id %}">
+                            {{ item.type.type_name }}
+                        </a>
+                    {% endif %}
                 </td>
                 <td>
-                    <a href="{% url 'inventory:collitems' item.collection.id %}">
+                    {% if heading == item.collection.coll_name %}
                         {{ item.collection.coll_name }}
-                    </a>        
+                    {% else %}
+                        <a href="{% url 'inventory:collitems' item.collection.id %}">
+                            {{ item.collection.coll_name }}
+                        </a>
+                    {% endif %}        
                 </td>
                 <td>
                     <a href="{% url 'inventory:itemdetail' item.id %}">

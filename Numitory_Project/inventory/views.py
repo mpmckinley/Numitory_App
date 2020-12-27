@@ -16,9 +16,16 @@ def about(request):
 
 #APPLICATION
 def inventory(request):
-    items = Item.objects.filter(user=request.user, sold=False)
+    heading = 'Active'
+    items = Item.objects.filter(user=request.user, status='A')
     #REMOVED AS UNECSSARY ABOVE ".select_related('type', 'collection')"
-    return render(request, 'inventory/inventory.html', {'items': items})
+    return render(request, 'inventory/inventory.html', {'items': items, 'heading':heading})
+
+def recycle(request):
+    heading = 'Recycled'
+    items = Item.objects.filter(user=request.user).exclude(status='A')
+    #REMOVED AS UNECSSARY ABOVE ".select_related('type', 'collection')"
+    return render(request, 'inventory/inventory.html', {'items': items, 'heading':heading})
 
 def itemcreate(request):
     if request.method == 'GET':
@@ -48,7 +55,7 @@ def itemdetail(request, item_pk):
 
 def typeinv(request):
     types = Type.objects.filter(user=request.user)
-    #REMOVED AS UNECSSARY ABOVE ".select_related('type', 'collection')" and ", sold=False"
+    #REMOVED AS UNECSSARY ABOVE ".select_related('type', 'collection')" and ", status='A'"
     return render(request, 'inventory/typeinv.html', {'types': types})
 
 def typecreate(request):
@@ -78,13 +85,14 @@ def typedetail(request, type_pk):
             return render(request, 'inventory/typedetail.html', {'type': type, 'form': TypeCreateForm(), 'error':'You have some bad data in there, try again'})
 
 def typeitems(request, type_pk):
-    items = Item.objects.filter(user=request.user, sold=False, type=type_pk)
+    items = Item.objects.filter(user=request.user, status='A', type=type_pk)
+    heading = Type.objects.values_list('type_name', flat=True).get(id=type_pk)
     #REMOVED AS UNECSSARY ABOVE ".select_related('type', 'collection')"
-    return render(request, 'inventory/inventory.html', {'items': items})
+    return render(request, 'inventory/inventory.html', {'items':items, 'heading':heading})
 
 def collinv(request):
     collections = Collection.objects.filter(user=request.user)
-    #REMOVED AS UNECSSARY ABOVE ".select_related('type', 'collection')" and ", sold=False"
+    #REMOVED AS UNECSSARY ABOVE ".select_related('type', 'collection')" and ", status='A'"
     return render(request, 'inventory/collinv.html', {'collections': collections})
 
 def collcreate(request):
@@ -116,9 +124,10 @@ def colldetail(request, coll_pk):
             return render(request, 'inventory/colldetail.html', {'collection': collection, 'form': CollectionCreateForm(), 'error':'You have some bad data in there, try again'})
 
 def collitems(request, coll_pk):
-    items = Item.objects.filter(user=request.user, sold=False, collection=coll_pk)
+    items = Item.objects.filter(user=request.user, status='A', collection=coll_pk)
+    heading = Collection.objects.values_list('coll_name', flat=True).get(id=coll_pk)
     #REMOVED AS UNECSSARY ABOVE ".select_related('type', 'collection')"
-    return render(request, 'inventory/inventory.html', {'items': items})
+    return render(request, 'inventory/inventory.html', {'items': items, 'heading': heading})
 
 #AUTH
 def signupuser(request):

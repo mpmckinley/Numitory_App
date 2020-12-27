@@ -20,4 +20,8 @@ urlpatterns = [
     path('collection/items/<int:coll_pk>', views.collitems, name='collitems'),
     path('collection/create/', views.collcreate, name='collcreate'),
     path('collection/<int:coll_pk>/', views.colldetail, name='colldetail'),
+
+    # RECYcLE
+    path('recycle/', views.recycle, name='recycle'),
+
 ]
