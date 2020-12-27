@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
-from .forms import ItemCreateForm, TypeCreateForm, CollectionCreateForm
+from .forms import ItemCreateForm, TypeCreateForm, CollectionCreateForm, UserChangeForm
 from .models import Type, Collection, Item
 from django.contrib.auth.decorators import login_required
 
@@ -152,7 +152,7 @@ def signupuser(request):
                     user = User.objects.create_user(request.POST['username'], password=request.POST['password1'])
                     user.save()
                     login(request, user)
-                    return redirect(user, '/inventory/')
+                    return redirect(user, '/inventory/inventory.html')
                 except IntegrityError:
                     return render(request, 'inventory/signupuser.html', {'form':UserCreationForm(), 'error':"Username alerady taken - select another."})
         else:
@@ -168,6 +168,19 @@ def loginuser(request):
         else:
             login(request, user)
             return redirect('/inventory/')
+
+def edituser(request, user_pk):
+    user = get_object_or_404(User, pk=user_pk)
+    if request.method == 'GET':
+        form = UserChangeForm(instance=user)
+        return render(request, 'inventory/edituser.html', {'user': user, 'form':form})
+    else:
+        try:
+            form = UserChangeForm(request.POST, instance=user)
+            form.save()
+            return redirect('inventory:inventory')
+        except ValueError:
+            return render(request, 'inventory/edituser.html', {'user': user, 'form': UserChangeForm(), 'error':'You have some bad data in there, try again'})
 
 @login_required
 def logoutuser(request):

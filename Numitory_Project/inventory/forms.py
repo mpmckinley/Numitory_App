@@ -1,11 +1,27 @@
+from django.contrib.auth.models import User
 from django.forms import ModelForm
+from django.contrib.auth.forms import UserChangeForm
 from django import forms
-from django.forms.fields import ChoiceField
 from .models import Item, Collection, Type
+
+class UserChangeForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = [
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+        ]
 
 class ItemCreateForm(ModelForm):
     class Meta:
         model = Item
+        collection = forms.ChoiceField(
+            choices=[(x.id, x.coll_name) for x in Collection.objects.all()])
+            # choices=[(x.id, x.type_name) for x in Collection.objects.filter(user_id=User.id)])
+        type = forms.ChoiceField(
+            choices=[(x.id, x.type_name) for x in Type.objects.all()])
         fields = [
             'item_name',
             'item_desc',
@@ -13,6 +29,8 @@ class ItemCreateForm(ModelForm):
             'type',
             'status',
         ]
+
+
 class TypeCreateForm(ModelForm):
     class Meta:
         model = Type
