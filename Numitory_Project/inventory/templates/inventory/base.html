@@ -23,9 +23,11 @@
 {% include 'inventory/navbar.html' %}
     
     <div class="container-fluid">
-        {% block content %}
-            
-        {% endblock content %}
+        <div class="container-fluid main">
+            {% block content %}
+                
+            {% endblock content %}
+        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>

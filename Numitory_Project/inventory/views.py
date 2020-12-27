@@ -7,6 +7,7 @@ from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
 from .forms import ItemCreateForm, TypeCreateForm, CollectionCreateForm
 from .models import Type, Collection, Item
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     return render(request, 'inventory/home.html')
@@ -15,18 +16,21 @@ def about(request):
     return render(request, 'inventory/about.html')
 
 #APPLICATION
+@login_required
 def inventory(request):
     heading = 'Active'
     items = Item.objects.filter(user=request.user, status='A')
     #REMOVED AS UNECSSARY ABOVE ".select_related('type', 'collection')"
     return render(request, 'inventory/inventory.html', {'items': items, 'heading':heading})
 
+@login_required
 def recycle(request):
     heading = 'Recycled'
     items = Item.objects.filter(user=request.user).exclude(status='A')
     #REMOVED AS UNECSSARY ABOVE ".select_related('type', 'collection')"
     return render(request, 'inventory/inventory.html', {'items': items, 'heading':heading})
 
+@login_required
 def itemcreate(request):
     if request.method == 'GET':
         return render(request, 'inventory/itemcreate.html', {'form':ItemCreateForm()})
@@ -40,6 +44,7 @@ def itemcreate(request):
         except ValueError:
             return render(request, 'inventory/itemcreate.html', {'form':ItemCreateForm(), 'error':"Field validation error"})
 
+@login_required
 def itemdetail(request, item_pk):
     item = get_object_or_404(Item, pk=item_pk, user=request.user)
     if request.method == 'GET':
@@ -53,11 +58,13 @@ def itemdetail(request, item_pk):
         except ValueError:
             return render(request, 'inventory/itemdetail.html', {'item': item, 'form': ItemCreateForm(), 'error':'You have some bad data in there, try again'})
 
+@login_required
 def typeinv(request):
     types = Type.objects.filter(user=request.user)
     #REMOVED AS UNECSSARY ABOVE ".select_related('type', 'collection')" and ", status='A'"
     return render(request, 'inventory/typeinv.html', {'types': types})
 
+@login_required
 def typecreate(request):
     if request.method == 'GET':
         return render(request, 'inventory/typecreate.html', {'form':TypeCreateForm()})
@@ -71,6 +78,7 @@ def typecreate(request):
         except ValueError:
             return render(request, 'inventory/typecreate.html', {'form':TypeCreateForm(), 'error':"Data validation error"})
 
+@login_required
 def typedetail(request, type_pk):
     type = get_object_or_404(Type, pk=type_pk, user=request.user)
     if request.method == 'GET':
@@ -84,17 +92,20 @@ def typedetail(request, type_pk):
         except ValueError:
             return render(request, 'inventory/typedetail.html', {'type': type, 'form': TypeCreateForm(), 'error':'You have some bad data in there, try again'})
 
+@login_required
 def typeitems(request, type_pk):
     items = Item.objects.filter(user=request.user, status='A', type=type_pk)
     heading = Type.objects.values_list('type_name', flat=True).get(id=type_pk)
     #REMOVED AS UNECSSARY ABOVE ".select_related('type', 'collection')"
     return render(request, 'inventory/inventory.html', {'items':items, 'heading':heading})
 
+@login_required
 def collinv(request):
     collections = Collection.objects.filter(user=request.user)
     #REMOVED AS UNECSSARY ABOVE ".select_related('type', 'collection')" and ", status='A'"
     return render(request, 'inventory/collinv.html', {'collections': collections})
 
+@login_required
 def collcreate(request):
     if request.method == 'GET':
         return render(request, 'inventory/collcreate.html', {'form':CollectionCreateForm()})
@@ -110,6 +121,7 @@ def collcreate(request):
         except ValueError:
             return render(request, 'inventory/collcreate.html', {'form':CollectionCreateForm(), 'error':"Data validation error."})
 
+@login_required
 def colldetail(request, coll_pk):
     collection = get_object_or_404(Collection, pk=coll_pk, user=request.user)
     if request.method == 'GET':
@@ -123,6 +135,7 @@ def colldetail(request, coll_pk):
         except ValueError:
             return render(request, 'inventory/colldetail.html', {'collection': collection, 'form': CollectionCreateForm(), 'error':'You have some bad data in there, try again'})
 
+@login_required
 def collitems(request, coll_pk):
     items = Item.objects.filter(user=request.user, status='A', collection=coll_pk)
     heading = Collection.objects.values_list('coll_name', flat=True).get(id=coll_pk)
@@ -156,6 +169,7 @@ def loginuser(request):
             login(request, user)
             return redirect('/inventory/')
 
+@login_required
 def logoutuser(request):
     if request.method == 'POST':
         logout(request)

@@ -14,6 +14,7 @@ class Type(models.Model):
 class Item(models.Model):
     item_name = models.CharField(max_length=100)
     item_desc = models.CharField(max_length=250)
+    # image = models.ImageField(upload_to=)
     created = models.DateTimeField(auto_now_add=True)
     ACTIVE = 'A'
     SOLD = 'S'
