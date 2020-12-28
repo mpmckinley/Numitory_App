@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'inventory',
 
     #3rd Party
-
+    # 'django_tables2',
+    # 'jquery',
 ]
 
 MIDDLEWARE = [
@@ -68,6 +69,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                #Django-DataTables2 Application
+                # 'django.template.context_processors.request',
             ],
         },
     },
@@ -139,3 +142,5 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
 
 LOGIN_URL = '/login'
+
+# DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap4.html"

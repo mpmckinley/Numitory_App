@@ -11,11 +11,14 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.5.3/sandstone/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    {% comment %} <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css"> {% endcomment %}
+    {% comment %} <link rel="stylesheet" href="assets/css/style.css"> {% endcomment %}
     <!-- Numitory Style -->
     <link rel="stylesheet" type="text/css" href="{% static 'inventory/style.css' %}"/>
 
     <title>Numitory</title>
+
+
 </head>
 
 <body>
@@ -33,10 +36,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.min.js"></script>
+    {% comment %} <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script> {% endcomment %}
+
 
 {% include 'inventory/navfooter.html' %}
 
 </body>
 
+{% block scripts %}
+
+{% endblock scripts %}
 
 </html>
