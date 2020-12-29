@@ -1,8 +1,9 @@
 from django.contrib.auth.models import User
+from django.db.models import fields
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserChangeForm
 from django import forms
-from .models import Item, Collection, Type
+from .models import Item, Collection, Transaction, Type
 
 class UserChangeForm(UserChangeForm):
     class Meta:
@@ -17,11 +18,6 @@ class UserChangeForm(UserChangeForm):
 class ItemCreateForm(ModelForm):
     class Meta:
         model = Item
-        # collection = forms.ChoiceField(
-        #     choices=[(x.id, x.coll_name) for x in Collection.objects.all()])
-        #     # choices=[(x.id, x.type_name) for x in Collection.objects.filter(user_id=User.id)])
-        # type = forms.ChoiceField(
-        #     choices=[(x.id, x.type_name) for x in Type.objects.all()])
         fields = [
             'item_name',
             'item_desc',
@@ -29,6 +25,16 @@ class ItemCreateForm(ModelForm):
             'type',
             'status',
         ]
+    
+    item_desc = forms.CharField(
+        widget=(
+            forms.Textarea(
+                attrs={
+                    'rows':2}
+            )
+        )
+    )
+
     def __init__(self, user, **kwargs):
         super(ItemCreateForm, self).__init__(**kwargs)
         self.fields['type'].queryset = Type.objects.filter(user=user)
@@ -40,6 +46,7 @@ class TypeCreateForm(ModelForm):
         fields = [
             'type_name',
             'type_desc',
+            'category',
         ]
 class CollectionCreateForm(ModelForm):
     class Meta:
@@ -47,4 +54,14 @@ class CollectionCreateForm(ModelForm):
         fields = [
             'coll_name',
             'coll_desc',
+        ]
+
+class TransactionCreateForm(ModelForm):
+    class Meta:
+        model = Transaction
+        fields = [
+            'date',
+            'direction',
+            'tran_quantity',
+            'tran_value',
         ]

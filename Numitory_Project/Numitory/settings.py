@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'inventory',
 
     #3rd Party
+    'crispy_forms',
     # 'django_tables2',
     # 'jquery',
 ]
@@ -142,5 +143,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
 
 LOGIN_URL = '/login'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap4.html"

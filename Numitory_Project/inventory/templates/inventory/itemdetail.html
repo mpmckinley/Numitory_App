@@ -1,26 +1,92 @@
 {% extends 'inventory/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
     <h1>ITEM Detail</h1>
 
-    {% comment %} {{ item.item_name }}<br>
-    {{ item.item_desc }}<br>
-    {{ item.collection.coll_name }} {% endcomment %}
+<div class="row">
+    <div class="col">
 
-    {% if error %}
-        <div class="alert alert-dismissible alert-warning">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <h4 class="alert-heading">Warning!</h4>
-            <p class="mb-0">{{ error }} <a class="alert-link">vel scelerisque nisl consectetur et</a>.</p>
-        </div>
-    {% endif %}
+        {% if error %}
+            <div class="alert alert-dismissible alert-warning">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <h4 class="alert-heading">Warning!</h4>
+                <p class="mb-0">{{ error }} <a class="alert-link">vel scelerisque nisl consectetur et</a>.</p>
+            </div>
+        {% endif %}
 
-    <br>
-    <form method="POST">
-    {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Update</button>
-    </form>
+        <form method="POST">
+        {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" name="item" class="btn btn-primary">Update</button>
+        </form>
 
+    </div>
+
+    <div class="col">
+
+        <form method="POST">
+        {% csrf_token %}
+            <div class="row">
+                <div class="col">
+                    {{ tranform.date|as_crispy_field }}
+                </div>
+                <div class="col">
+                    {{ tranform.direction|as_crispy_field }}
+                </div>
+                <div class="col">
+                    {{ tranform.tran_quantity|as_crispy_field }}
+                </div>
+                <div class="col">
+                    {{ tranform.tran_value|as_crispy_field }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button type="submit" name="tran" class="btn btn-success">Add Transaction</button>
+                </div>
+            </div>
+        </form>
+
+        <table class="table table-sm table-hover mt-3" style="width:100%" id="tran_table">
+            <thead>
+                <tr>
+                    <th scope="col">Direction</th>
+                    <th>Date</th>
+                    <th>Quantity</th>
+                    <th>Value</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if not trans %}
+                    <tr>
+                        <td colspan="4">No Transactions</td>
+                    </tr>
+                {% else %}
+                    {% for trans in trans %}
+                        <tr>
+                            <td>{{ trans.direction }}</td>
+                            <td>{{ trans.date }}</td>
+                            <td>{{ trans.tran_quantity }}</td>
+                            <td>{{ trans.tran_value }}</td>
+                            <td align="center">
+                {% comment %} ***NEED TO WORK ON THIS DELETE {% endcomment %}
+                                <form method="POST">
+                                {% csrf_token %}
+                                    <button type="submit" class="hidebtn" id="{{ trans.id }}" name="delete">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                                        </svg>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+
+    </div>
+</div>
 {% endblock content %}

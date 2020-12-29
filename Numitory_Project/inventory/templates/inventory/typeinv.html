@@ -9,6 +9,7 @@
             <tr>
                 <th scope="col">Name</th>
                 <th>Description</th>
+                <th>Category</th>
                 <th>Edit</th>
             </tr>
         </thead>
@@ -21,6 +22,7 @@
                     </a>
                 </td>
                 <td>{{ type.type_desc }}</td>
+                <td>{{ type.category }}</td>
                 <td>
                     <a href="{% url 'inventory:typedetail' type.id %}">
                         Edit

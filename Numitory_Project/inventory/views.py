@@ -6,8 +6,8 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
-from .forms import ItemCreateForm, TypeCreateForm, CollectionCreateForm, UserChangeForm
-from .models import Type, Collection, Item
+from .forms import ItemCreateForm, TransactionCreateForm, TypeCreateForm, CollectionCreateForm, UserChangeForm
+from .models import Transaction, Type, Collection, Item
 from django.contrib.auth.decorators import login_required
 
 
@@ -21,9 +21,9 @@ def about(request):
 @login_required
 def inventory(request):
     heading = 'Active'
-    items = Item.objects.filter(user=request.user, status='A')
+    items = Item.objects.filter(user=request.user, status='Active')
 
-    paginator = Paginator(items, 5)
+    paginator = Paginator(items, 20)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -36,9 +36,9 @@ def inventory(request):
 @login_required
 def recycle(request):
     heading = 'Recycled'
-    items = Item.objects.filter(user=request.user).exclude(status='A')
+    items = Item.objects.filter(user=request.user).exclude(status='Active')
 
-    paginator = Paginator(items, 5)
+    paginator = Paginator(items, 20)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -77,11 +77,15 @@ def itemdetail(request, item_pk):
     item = get_object_or_404(Item, pk=item_pk, user=request.user)
     if request.method == 'GET':
         form = ItemCreateForm(user=request.user, instance=item)
+        trans = Transaction.objects.filter(user=request.user, tran_item_id=item_pk).order_by('-date')
+        tranform = TransactionCreateForm(instance=item)
         return render(request, 'inventory/itemdetail.html', {
             'item': item,
             'form': form,
+            'tranform': tranform,
+            'trans': trans,
         })
-    else:
+    if 'item' in request.POST:
         try:
             form = ItemCreateForm(data=request.POST, user=request.user, instance=item)
             form.save()
@@ -89,9 +93,30 @@ def itemdetail(request, item_pk):
         except ValueError:
             return render(request, 'inventory/itemdetail.html', {
                 'item': item,
-                'form': ItemCreateForm(user=request.user),
+                'form': ItemCreateForm(user=request.user, instance=item),
+                'tranform': TransactionCreateForm(),
                 'error':'You have some bad data in there, try again',
             })
+    if 'tran' in request.POST:
+        try:
+            tranform = TransactionCreateForm(data=request.POST)
+            newtran = tranform.save(commit=False)
+            newtran.user = request.user
+            newtran.tran_item_id = item_pk
+            newtran.save()
+            return redirect(request.path_info)
+        except ValueError:
+            return render(request, 'inventory/itemdetail.html', {
+                'item': item,
+                'form': ItemCreateForm(user=request.user, instance=item),
+                'tranform': TransactionCreateForm(),
+                'error':'You had some bad data in your tran form, try again',
+            })
+    # ***NEED TO WORK ON THIS
+    if 'delete' in request.POST:
+        tran = get_object_or_404(Transaction, pk=request.GET.get(id))
+        tran.delete()
+        return redirect(request.path_info)
 
 @login_required
 def typeinv(request):
@@ -148,9 +173,9 @@ def typedetail(request, type_pk):
 @login_required
 def typeitems(request, type_pk):
     heading = Type.objects.values_list('type_name', flat=True).get(id=type_pk)
-    items = Item.objects.filter(user=request.user, status='A', type=type_pk)
+    items = Item.objects.filter(user=request.user, status='Active', type=type_pk)
 
-    paginator = Paginator(items, 5)
+    paginator = Paginator(items, 20)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -217,9 +242,9 @@ def colldetail(request, coll_pk):
 @login_required
 def collitems(request, coll_pk):
     heading = Collection.objects.values_list('coll_name', flat=True).get(id=coll_pk)
-    items = Item.objects.filter(user=request.user, status='A', collection=coll_pk)
+    items = Item.objects.filter(user=request.user, status='Active', collection=coll_pk)
 
-    paginator = Paginator(items, 5)
+    paginator = Paginator(items, 20)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -241,7 +266,7 @@ def signupuser(request):
                     user = User.objects.create_user(request.POST['username'], password=request.POST['password1'])
                     user.save()
                     login(request, user)
-                    return redirect(user, '/inventory/inventory.html')
+                    return redirect('/inventory/')
                 except IntegrityError:
                     return render(request, 'inventory/signupuser.html', {
                         'form': UserCreationForm(),

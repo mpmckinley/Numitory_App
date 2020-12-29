@@ -2,8 +2,32 @@
 
 {% block content %}
 
-    <div>
-        <h1>This is something worth saying here, in the homepage...</h1>
+{% if user.is_authenticated %}
+
+<p>
+    <h4>Welcome back, <strong>{{ user }}</strong></h4>
+    <br>
+    You currently have XXX Items in your inventory across XXX Types, in XX Collections.
+</p>
+
+{% else %}
+
+    <div class="row">
+        <div class="col">
+            <h1 class="title">Numitory</h1>
+            <h2 class="subtitle">Numistmatic and Bullion collection management on your terms.
+        </div>
+        <div class="col">
+            <div class="card border-dark mb-3" style="max-width: 20rem;">
+                <div class="card-header">Release Notes</div>
+                <div class="card-body">
+                    <h4 class="card-title">v1</h4>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+        </div>
     </div>
+
+{% endif %}
 
 {% endblock content %}

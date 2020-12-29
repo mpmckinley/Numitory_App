@@ -9,6 +9,8 @@
             <tr>
                 <th scope="col">Name</th>
                 <th>Description</th>
+                <th>Status</th>
+                <th>Quantity</th>
                 <th>Type</th>
                 <th>Collection</th>
                 <th>Edit</th>
@@ -23,6 +25,8 @@
                     </a>
                 </td>
                 <td>{{ item.item_desc }}</td>
+                <td>{{ item.status }}</td>
+                <td>{{ item.quantity }}</td>
                 <td>
                     {% if heading == item.type.type_name %}
                         {{ item.type.type_name }}
@@ -51,7 +55,7 @@
         </tbody>
     </table>
 
-    <div class="pagination">
+    <div class="pagination justify-content-center">
         <span class="step-links">
             {% if page_obj.has_previous %}
                 <a href="?page=1">&laquo; first</a>
