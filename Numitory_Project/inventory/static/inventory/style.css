@@ -31,7 +31,12 @@ footer {
 }
 
 /* Button icons */
-.bi{
+.bi {
     width: 1em;
     height: 1em;
 }
+
+/* .bi_btn {
+    font-size: 1em;
+    font-weight: 900;
+} */

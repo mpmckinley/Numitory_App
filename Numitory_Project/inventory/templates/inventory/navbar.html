@@ -1,8 +1,13 @@
+{% load static %}
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="{% url 'home' %}">Numitory</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+  <a class="navbar-brand" href="{% url 'home' %}">
+      <img src="{% static 'inventory/logo2_navbar_black.png' %}" height="25" class="d-inline-block align-top"></img>
+  </a>
+  {% comment %} <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon">
+    </span>
+  </button> {% endcomment %}
 
   <div class="collapse navbar-collapse" id="navbarColor03">
     <ul class="navbar-nav mr-auto">
@@ -35,7 +40,7 @@
             {% if user.is_authenticated %}
                 <div class="btn-group" role="group">
                     <button id="btnGroupDrop1" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Create
+                        <i class="bi bi-plus-circle bi_btn"></i>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                     <a class="dropdown-item" href="{% url 'inventory:itemcreate' %}">Item</a>

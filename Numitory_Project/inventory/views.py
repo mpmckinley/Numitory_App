@@ -77,13 +77,19 @@ def itemdetail(request, item_pk):
     item = get_object_or_404(Item, pk=item_pk, user=request.user)
     if request.method == 'GET':
         form = ItemCreateForm(user=request.user, instance=item)
-        trans = Transaction.objects.filter(user=request.user, tran_item_id=item_pk).order_by('-date')
+        trans = Transaction.objects.filter(user=request.user, tran_item_id=item_pk).order_by('-id')
         tranform = TransactionCreateForm(instance=item)
+
+        paginator = Paginator(trans, 10)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
         return render(request, 'inventory/itemdetail.html', {
             'item': item,
             'form': form,
             'tranform': tranform,
             'trans': trans,
+            'page_obj': page_obj,
         })
     if 'item' in request.POST:
         try:
