@@ -102,8 +102,9 @@
                             <td>{{ trans.tran_value }}</td>
                             <td align="center">
                 {% comment %} ***NEED TO WORK ON THIS DELETE {% endcomment %}
-                                <form method="POST">
+                                <form action="{% url 'inventory:itemdetail' item.id %}" method="POST">
                                 {% csrf_token %}
+                                    <input type="hidden" value="{{ trans.id }}" name="pk">
                                     <button type="submit" class="hidebtn" id="{{ trans.id }}" name="delete">
                                         <i class="bi bi-x-circle-fill" style="color: red;"></i>
                                     </button>
