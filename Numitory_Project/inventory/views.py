@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.db.models import Sum
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login, logout, authenticate,update_session_auth_hash
 from .forms import ItemCreateForm, TransactionCreateForm, TypeCreateForm, CollectionCreateForm, UserChangeForm
 from .models import Transaction, Type, Collection, Item
 from django.contrib.auth.decorators import login_required
@@ -331,13 +331,22 @@ def edituser(request, user_pk):
     else:
         try:
             form = UserChangeForm(request.POST, instance=user)
-            form.save()
-            return redirect('inventory:inventory')
-        except ValueError:
+            if(form.is_valid()):
+                form.save()
+                update_session_auth_hash(request,user)
+                return redirect('inventory:inventory')
+            else:
+                er_str=""
+                return render(request, 'inventory/edituser.html', {
+                    'user': user,
+                    'form': UserChangeForm(instance=user),
+                    'error':form.errors.get("__all__")
+                })  
+        except ValueError as e:
             return render(request, 'inventory/edituser.html', {
                 'user': user,
-                'form': UserChangeForm(),
-                'error':'You have some bad data in there, try again',
+                'form': UserChangeForm(instance=user),
+                'error':str(e)
             })
 
 @login_required

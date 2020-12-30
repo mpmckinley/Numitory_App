@@ -34,7 +34,13 @@
         Thank you for joining us. While we design Numitory to LOREM ISPUM, we've found a quick overview of our methods and schema can prove valuable...
 
     {% else %}
-
+	{% if success_message %}
+        <div class="alert alert-dismissible alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <h4 class="alert-heading">Success!</h4>
+            <p class="mb-0">{{ success_message }} <a class="alert-link"></a>.</p>
+        </div>
+    {% endif %}
     <h2>{{ heading }} Inventory</h2>
 
     <table class="table table-striped" style="width:100%" id="main_table">
@@ -87,7 +93,6 @@
             {% endfor %}
         </tbody>
     </table>
-
     <div class="pagination justify-content-center">
         <span class="step-links">
             {% if page_obj.has_previous %}

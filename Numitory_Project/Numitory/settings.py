@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '2l$$x%**j2mltxx%t1#fmir#-a@84rvyfl_lfgk30!x4t_azuu'
+# SECRET_KEY = '2l$$x%**j2mltxx%t1#fmir#-a@84rvyfl_lfgk30!x4t_azuu'
+SECRET_KEY= config("SECRET_KEY")
 
 # ***GET KEY OUT OF HERE, IGNORED in GIT, etc.
 # SECRET_KEY = ['DJANGO_SECRET_KEY']
@@ -99,7 +102,7 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '3306',
         'options': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+            #'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
         }
     }
 
