@@ -1,4 +1,4 @@
 # Numitory_Django
-Numitory reboot - simpler, and in Django
+Bullion and Numismatic collection management on your terms.
 
-### MySQL database
+#### MySQL database
