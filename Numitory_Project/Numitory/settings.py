@@ -23,10 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = '2l$$x%**j2mltxx%t1#fmir#-a@84rvyfl_lfgk30!x4t_azuu'
-SECRET_KEY= config("SECRET_KEY")
-
 # ***GET KEY OUT OF HERE, IGNORED in GIT, etc.
-# SECRET_KEY = ['DJANGO_SECRET_KEY']
+SECRET_KEY = config("SECRET_KEY")
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

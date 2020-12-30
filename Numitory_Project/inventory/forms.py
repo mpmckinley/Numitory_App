@@ -62,6 +62,9 @@ class ItemCreateForm(ModelForm):
             'collection',
             'type',
             'status',
+            'graded',
+            'grade',
+            'condition',
         ]
     
     item_desc = forms.CharField(
@@ -85,6 +88,9 @@ class TypeCreateForm(ModelForm):
             'type_name',
             'type_desc',
             'category',
+            'metal',
+            'metal_weight',
+            'purity',
         ]
 class CollectionCreateForm(ModelForm):
     class Meta:
