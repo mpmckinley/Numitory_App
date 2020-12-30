@@ -1,7 +1,8 @@
 # Numitory_Django
-Tagline: Bullion and Numismatic collection management on your terms.
-Pitch: No more spreadsheet, ledgers, random notes, or guessing
+**Tagline**: Bullion and Numismatic collection management on your terms.
+
+**Pitch**: No more spreadsheet, ledgers, random notes, or guessing.
 
 Numitory brings all of your collection management needs under one roof. Designed with simplicity and scale in mind - leverage our proprietary ITEM  TYPE  COLLECTION methodology to seamlessly track and manage your bullion and numismatic collection - transactions, and cost basis.
 
-#### MySQL database
+* #### MySQL database

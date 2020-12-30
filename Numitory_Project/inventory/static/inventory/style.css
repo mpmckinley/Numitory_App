@@ -36,6 +36,7 @@ footer {
 }
 
 .jumbo {
+<<<<<<< HEAD
     padding-top: 3em;
     padding-bottom: 3em;
   }
@@ -45,3 +46,8 @@ footer {
     height: 35%;
     width: 35%;
 }
+=======
+    padding-top: 2em;
+    padding-bottom: 2em;
+  }
+>>>>>>> fcb4b3a4187a65f021ed93dfc960120a2ffa3b2d
