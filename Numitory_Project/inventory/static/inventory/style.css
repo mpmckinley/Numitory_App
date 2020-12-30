@@ -36,7 +36,7 @@ footer {
     height: 1em;
 }
 
-/* .bi_btn {
-    font-size: 1em;
-    font-weight: 900;
-} */
+.jumbo {
+    padding-top: 3em;
+    padding-bottom: 3em;
+  }

@@ -30,7 +30,7 @@ class ItemCreateForm(ModelForm):
         widget=(
             forms.Textarea(
                 attrs={
-                    'rows':2}
+                    'rows':1}
             )
         )
     )

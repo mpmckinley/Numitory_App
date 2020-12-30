@@ -5,6 +5,7 @@ from django.core.paginator import Paginator
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
+from django.db.models import Sum
 from django.contrib.auth import login, logout, authenticate
 from .forms import ItemCreateForm, TransactionCreateForm, TypeCreateForm, CollectionCreateForm, UserChangeForm
 from .models import Transaction, Type, Collection, Item
@@ -80,6 +81,8 @@ def itemdetail(request, item_pk):
         trans = Transaction.objects.filter(user=request.user, tran_item_id=item_pk).order_by('-id')
         tranform = TransactionCreateForm(instance=item)
 
+        total = Transaction.objects.filter(user=request.user, tran_item_id=item_pk).aggregate(Sum('tran_quantity'))
+
         paginator = Paginator(trans, 10)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
@@ -89,6 +92,7 @@ def itemdetail(request, item_pk):
             'form': form,
             'tranform': tranform,
             'trans': trans,
+            'total': total,
             'page_obj': page_obj,
         })
     if 'item' in request.POST:

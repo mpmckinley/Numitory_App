@@ -12,11 +12,31 @@
 
 {% else %}
 
-    <div class="row">
-        <div class="col-8">
-            {% comment %} <h1 class="title">Numitory</h1> {% endcomment %}
-            <h2 class="subtitle">Bullion and Numistmatic collection management<br> on your terms.</h2>
-            <p class="">
+    <div class="jumbotron jumbotron-fluid jumbo">
+        <div class="container-fluid">
+            <h1 class="display-3">Numitory</h1>
+            <p class="lead">Bullion and Numismatic collection management on your terms.</p>
+            <hr class="my-4">
+            <p>No more spreadsheet, ledgers, random notes, or guessing</p>
+            <p>Numitory brings all of your collection management needs under one roof. Designed with simplicity and scale in mind - leverage our proprietary <text style="color: success; text-transform: uppercase; font-weight: bold;">Item <i class="bi bi-arrow-left-right"></i> Type <i class="bi bi-arrow-left-right"></i> Collection</text> methodology to seamlessly track and manage your bullion and numismatic collection - transactions, and cost basis.</p>
+            <p class="lead">
+                <a class="btn btn-primary btn-lg mt-3" href="{% url 'about' %}" role="button">Learn more</a>
+                <a class="btn btn-success btn-lg mt-3" href="{% url 'signupuser' %}" role="button">Sign Up</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <p class="homelist">
+                <ul>
+                    <li>First something</li>
+                    <li>Second something</li>
+                </ul>
+            </p>
+        </div>
+        <div class="col-4">
+            <p class="homelist">
                 <ul>
                     <li>First something</li>
                     <li>Second something</li>
@@ -24,10 +44,10 @@
             </p>
         </div>
         <div class="col">
-            <div class="card border-dark mb-3" style="max-width: 20rem;">
-                <div class="card-header">Release Notes</div>
+            <div class="card border-dark mb-2" style="max-width: 25rem;">
+                <div class="card-header">Latest Release Notes</div>
                 <div class="card-body">
-                    <h4 class="card-title">v1</h4>
+                    <h4 class="card-title">v1_022721</h4>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                 </div>
             </div>

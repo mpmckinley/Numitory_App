@@ -6,6 +6,7 @@
 
     <h1>ITEM Detail</h1>
 
+
 <div class="row">
     <div class="col">
 
@@ -19,9 +20,36 @@
 
         <form method="POST">
         {% csrf_token %}
-            {{ form|crispy }}
+            <div class="row">
+                <div class="col">
+                    {{ form.item_name|as_crispy_field }}
+                </div>
+                <div class="col">
+                    {{ form.item_desc|as_crispy_field }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {{ form.collection|as_crispy_field }}
+                </div>
+                <div class="col">
+                    {{ form.type|as_crispy_field }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {{ form.status|as_crispy_field }}
+                </div>
+            </div>            <!-- {{ form|crispy }} -->
             <button type="submit" name="item" class="btn btn-primary">Update</button>
         </form>
+
+        <div class="row">
+            <div class="col">
+                Total Quantity: {{ total.tran_quantity__sum }}<br>
+                Total Value: 
+            </div>
+        </div>
 
     </div>
 

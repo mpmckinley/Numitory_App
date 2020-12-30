@@ -27,7 +27,7 @@ class Transaction(models.Model):
     ]
     direction = models.CharField(max_length=10, choices=DIR_CHOICES)
     tran_quantity = models.IntegerField()
-    tran_value = models.IntegerField()
+    tran_value = models.DecimalField(max_digits=50, decimal_places=2)
     date = models.DateField()
     tran_item = models.ForeignKey("inventory.Item", on_delete=CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
