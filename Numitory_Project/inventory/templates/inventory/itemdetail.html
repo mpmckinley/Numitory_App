@@ -109,12 +109,10 @@
                             <td>{{ trans.tran_quantity }}</td>
                             <td>{{ trans.tran_value }}</td>
                             <td align="center">
-<<<<<<< HEAD
                 {% comment %} ***NEED TO WORK ON THIS DELETE {% endcomment %}
                                 <form action="{% url 'inventory:itemdetail' item.id %}" method="POST">
                                 {% csrf_token %}
                                     <input type="hidden" value="{{ trans.id }}" name="pk">
-=======
                 {% comment %} ***NEED TO WORK ON THIS EDIT {% endcomment %}
                                 <form action="{% url 'inventory:itemdetail' item.id %}" method="POST">
                                 {% csrf_token %}
@@ -127,7 +125,6 @@
                                 <form action="{% url 'inventory:itemdetail' item.id %}" method="POST">
                                 {% csrf_token %}
                                     <input type="hidden" value="{{ trans.id }}" name="pk">
->>>>>>> fcb4b3a4187a65f021ed93dfc960120a2ffa3b2d
                                     <button type="submit" class="hidebtn" id="{{ trans.id }}" name="delete">
                                         <i class="bi bi-x-circle-fill" style="color: red;"></i>
                                     </button>

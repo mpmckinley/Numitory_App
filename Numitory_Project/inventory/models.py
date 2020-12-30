@@ -13,7 +13,7 @@ def upload_location(instance, filename):
 class Item(models.Model):
     item_name = models.CharField(max_length=100)
     item_desc = models.CharField(max_length=250)
-    image = models.ImageField(upload_to=upload_location, null=True, blank=True)
+    image = models.ImageField(upload_to=upload_location, null=True, blank=True, default='empty.jpeg')
     created = models.DateTimeField(auto_now_add=True)
     STATUS_CHOICES = [
         ('Active', 'Active'),
