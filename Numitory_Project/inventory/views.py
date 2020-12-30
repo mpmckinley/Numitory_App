@@ -280,7 +280,7 @@ def collitems(request, coll_pk):
 #AUTH
 def signupuser(request):
     if request.user.is_authenticated:
-        # REDIRECT INSTEAD OF RENDER (NOT SURE WHY) NEEDS UPDATED IN PROD
+        # ***REDIRECT INSTEAD OF RENDER (NOT SURE WHICH IS RIGHT HERE) NEEDS UPDATED IN PROD
         return redirect('http://localhost:8000/inventory/')
     else:
         if request.method == 'GET':
