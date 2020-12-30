@@ -27,7 +27,6 @@ def home(request):
     else:
         return render(request, 'inventory/home.html')
 
-
 def about(request):
     return render(request, 'inventory/about.html')
 
