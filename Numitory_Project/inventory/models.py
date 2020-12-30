@@ -12,12 +12,10 @@ class Item(models.Model):
         ('Inactive', 'Inactive'),
     ]
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
-
     #Attributes
     graded = models.BooleanField(default=False)
     grade = models.CharField(max_length=6, blank=True)
     condition = models.CharField(max_length=25, blank=True)
-
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     type = models.ForeignKey("inventory.Type", on_delete=models.RESTRICT)
@@ -32,6 +30,7 @@ class Transaction(models.Model):
         ('Sell', 'Sell'),
         ('Trade', 'Trade'),
     ]
+
     direction = models.CharField(max_length=10, choices=DIR_CHOICES)
     tran_quantity = models.IntegerField()
     tran_value = models.DecimalField(max_digits=50, decimal_places=2)
