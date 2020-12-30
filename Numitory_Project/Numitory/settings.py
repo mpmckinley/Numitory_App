@@ -109,17 +109,17 @@ DATABASES = {
         }
 >>>>>>> fcb4b3a4187a65f021ed93dfc960120a2ffa3b2d
     }
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'django_numitory',
-#         'USER': 'root',
-#         'PASSWORD': '',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#         'options': {
-#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
-#         }
-#     }
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'django_numitory',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
+        'options': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+        }
+    }
 
 }
 
