@@ -279,27 +279,31 @@ def collitems(request, coll_pk):
 
 #AUTH
 def signupuser(request):
-    if request.method == 'GET':
-        return render(request, 'inventory/signupuser.html', {
-            'form': UserCreationForm(),
-        })
+    if request.user.is_authenticated:
+        # REDIRECT INSTEAD OF RENDER (NOT SURE WHY) NEEDS UPDATED IN PROD
+        return redirect('http://localhost:8000/inventory/')
     else:
-        if request.POST['password1'] == request.POST['password2']:
-                try:
-                    user = User.objects.create_user(request.POST['username'], password=request.POST['password1'])
-                    user.save()
-                    login(request, user)
-                    return redirect('/inventory/')
-                except IntegrityError:
-                    return render(request, 'inventory/signupuser.html', {
-                        'form': UserCreationForm(),
-                        'error': "Username alerady taken - select another.",
-                    })
-        else:
+        if request.method == 'GET':
             return render(request, 'inventory/signupuser.html', {
                 'form': UserCreationForm(),
-                'error': "Passwords did not match.",
             })
+        else:
+            if request.POST['password1'] == request.POST['password2']:
+                    try:
+                        user = User.objects.create_user(request.POST['username'], password=request.POST['password1'])
+                        user.save()
+                        login(request, user)
+                        return redirect('/inventory/')
+                    except IntegrityError:
+                        return render(request, 'inventory/signupuser.html', {
+                            'form': UserCreationForm(),
+                            'error': "Username alerady taken - select another.",
+                        })
+            else:
+                return render(request, 'inventory/signupuser.html', {
+                    'form': UserCreationForm(),
+                    'error': "Passwords did not match.",
+                })
 
 def loginuser(request):
     if request.method == 'GET':

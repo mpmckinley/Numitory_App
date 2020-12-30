@@ -2,6 +2,39 @@
 
 {% block content %}
 
+    {% if not items %}
+
+        <div class="jumbotron jumbotron-fluid jumbo">
+            <div class="container-fluid">
+                <h1 class="display-3">Welcome</h1>
+                <p class="lead">We're excited to have you!</p>
+                <hr class="my-4">
+                <p>No more spreadsheet, ledgers, random notes, or guessing</p>
+                <p>Numitory brings all of your collection management needs under one roof. Designed with simplicity and scale in mind - leverage our proprietary <text style="color: success; text-transform: uppercase; font-weight: bold;">Item <i class="bi bi-arrow-left-right"></i> Type <i class="bi bi-arrow-left-right"></i> Collection</text> methodology to seamlessly track and manage your bullion and numismatic collection - transactions, and cost basis.</p>
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg mt-3" href="{% url 'about' %}" role="button">Collection</a>
+                    <a class="btn btn-success btn-lg mt-3" href="{% url 'signupuser' %}" role="button">Type</a>
+                    <a class="btn btn-success btn-lg mt-3" href="{% url 'signupuser' %}" role="button">Item</a>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                All ITEMS must belong to a TYPE
+            </div>
+            <div class="col">
+                TYPES are broad classifications for ITEMS
+            </div>
+            <div class="col">
+                Any ITEM must belong to a COLLECTION
+            </div>
+        </div>
+        Looks like this is your first time here - welcome!!
+
+        Thank you for joining us. While we design Numitory to LOREM ISPUM, we've found a quick overview of our methods and schema can prove valuable...
+
+    {% else %}
+
     <h2>{{ heading }} Inventory</h2>
 
     <table class="table table-striped" style="width:100%" id="main_table">
@@ -72,6 +105,8 @@
             {% endif %}
         </span>
     </div>
+
+{% endif %}
 
 {% endblock content %}
 
