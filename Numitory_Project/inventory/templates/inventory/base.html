@@ -42,8 +42,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.min.js"></script>
     {% comment %} <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script> {% endcomment %}
 
+{% if user.is_authenticated %}
 
-{% include 'inventory/navfooter.html' %}
+    {% include 'inventory/navfooter.html' %}
+
+{% endif %}
 
 </body>
 
