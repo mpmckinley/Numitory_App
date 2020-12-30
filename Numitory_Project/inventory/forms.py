@@ -62,7 +62,7 @@ class ItemCreateForm(ModelForm):
             'collection',
             'type',
             'status',
-            'image'
+            'image',
             'graded',
             'grade',
             'condition',
