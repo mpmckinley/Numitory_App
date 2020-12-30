@@ -2,10 +2,18 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.deletion import CASCADE
 
+def upload_location(instance, filename):
+    filebase, extension = filename.split(".")
+    return "%s/%s.%s" %(instance.item_name, instance.item_name, extension)
+    ItemModel = instance.__class__
+    new_id = ItemModel.objects.order_by("instance.item_name").last().id + 1
+
+    return "%s" %(filename)
+
 class Item(models.Model):
     item_name = models.CharField(max_length=100)
     item_desc = models.CharField(max_length=250)
-    # image = models.ImageField(upload_to=)
+    image = models.ImageField(upload_to=upload_location, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     STATUS_CHOICES = [
         ('Active', 'Active'),

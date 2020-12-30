@@ -3,7 +3,6 @@ body {
     height: 100%;
     position: relative;
     zoom: 1.25; 
-    -moz-transform: scale(1.25); 
     -moz-transform-origin: 0 0;
 }
 
@@ -40,3 +39,9 @@ footer {
     padding-top: 3em;
     padding-bottom: 3em;
   }
+
+/* Item Image */
+.img-fluid.item-image {
+    height: 35%;
+    width: 35%;
+}

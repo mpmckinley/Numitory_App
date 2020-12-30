@@ -40,7 +40,15 @@
                 <div class="col">
                     {{ form.status|as_crispy_field }}
                 </div>
-            </div>            <!-- {{ form|crispy }} -->
+            </div>
+                        <!-- item image view delete edit-->            
+            <div class="row">
+                <div class="col" style="margin-bottom: -25%">
+                    Preview : <img class="img-fluid item-image" src="{{item.image.url}}" alt="">
+                    {{ form.image|as_crispy_field }}</br>     
+                </div>
+            </div>
+                        <!-- {{ form|crispy }} -->
             <button type="submit" name="item" class="btn btn-primary">Update</button>
         </form>
 

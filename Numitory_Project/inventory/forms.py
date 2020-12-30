@@ -24,6 +24,7 @@ class ItemCreateForm(ModelForm):
             'collection',
             'type',
             'status',
+            'image'
         ]
     
     item_desc = forms.CharField(
