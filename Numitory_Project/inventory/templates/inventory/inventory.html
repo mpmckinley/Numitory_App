@@ -4,114 +4,89 @@
 
     {% if not items %}
 
-        <div class="jumbotron jumbotron-fluid jumbo">
-            <div class="container-fluid">
-                <h1 class="display-3">Welcome</h1>
-                <p class="lead">We're excited to have you!</p>
-                <hr class="my-4">
-                <p>No more spreadsheet, ledgers, random notes, or guessing</p>
-                <p>Numitory brings all of your collection management needs under one roof. Designed with simplicity and scale in mind - leverage our proprietary <text style="color: success; text-transform: uppercase; font-weight: bold;">Item <i class="bi bi-arrow-left-right"></i> Type <i class="bi bi-arrow-left-right"></i> Collection</text> methodology to seamlessly track and manage your bullion and numismatic collection - transactions, and cost basis.</p>
-                <p class="lead">
-                    <a class="btn btn-primary btn-lg mt-3" href="{% url 'about' %}" role="button">Collection</a>
-                    <a class="btn btn-success btn-lg mt-3" href="{% url 'signupuser' %}" role="button">Type</a>
-                    <a class="btn btn-success btn-lg mt-3" href="{% url 'signupuser' %}" role="button">Item</a>
-                </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                All ITEMS must belong to a TYPE
-            </div>
-            <div class="col">
-                TYPES are broad classifications for ITEMS
-            </div>
-            <div class="col">
-                Any ITEM must belong to a COLLECTION
-            </div>
-        </div>
-        Looks like this is your first time here - welcome!!
-
-        Thank you for joining us. While we design Numitory to LOREM ISPUM, we've found a quick overview of our methods and schema can prove valuable...
+        {% include 'inventory/welcome.html' %}
 
     {% else %}
-	{% if success_message %}
-        <div class="alert alert-dismissible alert-success">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <h4 class="alert-heading">Success!</h4>
-            <p class="mb-0">{{ success_message }} <a class="alert-link"></a>.</p>
-        </div>
-    {% endif %}
-    <h2>{{ heading }} Inventory</h2>
 
-    <table class="table table-striped" style="width:100%" id="main_table">
-        <thead>
-            <tr>
-                <th scope="col">Item</th>
-                <th>Description</th>
-                <th>Status</th>
-                <th>Quantity</th>
-                <th>Type</th>
-                <th>Collection</th>
-                <th>Edit</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in page_obj %}
-            <tr>
-                <td>
-                    <a href="{% url 'inventory:itemdetail' item.id %}">
-                        {{ item.item_name }}
-                    </a>
-                </td>
-                <td>{{ item.item_desc }}</td>
-                <td>{{ item.status }}</td>
-                <td>{{ item.quantity }}</td>
-                <td>
-                    {% if heading == item.type.type_name %}
-                        {{ item.type.type_name }}
-                    {% else %}
-                        <a href="{% url 'inventory:typeitems' item.type.id %}">
+        {% if success_message %}
+            <div class="alert alert-dismissible alert-success">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <h4 class="alert-heading">Success!</h4>
+                <p class="mb-0">{{ success_message }} <a class="alert-link"></a>.</p>
+            </div>
+        {% endif %}
+
+        <h2>{{ heading }} Inventory</h2>
+
+        <table class="table table-striped" style="width:100%" id="main_table">
+            <thead>
+                <tr>
+                    <th scope="col">Item</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Quantity</th>
+                    <th>Type</th>
+                    <th>Collection</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in page_obj %}
+                <tr>
+                    <td>
+                        <a href="{% url 'inventory:itemdetail' item.id %}">
+                            {{ item.item_name }}
+                        </a>
+                    </td>
+                    <td>{{ item.item_desc }}</td>
+                    <td>{{ item.status }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>
+                        {% if heading == item.type.type_name %}
                             {{ item.type.type_name }}
-                        </a>
-                    {% endif %}
-                </td>
-                <td>
-                    {% if heading == item.collection.coll_name %}
-                        {{ item.collection.coll_name }}
-                    {% else %}
-                        <a href="{% url 'inventory:collitems' item.collection.id %}">
+                        {% else %}
+                            <a href="{% url 'inventory:typeitems' item.type.id %}">
+                                {{ item.type.type_name }}
+                            </a>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if heading == item.collection.coll_name %}
                             {{ item.collection.coll_name }}
+                        {% else %}
+                            <a href="{% url 'inventory:collitems' item.collection.id %}">
+                                {{ item.collection.coll_name }}
+                            </a>
+                        {% endif %}        
+                    </td>
+                    <td>
+                        <a href="{% url 'inventory:itemdetail' item.id %}">
+                            Edit
                         </a>
-                    {% endif %}        
-                </td>
-                <td>
-                    <a href="{% url 'inventory:itemdetail' item.id %}">
-                        Edit
-                    </a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <div class="pagination justify-content-center">
-        <span class="step-links">
-            {% if page_obj.has_previous %}
-                <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-            {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="pagination justify-content-center">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
 
-            <span class="current">
-                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
             </span>
+        </div>
 
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">next</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-            {% endif %}
-        </span>
-    </div>
-
-{% endif %}
+    {% endif %}
 
 {% endblock content %}
 
