@@ -1,6 +1,6 @@
 from django.contrib import auth
 from django.db.models.aggregates import Count
-from django.http import response
+from django.http import response, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.core.paginator import Paginator
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -26,6 +26,7 @@ def home(request):
         })
     else:
         return render(request, 'inventory/home.html')
+
 
 def about(request):
     return render(request, 'inventory/about.html')
@@ -135,10 +136,11 @@ def itemdetail(request, item_pk):
                 'error':'You had some bad data in your tran form, try again',
             })
     # ***NEED TO WORK ON THIS
-    if 'delete' in request.POST:
-        tran = get_object_or_404(Transaction, pk=request.GET.get(id))
+    pk = request.POST['pk']
+    if request.method == 'POST' and 'delete' in request.POST:
+        tran = get_object_or_404(Transaction, pk=pk)
         tran.delete()
-        return redirect(request.path_info)
+        return HttpResponseRedirect('inventory:inventory')
 
 @login_required
 def typeinv(request):
@@ -278,31 +280,27 @@ def collitems(request, coll_pk):
 
 #AUTH
 def signupuser(request):
-    if request.user.is_authenticated:
-        # ***REDIRECT INSTEAD OF RENDER (NOT SURE WHICH IS RIGHT HERE) NEEDS UPDATED IN PROD
-        return redirect('http://localhost:8000/inventory/')
+    if request.method == 'GET':
+        return render(request, 'inventory/signupuser.html', {
+            'form': UserCreationForm(),
+        })
     else:
-        if request.method == 'GET':
+        if request.POST['password1'] == request.POST['password2']:
+                try:
+                    user = User.objects.create_user(request.POST['username'], password=request.POST['password1'])
+                    user.save()
+                    login(request, user)
+                    return redirect('/inventory/')
+                except IntegrityError:
+                    return render(request, 'inventory/signupuser.html', {
+                        'form': UserCreationForm(),
+                        'error': "Username alerady taken - select another.",
+                    })
+        else:
             return render(request, 'inventory/signupuser.html', {
                 'form': UserCreationForm(),
+                'error': "Passwords did not match.",
             })
-        else:
-            if request.POST['password1'] == request.POST['password2']:
-                    try:
-                        user = User.objects.create_user(request.POST['username'], password=request.POST['password1'])
-                        user.save()
-                        login(request, user)
-                        return redirect('/inventory/')
-                    except IntegrityError:
-                        return render(request, 'inventory/signupuser.html', {
-                            'form': UserCreationForm(),
-                            'error': "Username alerady taken - select another.",
-                        })
-            else:
-                return render(request, 'inventory/signupuser.html', {
-                    'form': UserCreationForm(),
-                    'error': "Passwords did not match.",
-                })
 
 def loginuser(request):
     if request.method == 'GET':
