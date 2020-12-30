@@ -141,7 +141,7 @@ def itemdetail(request, item_pk):
     if request.method == 'POST' and 'delete' in request.POST:
         tran = get_object_or_404(Transaction, pk=pk)
         tran.delete()
-        return redirect(request.path_info)
+        return HttpResponseRedirect('inventory:inventory, id=item.id')
 
 @login_required
 def typeinv(request):

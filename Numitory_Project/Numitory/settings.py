@@ -22,10 +22,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+<<<<<<< HEAD
+SECRET_KEY = '2l$$x%**j2mltxx%t1#fmir#-a@84rvyfl_lfgk30!x4t_azuu'
+=======
 # SECRET_KEY = '2l$$x%**j2mltxx%t1#fmir#-a@84rvyfl_lfgk30!x4t_azuu'
 # ***GET KEY OUT OF HERE, IGNORED in GIT, etc.
 SECRET_KEY = config("SECRET_KEY")
 
+>>>>>>> fcb4b3a4187a65f021ed93dfc960120a2ffa3b2d
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -89,11 +93,11 @@ WSGI_APPLICATION = 'Numitory.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
     'default': {
+<<<<<<< HEAD
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+=======
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'django_numitory',
         'USER': 'root',
@@ -102,6 +106,18 @@ DATABASES = {
         'PORT': '3306',
         'options': {
             #'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+        }
+>>>>>>> fcb4b3a4187a65f021ed93dfc960120a2ffa3b2d
+    }
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'django_numitory',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
+        'options': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
         }
     }
 
@@ -146,9 +162,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
-
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / 'media'
 LOGIN_URL = '/login'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap4.html"
+
+

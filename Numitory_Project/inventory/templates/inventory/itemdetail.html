@@ -40,7 +40,15 @@
                 <div class="col">
                     {{ form.status|as_crispy_field }}
                 </div>
-            </div>            <!-- {{ form|crispy }} -->
+            </div>
+                        <!-- item image view delete edit-->            
+            <div class="row">
+                <div class="col" style="margin-bottom: -25%">
+                    Preview : <img class="img-fluid item-image" src="{{item.image.url}}" alt="">
+                    {{ form.image|as_crispy_field }}</br>     
+                </div>
+            </div>
+                        <!-- {{ form|crispy }} -->
             <button type="submit" name="item" class="btn btn-primary">Update</button>
         </form>
 
@@ -101,6 +109,12 @@
                             <td>{{ trans.tran_quantity }}</td>
                             <td>{{ trans.tran_value }}</td>
                             <td align="center">
+<<<<<<< HEAD
+                {% comment %} ***NEED TO WORK ON THIS DELETE {% endcomment %}
+                                <form action="{% url 'inventory:itemdetail' item.id %}" method="POST">
+                                {% csrf_token %}
+                                    <input type="hidden" value="{{ trans.id }}" name="pk">
+=======
                 {% comment %} ***NEED TO WORK ON THIS EDIT {% endcomment %}
                                 <form action="{% url 'inventory:itemdetail' item.id %}" method="POST">
                                 {% csrf_token %}
@@ -113,6 +127,7 @@
                                 <form action="{% url 'inventory:itemdetail' item.id %}" method="POST">
                                 {% csrf_token %}
                                     <input type="hidden" value="{{ trans.id }}" name="pk">
+>>>>>>> fcb4b3a4187a65f021ed93dfc960120a2ffa3b2d
                                     <button type="submit" class="hidebtn" id="{{ trans.id }}" name="delete">
                                         <i class="bi bi-x-circle-fill" style="color: red;"></i>
                                     </button>
