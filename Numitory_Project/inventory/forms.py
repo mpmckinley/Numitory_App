@@ -62,13 +62,10 @@ class ItemCreateForm(ModelForm):
             'collection',
             'type',
             'status',
-<<<<<<< HEAD
             'image'
-=======
             'graded',
             'grade',
             'condition',
->>>>>>> fcb4b3a4187a65f021ed93dfc960120a2ffa3b2d
         ]
     
     item_desc = forms.CharField(
