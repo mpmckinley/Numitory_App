@@ -52,3 +52,8 @@ footer {
     font-size: large;
     font-weight: 700;
 }
+
+.card-header-sm {
+    font-size: small;
+    font-weight: 900;
+}
