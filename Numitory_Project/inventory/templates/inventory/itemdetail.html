@@ -4,8 +4,6 @@
 
 {% block content %}
 
-<h1>ITEM Detail</h1>
-
 <div class="row">
     <div class="col">
 
@@ -17,66 +15,71 @@
             </div>
         {% endif %}
 
-        <form method="POST">
-        {% csrf_token %}
-            <div class="row">
-                <div class="col">
-                    {{ form.item_name|as_crispy_field }}
-                </div>
-                <div class="col">
-                    {{ form.item_desc|as_crispy_field }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    {{ form.collection|as_crispy_field }}
-                </div>
-                <div class="col">
-                    {{ form.type|as_crispy_field }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <div class="col">
-                        {{ form.graded|as_crispy_field }}
+        <div class="card border-dark mb-3">
+            <div class="card-header card-heade-sm">Detail</div>
+            <div class="card-body">
+                <form method="POST">
+                {% csrf_token %}
+                    <div class="row">
+                        <div class="col">
+                            {{ form.item_name|as_crispy_field }}
+                        </div>
+                        <div class="col">
+                            {{ form.item_desc|as_crispy_field }}
+                        </div>
                     </div>
-                    <div class="col">
-                        {{ form.grade|as_crispy_field }}
+                    <div class="row">
+                        <div class="col">
+                            {{ form.collection|as_crispy_field }}
+                        </div>
+                        <div class="col">
+                            {{ form.type|as_crispy_field }}
+                        </div>
                     </div>
-                    <div class="col">
-                        {{ form.status|as_crispy_field }}
+                    <div class="row">
+                        <div class="col">
+                            <div class="col">
+                                {{ form.graded|as_crispy_field }}
+                            </div>
+                            <div class="col">
+                                {{ form.grade|as_crispy_field }}
+                            </div>
+                            <div class="col">
+                                {{ form.status|as_crispy_field }}
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    {{ form.condition|as_crispy_field }}
-                </div>
-            </div>
+                    <div class="row">
+                        <div class="col">
+                            {{ form.condition|as_crispy_field }}
+                        </div>
+                    </div>
 
-            <div class="row">
-                <div class="col">
-                    Preview : <img class="img-fluid item-image" src="{{item.image.url}}" alt="">
-                    {{ form.image|as_crispy_field }}</br>     
-                </div>
-            </div>
+                    <div class="row">
+                        <div class="col">
+                            Preview : <img class="img-fluid item-image" src="{{item.image.url}}" alt="">
+                            {{ form.image|as_crispy_field }}</br>     
+                        </div>
+                    </div>
 
-            <div class="row">
-                <div class="col">
-                    <button type="submit" name="item" class="btn btn-primary">Update</button>
-                </div>
-                <div class="col">
-                    Total Quantity: {{ total.tran_quantity__sum }}<br>
-                    Total Value: 
-                </div>
+                    <div class="row">
+                        <div class="col">
+                            <button type="submit" name="item" class="btn btn-primary">Update</button>
+                        </div>
+                        <div class="col">
+                            Total Quantity: {{ total.tran_quantity__sum }}<br>
+                            Total Value: 
+                        </div>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
 
     </div>
 
     <div class="col">
 
-        <div class="card border-light mb-3">
+        <div class="card border-dark mb-3">
             <div class="card-header card-heade-sm">Transaction</div>
             <div class="card-body">
                 <form method="POST">

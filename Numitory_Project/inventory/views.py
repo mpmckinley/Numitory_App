@@ -38,7 +38,7 @@ def inventory(request):
     heading = 'Active'
     items = Item.objects.filter(user=request.user, status='Active')
 
-    paginator = Paginator(items, 10)
+    paginator = Paginator(items, 15)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
