@@ -16,7 +16,7 @@
         {% endif %}
 
         <div class="card border-dark mb-3">
-            <div class="card-header card-heade-sm">Detail</div>
+            <div class="card-header card-heade-sm">Item Detail</div>
             <div class="card-body">
                 <form method="POST">
                 {% csrf_token %}
@@ -25,15 +25,15 @@
                             {{ form.item_name|as_crispy_field }}
                         </div>
                         <div class="col">
-                            {{ form.item_desc|as_crispy_field }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
                             {{ form.collection|as_crispy_field }}
                         </div>
                         <div class="col">
                             {{ form.type|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            {{ form.item_desc|as_crispy_field }}
                         </div>
                     </div>
                     <div class="row">
@@ -58,7 +58,7 @@
                             {% if item.image %}
                                 <img class="img-fluid item-image" src="{{item.image.url}}" alt="">
                             {% endif %}
-                            {{ form.image|as_crispy_field }}</br>     
+                            {{ form.image|as_crispy_field }}</br>
                         </div>
                     </div>
 
@@ -74,6 +74,14 @@
     </div>
 
     <div class="col">
+
+        <div class="card border-dark mb-3">
+            <div class="card-header card-heade-sm">Stats</div>
+            <div class="card-body">
+                Total Quantity: {{ total.tran_quantity__sum }}<br>
+                Total Value: 
+            </div>
+        </div>
 
         <div class="card border-dark mb-3">
             <div class="card-header card-heade-sm">Transaction</div>
@@ -102,14 +110,6 @@
                 </form>
                 {% comment %} <h5 class="card-title">Light card title</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> {% endcomment %}
-            </div>
-        </div>
-
-        <div class="card border-dark mb-3">
-            <div class="card-header card-heade-sm">Stats</div>
-            <div class="card-body">
-                Total Quantity: {{ total.tran_quantity__sum }}<br>
-                Total Value: 
             </div>
         </div>
 

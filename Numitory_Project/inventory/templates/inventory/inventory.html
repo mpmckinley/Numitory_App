@@ -26,7 +26,7 @@
                     <th>Quantity</th>
                     <th>Type</th>
                     <th>Collection</th>
-                    <th>Edit</th>
+                    {% comment %} <th>Edit</th> {% endcomment %}
                 </tr>
             </thead>
             <tbody>
@@ -57,11 +57,11 @@
                             </a>
                         {% endif %}        
                     </td>
-                    <td>
+                    {% comment %} <td>
                         <a href="{% url 'inventory:itemdetail' item.id %}">
                             Edit
                         </a>
-                    </td>
+                    </td> {% endcomment %}
                 </tr>
                 {% endfor %}
             </tbody>

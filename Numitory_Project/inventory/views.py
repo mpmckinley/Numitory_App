@@ -113,6 +113,7 @@ def itemdetail(request, item_pk):
         try:
             form = ItemCreateForm(data=request.POST, user=request.user, instance=item)
             form.save()
+            # print (form.data)
             return redirect('inventory:inventory')
         except ValueError:
             return render(request, 'inventory/itemdetail.html', {
@@ -136,7 +137,7 @@ def itemdetail(request, item_pk):
                 'tranform': TransactionCreateForm(),
                 'error':'You had some bad data in your tran form, try again',
             })
-    # ***NEED TO WORK ON THIS
+
     pk = request.POST['pk']
     if request.method == 'POST' and 'delete' in request.POST:
         tran = get_object_or_404(Transaction, pk=pk)
