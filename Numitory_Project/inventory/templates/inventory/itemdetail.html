@@ -55,9 +55,11 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                     <div class="row">
                         <div class="col">
+                            {% if item.image %}
                             Preview : <img class="img-fluid item-image" src="{{item.image.url}}" alt="">
+                            {% endif %}
                             {{ form.image|as_crispy_field }}</br>     
                         </div>
                     </div>
