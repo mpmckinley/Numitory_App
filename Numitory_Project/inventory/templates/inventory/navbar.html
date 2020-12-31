@@ -1,12 +1,13 @@
 {% load static %}
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="{% url 'home' %}">
-      <img src="{% static 'inventory/logo2_navbar_black.png' %}" height="23" class="d-inline-block align-top"></img>
+      <img src="{% static 'inventory/logo2_navbar_black.png' %}" height="21" class="d-inline-block align-top"></img>
   </a>
-
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarColor03">
+    <span class="navbar-toggler-icon"></span>
+  </button>
   <div class="collapse navbar-collapse" id="navbarColor03">
-    <ul class="navbar-nav mr-auto">
+     <ul class="navbar-nav mr-auto">
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Inventory</a>
             <div class="dropdown-menu">
@@ -30,26 +31,26 @@
         <li class="nav-item">
             <a class="nav-link" href="{% url 'about' %}">About</a>
         </li>
-    </ul>
-    <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav ml-auto">
+     </ul>
+     <ul class="nav navbar-nav ml-auto row">
             {% if user.is_authenticated %}
-                <div class="btn-group" role="group">
-                    <button id="btnGroupDrop1" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="bi bi-plus-circle bi_btn"></i>
-                    </button>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle btn btn-success px-sm-4 pb-sm-1 my-sm-2 dropdown-toggle text-white" id="btnGroupDrop1" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="bi bi-plus-circle bi_btn"></i></a>
                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                    <a class="dropdown-item" href="{% url 'inventory:itemcreate' %}">Item</a>
-                    <a class="dropdown-item" href="{% url 'inventory:typecreate' %}">Type</a>
-                    <a class="dropdown-item" href="{% url 'inventory:collcreate' %}">Collection</a>
+                    <a class="dropdown-item" href="{% url 'inventory:inventory' %}">My Inventory</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{% url 'inventory:typeinv' %}">Types</a>
+                    <a class="dropdown-item" href="{% url 'inventory:collinv' %}">Collections</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{% url 'inventory:recycle' %}">Recycle Bin</a>
                     </div>
-                </div>
-                <li class="nav-item">
+                </li>
+                <li class="nav-item my-sm-2">
                     <a href="{% url 'edituser' user.id %}">
                         <button type="submit" class="btn btn-outline-secondary btn-margin-left">{{ user }}</button>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item my-sm-2">
                     <form action="{% url 'logoutuser' %}" method="POST">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-outline-danger btn-margin-left">Logout</button>
@@ -58,18 +59,90 @@
                     </form>
                 </li>
             {% else %}
-                <li class="nav-item">
+                <li class="nav-item my-sm-2">
                     <a href="{% url 'signupuser' %}">
                         <button class="btn btn-success">Sign Up</button>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item my-sm-2">
                     <a href="{% url 'loginuser' %}">
                         <button class="btn btn-primary btn-margin-left">Login</button>
                     </a>
                 </li>
             {% endif %}
         </ul>
-    </div>
   </div>
 </nav>
+<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light"> -->
+  <!-- <a class="navbar-brand" href="{% url 'home' %}"> -->
+      <!-- <img src="{% static 'inventory/logo2_navbar_black.png' %}" height="23" class="d-inline-block align-top"></img> -->
+  <!-- </a> -->
+
+  <!-- <div class="collapse navbar-collapse" id="navbarColor03"> -->
+    <!-- <ul class="navbar-nav mr-auto"> -->
+        <!-- <li class="nav-item dropdown"> -->
+            <!-- <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Inventory</a> -->
+            <!-- <div class="dropdown-menu"> -->
+            <!-- <a class="dropdown-item" href="{% url 'inventory:inventory' %}">My Inventory</a> -->
+            <!-- <div class="dropdown-divider"></div> -->
+            <!-- <a class="dropdown-item" href="{% url 'inventory:typeinv' %}">Types</a> -->
+            <!-- <a class="dropdown-item" href="{% url 'inventory:collinv' %}">Collections</a> -->
+            <!-- <div class="dropdown-divider"></div> -->
+            <!-- <a class="dropdown-item" href="{% url 'inventory:recycle' %}">Recycle Bin</a> -->
+            <!-- </div> -->
+        <!-- </li> -->
+        <!-- <li class="nav-item"> -->
+            <!-- <a class="nav-link disabled" href="#" disabled>Boards</a> -->
+        <!-- </li> -->
+        <!-- <li class="nav-item"> -->
+            <!-- <a class="nav-link disabled" href="#">Marketplace</a> -->
+        <!-- </li> -->
+        <!-- <li class="nav-item"> -->
+            <!-- <a class="nav-link disabled" href="#">Reading</a> -->
+        <!-- </li> -->
+        <!-- <li class="nav-item"> -->
+            <!-- <a class="nav-link" href="{% url 'about' %}">About</a> -->
+        <!-- </li> -->
+    <!-- </ul> -->
+    <!-- <div class="navbar-collapse collapse"> -->
+        <!-- <ul class="nav navbar-nav ml-auto"> -->
+            <!-- {% if user.is_authenticated %} -->
+                <!-- <div class="btn-group" role="group"> -->
+                    <!-- <button id="btnGroupDrop1" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
+                        <!-- <i class="bi bi-plus-circle bi_btn"></i> -->
+                    <!-- </button> -->
+                    <!-- <div class="dropdown-menu" aria-labelledby="btnGroupDrop1"> -->
+                    <!-- <a class="dropdown-item" href="{% url 'inventory:itemcreate' %}">Item</a> -->
+                    <!-- <a class="dropdown-item" href="{% url 'inventory:typecreate' %}">Type</a> -->
+                    <!-- <a class="dropdown-item" href="{% url 'inventory:collcreate' %}">Collection</a> -->
+                    <!-- </div> -->
+                <!-- </div> -->
+                <!-- <li class="nav-item"> -->
+                    <!-- <a href="{% url 'edituser' user.id %}"> -->
+                        <!-- <button type="submit" class="btn btn-outline-secondary btn-margin-left">{{ user }}</button> -->
+                    <!-- </a> -->
+                <!-- </li> -->
+                <!-- <li class="nav-item"> -->
+                    <!-- <form action="{% url 'logoutuser' %}" method="POST"> -->
+                    <!-- {% csrf_token %} -->
+                    <!-- <button type="submit" class="btn btn-outline-danger btn-margin-left">Logout</button> -->
+                        <!-- {% comment %} <input type="submit" name="logout_button" value="Logout"> {% endcomment %} -->
+                        <!-- {% comment %} <a class="nav-link" href="{% url 'logoutuser' %}">Logout</a> {% endcomment %} -->
+                    <!-- </form> -->
+                <!-- </li> -->
+            <!-- {% else %} -->
+                <!-- <li class="nav-item"> -->
+                    <!-- <a href="{% url 'signupuser' %}"> -->
+                        <!-- <button class="btn btn-success">Sign Up</button> -->
+                    <!-- </a> -->
+                <!-- </li> -->
+                <!-- <li class="nav-item"> -->
+                    <!-- <a href="{% url 'loginuser' %}"> -->
+                        <!-- <button class="btn btn-primary btn-margin-left">Login</button> -->
+                    <!-- </a> -->
+                <!-- </li> -->
+            <!-- {% endif %} -->
+        <!-- </ul> -->
+    <!-- </div> -->
+  <!-- </div> -->
+<!-- </nav> -->
