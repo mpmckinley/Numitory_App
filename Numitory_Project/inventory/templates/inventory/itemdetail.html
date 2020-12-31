@@ -66,10 +66,6 @@
                         <div class="col">
                             <button type="submit" name="item" class="btn btn-primary">Update</button>
                         </div>
-                        <div class="col">
-                            Total Quantity: {{ total.tran_quantity__sum }}<br>
-                            Total Value: 
-                        </div>
                     </div>
                 </form>
             </div>
@@ -106,6 +102,14 @@
                 </form>
                 {% comment %} <h5 class="card-title">Light card title</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> {% endcomment %}
+            </div>
+        </div>
+
+        <div class="card border-dark mb-3">
+            <div class="card-header card-heade-sm">Stats</div>
+            <div class="card-body">
+                Total Quantity: {{ total.tran_quantity__sum }}<br>
+                Total Value: 
             </div>
         </div>
 
