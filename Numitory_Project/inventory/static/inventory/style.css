@@ -17,10 +17,14 @@ footer {
 }
 /* BUTTONS */
 .btn-margin-left {
-    margin-left: .25em;
+    margin-left: .25rem;
 }
 
 .navbar {
+    padding-top: 0.1rem;
+    padding-right: 1rem;
+    padding-bottom: 0.1rem;
+    padding-left: 1rem;
 }
 /* Button icons hidden button */
 .hidebtn {
@@ -32,21 +36,24 @@ footer {
 
 /* Button icons */
 .bi {
-    width: 1em;
-    height: 1em;
+    font-size: 1em;
+}
+
+.bi_btn {
+    font-size: 2.8em;
+}
+
+.btn-sm {
+    margin-top: .1em;
+    margin-bottom: .1em;
 }
 
 .jumbo {
-    padding-top: 1em;
-    padding-bottom: 2em;
+    padding-top: .5em;
+    padding-bottom: 1em;
+    margin-bottom: 1.5em;
   }
   
-@media only screen and (max-width: 991px) {
- #btnGroupDrop1
- {
-     max-width:30%;
- }
-}  
 /* Item Image */
 .img-fluid.item-image {
     height: 35%;

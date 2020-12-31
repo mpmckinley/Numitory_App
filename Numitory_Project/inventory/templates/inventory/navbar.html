@@ -11,12 +11,12 @@
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Inventory</a>
             <div class="dropdown-menu">
-            <a class="dropdown-item" href="{% url 'inventory:inventory' %}">My Inventory</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{% url 'inventory:typeinv' %}">Types</a>
-            <a class="dropdown-item" href="{% url 'inventory:collinv' %}">Collections</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{% url 'inventory:recycle' %}">Recycle Bin</a>
+                <a class="dropdown-item" href="{% url 'inventory:inventory' %}">My Inventory</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'inventory:typeinv' %}">Types</a>
+                <a class="dropdown-item" href="{% url 'inventory:collinv' %}">Collections</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'inventory:recycle' %}">Recycle Bin</a>
             </div>
         </li>
         <li class="nav-item">
@@ -32,30 +32,27 @@
             <a class="nav-link" href="{% url 'about' %}">About</a>
         </li>
      </ul>
-     <ul class="nav navbar-nav ml-auto row">
+     <ul class="nav navbar-nav">
             {% if user.is_authenticated %}
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle btn btn-success px-sm-4 pb-sm-1 my-2 dropdown-toggle text-white" id="btnGroupDrop1" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="bi bi-plus-circle bi_btn"></i></a>
-                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                    <a class="dropdown-item" href="{% url 'inventory:inventory' %}">My Inventory</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{% url 'inventory:typeinv' %}">Types</a>
-                    <a class="dropdown-item" href="{% url 'inventory:collinv' %}">Collections</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{% url 'inventory:recycle' %}">Recycle Bin</a>
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="bi bi-plus-circle bi_btn"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'inventory:itemcreate' %}">Item</a>
+                        <a class="dropdown-item" href="{% url 'inventory:typecreate' %}">Type</a>
+                        <a class="dropdown-item" href="{% url 'inventory:collcreate' %}">Collection</a>
                     </div>
                 </li>
                 <li class="nav-item my-2">
                     <a href="{% url 'edituser' user.id %}">
-                        <button type="submit" class="btn btn-outline-secondary btn-margin-left">{{ user }}</button>
+                        <button type="submit" class="btn btn-outline-secondary btn-sm btn-margin-left">{{ user }}</button>
                     </a>
                 </li>
                 <li class="nav-item my-2">
                     <form action="{% url 'logoutuser' %}" method="POST">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-outline-danger btn-margin-left">Logout</button>
-                        {% comment %} <input type="submit" name="logout_button" value="Logout"> {% endcomment %}
-                        {% comment %} <a class="nav-link" href="{% url 'logoutuser' %}">Logout</a> {% endcomment %}
+                        <button type="submit" class="btn btn-outline-danger btn-sm btn-margin-left">Logout</button>
                     </form>
                 </li>
             {% else %}
