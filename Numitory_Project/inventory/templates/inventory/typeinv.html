@@ -10,6 +10,9 @@
                 <th scope="col">Name</th>
                 <th>Description</th>
                 <th>Category</th>
+                <th>Metal</th>
+                <th>Purity</th>
+                <th>Weight</th>
                 <th>Edit</th>
             </tr>
         </thead>
@@ -23,6 +26,9 @@
                 </td>
                 <td>{{ type.type_desc }}</td>
                 <td>{{ type.category }}</td>
+                <td>{{ type.metal }}</td>
+                <td>{{ type.purity }}</td>
+                <td>{{ type.metal_weight }}</td>
                 <td>
                     <a href="{% url 'inventory:typedetail' type.id %}">
                         Edit

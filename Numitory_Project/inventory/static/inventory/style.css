@@ -1,9 +1,7 @@
-body {
-    margin-bottom: 50px;
-    height: 100%;
+body, html {
+    height: 95%;
     position: relative;
-    zoom: 1.25; 
-    -moz-transform: scale(1.25); 
+    zoom: 1.15; 
     -moz-transform-origin: 0 0;
 }
 
@@ -14,7 +12,7 @@ footer {
     height: 35px;
   }
 
-.main {
+.container-fluid {
     padding-top: 1em;
 }
 /* BUTTONS */
@@ -22,6 +20,8 @@ footer {
     margin-left: .25em;
 }
 
+.navbar {
+}
 /* Button icons hidden button */
 .hidebtn {
     background: none;
@@ -37,12 +37,28 @@ footer {
 }
 
 .jumbo {
-    padding-top: 2em;
+    padding-top: 1em;
     padding-bottom: 2em;
   }
+  
 @media only screen and (max-width: 991px) {
  #btnGroupDrop1
  {
      max-width:30%;
  }
 }  
+/* Item Image */
+.img-fluid.item-image {
+    height: 35%;
+    width: 35%;
+}
+
+.card-header {
+    font-size: large;
+    font-weight: 700;
+}
+
+.card-header-sm {
+    font-size: small;
+    font-weight: 900;
+}

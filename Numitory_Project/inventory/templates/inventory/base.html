@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="Description" content="Enter your description here"/>
-    {% comment %} <link rel="icon" type="ico" href="{% static 'inventory/favicon.ico' %}"> {% endcomment %}
+    <link rel="icon" type="ico" href="{% static 'inventory/favicon.ico' %}">
 
     <!-- THEMED  Bootstrap -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.5.3/sandstone/bootstrap.min.css">
@@ -29,12 +29,10 @@
 
 {% include 'inventory/navbar.html' %}
     
-    <div class="container-fluid">
-        <div class="container-fluid main">
-            {% block content %}
-                
-            {% endblock content %}
-        </div>
+    <div class="container-fluid h-100">
+        {% block content %}
+            
+        {% endblock content %}
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>

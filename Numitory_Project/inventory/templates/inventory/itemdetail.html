@@ -40,7 +40,15 @@
                 <div class="col">
                     {{ form.status|as_crispy_field }}
                 </div>
-            </div>            <!-- {{ form|crispy }} -->
+            </div>
+                        <!-- item image view delete edit-->            
+            <div class="row">
+                <div class="col">
+                    Preview : <img class="img-fluid item-image" src="{{item.image.url}}" alt="">
+                    {{ form.image|as_crispy_field }}</br>     
+                </div>
+            </div>
+                        <!-- {{ form|crispy }} -->
             <button type="submit" name="item" class="btn btn-primary">Update</button>
         </form>
 
@@ -54,29 +62,36 @@
     </div>
 
     <div class="col">
+        <div class="card border-light mb-3">
+            <div class="card-header card-heade-sm">Transaction</div>
+            <div class="card-body">
+                <form method="POST">
+                {% csrf_token %}
+                    <div class="row">
+                        <div class="col">
+                            {{ tranform.date|as_crispy_field }}
+                        </div>
+                        <div class="col">
+                            {{ tranform.direction|as_crispy_field }}
+                        </div>
+                        <div class="col">
+                            {{ tranform.tran_quantity|as_crispy_field }}
+                        </div>
+                        <div class="col">
+                            {{ tranform.tran_value|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <button type="submit" name="tran" class="btn btn-success btn-sm"><i class="bi bi-plus-circle bi_btn"></i> Transaction</button>
+                        </div>
+                    </div>
+                </form>
+                {% comment %} <h5 class="card-title">Light card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> {% endcomment %}
+            </div>
+        </div>
 
-        <form method="POST">
-        {% csrf_token %}
-            <div class="row">
-                <div class="col">
-                    {{ tranform.date|as_crispy_field }}
-                </div>
-                <div class="col">
-                    {{ tranform.direction|as_crispy_field }}
-                </div>
-                <div class="col">
-                    {{ tranform.tran_quantity|as_crispy_field }}
-                </div>
-                <div class="col">
-                    {{ tranform.tran_value|as_crispy_field }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <button type="submit" name="tran" class="btn btn-success btn-sm"><i class="bi bi-plus-circle bi_btn"></i> Transaction</button>
-                </div>
-            </div>
-        </form>
 
         <table class="table table-sm table-hover mt-3" style="width:100%" id="tran_table">
             <thead>
@@ -85,6 +100,7 @@
                     <th>Date</th>
                     <th>Quantity</th>
                     <th>Value</th>
+                    <th></th>
                     <th></th>
                 </tr>
             </thead>
@@ -100,8 +116,16 @@
                             <td>{{ trans.date }}</td>
                             <td>{{ trans.tran_quantity }}</td>
                             <td>{{ trans.tran_value }}</td>
+                            <td align="right">
+                                <form action="{% url 'inventory:itemdetail' item.id %}" method="POST">
+                                {% csrf_token %}
+                                    <input type="hidden" value="{{ trans.id }}" name="pk">
+                                    <button type="submit" class="hidebtn" id="{{ trans.id }}" name="edit">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </button>
+                                </form>
+                            </td>
                             <td align="center">
-                {% comment %} ***NEED TO WORK ON THIS DELETE {% endcomment %}
                                 <form action="{% url 'inventory:itemdetail' item.id %}" method="POST">
                                 {% csrf_token %}
                                     <input type="hidden" value="{{ trans.id }}" name="pk">

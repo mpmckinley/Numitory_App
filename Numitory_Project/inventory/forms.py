@@ -30,8 +30,7 @@ class UserChangeForm(forms.ModelForm):
             # raise forms.ValidationError(confirm_password)
             if(check_password(confirm_password,password)==False):
                 raise forms.ValidationError(
-                    "password and confirm_password does not match"
-                )
+                    "New password and confirm password do not match")
 			
     class Meta:
         password = forms.CharField(widget=forms.PasswordInput(),required=False)
@@ -46,12 +45,6 @@ class UserChangeForm(forms.ModelForm):
         widgets = {
             'password': forms.PasswordInput()
         }
-		
-# class UserChangeFormPassword(UserChangeForm):
-    # confirm_password = forms.CharField(widget=forms.PasswordInput())
-    # class Meta(UserChangeForm.Meta):
-        # fields = UserChangeForm.Meta.fields + ['confirm_password',]
-    
 
 class ItemCreateForm(ModelForm):
     class Meta:
@@ -62,13 +55,18 @@ class ItemCreateForm(ModelForm):
             'collection',
             'type',
             'status',
+            'image',
+            'graded',
+            'grade',
+            'condition',
         ]
     
     item_desc = forms.CharField(
         widget=(
             forms.Textarea(
                 attrs={
-                    'rows':1}
+                    'rows':1
+                }
             )
         )
     )
@@ -85,6 +83,9 @@ class TypeCreateForm(ModelForm):
             'type_name',
             'type_desc',
             'category',
+            'metal',
+            'metal_weight',
+            'purity',
         ]
 class CollectionCreateForm(ModelForm):
     class Meta:
