@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.deletion import CASCADE
+from djmoney.models.fields import MoneyField
 
 def upload_location(instance, filename):
     filebase, extension = filename.split(".")
@@ -11,9 +12,9 @@ def upload_location(instance, filename):
     return "%s" %(filename)
 
 class Item(models.Model):
-    item_name = models.CharField(max_length=100)
-    item_desc = models.CharField(max_length=250)
-    image = models.ImageField(upload_to=upload_location, null=True, blank=True)
+    item_name = models.CharField("Name", max_length=50)
+    item_desc = models.TextField("Description", max_length=250)
+    image = models.ImageField(upload_to=upload_location, null=True, blank=True, default='empty.jpeg')
     created = models.DateTimeField(auto_now_add=True)
     STATUS_CHOICES = [
         ('Active', 'Active'),
@@ -39,17 +40,25 @@ class Transaction(models.Model):
         ('Trade', 'Trade'),
     ]
 
-    direction = models.CharField(max_length=10, choices=DIR_CHOICES)
-    tran_quantity = models.IntegerField()
-    tran_value = models.DecimalField(max_digits=50, decimal_places=2)
+    direction = models.CharField(
+        max_length=10,
+        choices=DIR_CHOICES,
+    )
+    tran_quantity = models.IntegerField("Quantity")
+    tran_value = MoneyField(
+        "Value",
+        max_digits=50,
+        decimal_places=2,
+        default_currency='USD',
+    )
     date = models.DateField()
 
     tran_item = models.ForeignKey("inventory.Item", on_delete=CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Type(models.Model):
-    type_name = models.CharField(max_length=100, unique=True)
-    type_desc = models.CharField(max_length=250)
+    type_name = models.CharField("Name", max_length=100, unique=True)
+    type_desc = models.CharField("Description", max_length=250)
     
     CAT_CHOICES = [
         ('Bullion', 'Bullion'),
@@ -65,7 +74,7 @@ class Type(models.Model):
 
     category = models.CharField(max_length=10, choices=CAT_CHOICES)
     metal = models.CharField(max_length=10, choices=METAL_CHOICES)
-    metal_weight = models.DecimalField(max_digits=10, decimal_places=4)
+    metal_weight = models.DecimalField("Metal Weight (ozT)", max_digits=10, decimal_places=4)
     purity = models.DecimalField(max_digits=5, decimal_places=4)
     
     created = models.DateTimeField(auto_now_add=True)
@@ -76,8 +85,8 @@ class Type(models.Model):
         return self.type_name
 
 class Collection(models.Model):
-    coll_name = models.CharField(max_length=100, unique=True)
-    coll_desc = models.CharField(max_length=250)
+    coll_name = models.CharField("Name", max_length=100, unique=True)
+    coll_desc = models.CharField("Description", max_length=250)
 
     created = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

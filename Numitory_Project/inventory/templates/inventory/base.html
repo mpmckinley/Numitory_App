@@ -7,8 +7,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="Description" content="Enter your description here"/>
-    {% comment %} <link rel="icon" type="ico" href="{% static 'inventory/favicon.ico' %}"> {% endcomment %}
+    <meta name="Numitory" content="Bullion and Numismatic collection management on your terms."/>
+    <link rel="icon" type="ico" href="{% static 'inventory/favicon.ico' %}">
+    <title>Numitory</title>
 
     <!-- THEMED  Bootstrap -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.5.3/sandstone/bootstrap.min.css">
@@ -20,7 +21,6 @@
     <!-- Numitory Style -->
     <link rel="stylesheet" type="text/css" href="{% static 'inventory/style.css' %}"/>
 
-    <title>Numitory</title>
 
 
 </head>
@@ -29,8 +29,8 @@
 
 {% include 'inventory/navbar.html' %}
     
-    <div class="container-fluid">
-        <div class="container-fluid main">
+    <div class="container-fluid h-100">
+        <div class="content" id="content">
             {% block content %}
                 
             {% endblock content %}

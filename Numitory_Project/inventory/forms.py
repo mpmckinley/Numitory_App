@@ -30,8 +30,7 @@ class UserChangeForm(forms.ModelForm):
             # raise forms.ValidationError(confirm_password)
             if(check_password(confirm_password,password)==False):
                 raise forms.ValidationError(
-                    "password and confirm_password does not match"
-                )
+                    "New password and confirm password do not match")
 			
     class Meta:
         password = forms.CharField(widget=forms.PasswordInput(),required=False)
@@ -46,12 +45,6 @@ class UserChangeForm(forms.ModelForm):
         widgets = {
             'password': forms.PasswordInput()
         }
-		
-# class UserChangeFormPassword(UserChangeForm):
-    # confirm_password = forms.CharField(widget=forms.PasswordInput())
-    # class Meta(UserChangeForm.Meta):
-        # fields = UserChangeForm.Meta.fields + ['confirm_password',]
-    
 
 class ItemCreateForm(ModelForm):
     class Meta:
@@ -62,28 +55,17 @@ class ItemCreateForm(ModelForm):
             'collection',
             'type',
             'status',
-<<<<<<< HEAD
-            'image'
-=======
             'graded',
             'grade',
             'condition',
->>>>>>> fcb4b3a4187a65f021ed93dfc960120a2ffa3b2d
+            'image',
         ]
-    
-    item_desc = forms.CharField(
-        widget=(
-            forms.Textarea(
-                attrs={
-                    'rows':1}
-            )
-        )
-    )
 
     def __init__(self, user, **kwargs):
         super(ItemCreateForm, self).__init__(**kwargs)
         self.fields['type'].queryset = Type.objects.filter(user=user)
         self.fields['collection'].queryset = Collection.objects.filter(user=user)
+        self.fields['item_desc'].widget.attrs = {'rows': 2}
 
 class TypeCreateForm(ModelForm):
     class Meta:

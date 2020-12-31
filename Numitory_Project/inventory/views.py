@@ -1,5 +1,6 @@
 from django.contrib import auth
 from django.db.models.aggregates import Count
+from django.db.models.expressions import OrderBy
 from django.http import response, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.core.paginator import Paginator
@@ -37,7 +38,7 @@ def inventory(request):
     heading = 'Active'
     items = Item.objects.filter(user=request.user, status='Active')
 
-    paginator = Paginator(items, 20)
+    paginator = Paginator(items, 15)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -140,7 +141,7 @@ def itemdetail(request, item_pk):
     if request.method == 'POST' and 'delete' in request.POST:
         tran = get_object_or_404(Transaction, pk=pk)
         tran.delete()
-        return HttpResponseRedirect('inventory:inventory, id=item.id')
+        return redirect(request.path_info)
 
 @login_required
 def typeinv(request):
@@ -280,9 +281,11 @@ def collitems(request, coll_pk):
 
 #AUTH
 def signupuser(request):
+    heading = 'Sign Up'
     if request.method == 'GET':
         return render(request, 'inventory/signupuser.html', {
             'form': UserCreationForm(),
+            'heading':heading,
         })
     else:
         if request.POST['password1'] == request.POST['password2']:
