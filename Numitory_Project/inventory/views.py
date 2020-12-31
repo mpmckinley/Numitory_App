@@ -281,9 +281,11 @@ def collitems(request, coll_pk):
 
 #AUTH
 def signupuser(request):
+    heading = 'Sign Up'
     if request.method == 'GET':
         return render(request, 'inventory/signupuser.html', {
             'form': UserCreationForm(),
+            'heading':heading,
         })
     else:
         if request.POST['password1'] == request.POST['password2']:
