@@ -4,8 +4,7 @@
 
 {% block content %}
 
-    <h1>ITEM Detail</h1>
-
+<h1>ITEM Detail</h1>
 
 <div class="row">
     <div class="col">
@@ -38,30 +37,45 @@
             </div>
             <div class="row">
                 <div class="col">
-                    {{ form.status|as_crispy_field }}
+                    <div class="col">
+                        {{ form.graded|as_crispy_field }}
+                    </div>
+                    <div class="col">
+                        {{ form.grade|as_crispy_field }}
+                    </div>
+                    <div class="col">
+                        {{ form.status|as_crispy_field }}
+                    </div>
                 </div>
             </div>
-                        <!-- item image view delete edit-->            
+            <div class="row">
+                <div class="col">
+                    {{ form.condition|as_crispy_field }}
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col">
                     Preview : <img class="img-fluid item-image" src="{{item.image.url}}" alt="">
                     {{ form.image|as_crispy_field }}</br>     
                 </div>
             </div>
-                        <!-- {{ form|crispy }} -->
-            <button type="submit" name="item" class="btn btn-primary">Update</button>
-        </form>
 
-        <div class="row">
-            <div class="col">
-                Total Quantity: {{ total.tran_quantity__sum }}<br>
-                Total Value: 
+            <div class="row">
+                <div class="col">
+                    <button type="submit" name="item" class="btn btn-primary">Update</button>
+                </div>
+                <div class="col">
+                    Total Quantity: {{ total.tran_quantity__sum }}<br>
+                    Total Value: 
+                </div>
             </div>
-        </div>
+        </form>
 
     </div>
 
     <div class="col">
+
         <div class="card border-light mb-3">
             <div class="card-header card-heade-sm">Transaction</div>
             <div class="card-body">
@@ -91,7 +105,6 @@
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> {% endcomment %}
             </div>
         </div>
-
 
         <table class="table table-sm table-hover mt-3" style="width:100%" id="tran_table">
             <thead>
@@ -158,7 +171,8 @@
             </span>
         </div>
 
-
     </div>
+
 </div>
+
 {% endblock content %}
