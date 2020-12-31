@@ -94,6 +94,7 @@
                     <th>Quantity</th>
                     <th>Value</th>
                     <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -108,12 +109,7 @@
                             <td>{{ trans.date }}</td>
                             <td>{{ trans.tran_quantity }}</td>
                             <td>{{ trans.tran_value }}</td>
-                            <td align="center">
-                {% comment %} ***NEED TO WORK ON THIS DELETE {% endcomment %}
-                                <form action="{% url 'inventory:itemdetail' item.id %}" method="POST">
-                                {% csrf_token %}
-                                    <input type="hidden" value="{{ trans.id }}" name="pk">
-                {% comment %} ***NEED TO WORK ON THIS EDIT {% endcomment %}
+                            <td align="right">
                                 <form action="{% url 'inventory:itemdetail' item.id %}" method="POST">
                                 {% csrf_token %}
                                     <input type="hidden" value="{{ trans.id }}" name="pk">
@@ -121,7 +117,8 @@
                                         <i class="bi bi-pencil-square"></i>
                                     </button>
                                 </form>
-
+                            </td>
+                            <td align="center">
                                 <form action="{% url 'inventory:itemdetail' item.id %}" method="POST">
                                 {% csrf_token %}
                                     <input type="hidden" value="{{ trans.id }}" name="pk">

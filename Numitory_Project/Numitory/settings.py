@@ -48,8 +48,7 @@ INSTALLED_APPS = [
 
     #3rd Party
     'crispy_forms',
-    # 'django_tables2',
-    # 'jquery',
+    'djmoney',
 ]
 
 MIDDLEWARE = [
@@ -75,8 +74,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                #Django-DataTables2 Application
-                # 'django.template.context_processors.request',
             ],
         },
     },
@@ -89,17 +86,6 @@ WSGI_APPLICATION = 'Numitory.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'NAME': 'django_numitory',
-    #     'USER': 'root',
-    #     'PASSWORD': '',
-    #     'HOST': 'localhost',
-    #     'PORT': '3306',
-    #     'options': {
-    #         #'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
-    #     }
-    # }
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'django_numitory',
@@ -111,7 +97,6 @@ DATABASES = {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
         }
     }
-
 }
 
 
@@ -160,7 +145,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR / 'media')
 LOGIN_URL = '/login'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-# DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap4.html"
 
 

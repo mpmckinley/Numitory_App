@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.deletion import CASCADE
+from djmoney.models.fields import MoneyField
 
 def upload_location(instance, filename):
     filebase, extension = filename.split(".")
@@ -11,7 +12,7 @@ def upload_location(instance, filename):
     return "%s" %(filename)
 
 class Item(models.Model):
-    item_name = models.CharField(max_length=100)
+    item_name = models.CharField(max_length=50)
     item_desc = models.CharField(max_length=250)
     image = models.ImageField(upload_to=upload_location, null=True, blank=True, default='empty.jpeg')
     created = models.DateTimeField(auto_now_add=True)
@@ -39,9 +40,16 @@ class Transaction(models.Model):
         ('Trade', 'Trade'),
     ]
 
-    direction = models.CharField(max_length=10, choices=DIR_CHOICES)
+    direction = models.CharField(
+        max_length=10,
+        choices=DIR_CHOICES,
+    )
     tran_quantity = models.IntegerField()
-    tran_value = models.DecimalField(max_digits=50, decimal_places=2)
+    tran_value = MoneyField(
+        max_digits=50,
+        decimal_places=2,
+        default_currency='USD',
+    )
     date = models.DateField()
 
     tran_item = models.ForeignKey("inventory.Item", on_delete=CASCADE)
