@@ -92,8 +92,8 @@ def itemdetail(request, item_pk):
     item = get_object_or_404(Item, pk=item_pk, user=request.user)
     if request.method == 'GET':
         form = ItemCreateForm(user=request.user, instance=item)
-        trans = Transaction.objects.filter(user=request.user, tran_item_id=item_pk).order_by('-id')
         tranform = TransactionCreateForm(instance=item)
+        trans = Transaction.objects.filter(user=request.user, tran_item_id=item_pk).order_by('-id')
 
         total = Transaction.objects.filter(user=request.user, tran_item_id=item_pk).aggregate(Sum('tran_quantity'))
 
@@ -104,8 +104,8 @@ def itemdetail(request, item_pk):
         return render(request, 'inventory/itemdetail.html', {
             'item': item,
             'form': form,
-            'tranform': tranform,
             'trans': trans,
+            'tranform': tranform,
             'total': total,
             'page_obj': page_obj,
         })
