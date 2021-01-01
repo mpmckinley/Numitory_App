@@ -111,7 +111,7 @@ def itemdetail(request, item_pk):
         })
     if 'item' in request.POST:
         try:
-            form = ItemCreateForm(data=request.POST, user=request.user, instance=item)
+            form = ItemCreateForm(data=request.POST, files=request.FILES, user=request.user, instance=item)
             form.save()
             return redirect('inventory:inventory')
         except ValueError:
