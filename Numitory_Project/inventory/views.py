@@ -89,7 +89,7 @@ def itemcreate(request):
         })
     else:
         try:
-            form = ItemCreateForm(data=request.POST, user=request.user)
+            form = ItemCreateForm(data=request.POST, files=request.FILES, user=request.user)
             newitem = form.save(commit=False)
             newitem.user = request.user
             newitem.save()
@@ -124,7 +124,7 @@ def itemdetail(request, item_pk):
         })
     if 'item' in request.POST:
         try:
-            form = ItemCreateForm(data=request.POST, user=request.user, instance=item)
+            form = ItemCreateForm(data=request.POST, files=request.FILES, user=request.user, instance=item)
             form.save()
             # print (form.data)
             return redirect('inventory:inventory')
@@ -151,6 +151,7 @@ def itemdetail(request, item_pk):
                 'error':'You had some bad data in your tran form, try again',
             })
 
+    # ***TRANSECTION DELETE
     pk = request.POST['pk']
     if request.method == 'POST' and 'delete' in request.POST:
         tran = get_object_or_404(Transaction, pk=pk)
