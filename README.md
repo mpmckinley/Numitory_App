@@ -1,4 +1,4 @@
-# Numitory_Django
+# Numitory
 **Tagline**: Bullion and Numismatic collection management on your terms.
 
 **Pitch**: No more spreadsheet, ledgers, random post-its, and guessing.
