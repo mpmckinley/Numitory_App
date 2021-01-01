@@ -25,7 +25,7 @@ class Item(models.Model):
 
     item_name = models.CharField("Name", max_length=50)
     item_desc = models.TextField("Description / Notes", max_length=250)
-    image = models.ImageField("", upload_to=upload_location, null=True, blank=True)
+    item_image = models.ImageField("", upload_to=upload_location, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
     #Attributes
@@ -61,7 +61,7 @@ class Transaction(models.Model):
     )
     date = models.DateField()
 
-    tran_item = models.ForeignKey("inventory.Item", on_delete=CASCADE)
+    tran_item = models.OneToOneField("inventory.Item", on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Type(models.Model):

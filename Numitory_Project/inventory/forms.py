@@ -59,7 +59,7 @@ class ItemCreateForm(ModelForm):
             'grader',
             'grade',
             'condition',
-            'image',
+            'item_image',
         ]
 
     def __init__(self, user, **kwargs):

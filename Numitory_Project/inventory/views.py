@@ -70,7 +70,6 @@ def recycle(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    #REMOVED AS UNECSSARY ABOVE ".select_related('type', 'collection')"
     return render(request, 'inventory/inventory.html', {
         'items': items,
         'heading': heading,
@@ -122,11 +121,12 @@ def itemdetail(request, item_pk):
             'total': total,
             'page_obj': page_obj,
         })
+
     if 'item' in request.POST:
         try:
             form = ItemCreateForm(data=request.POST, files=request.FILES, user=request.user, instance=item)
             form.save()
-            # print (form.data)
+            print (form.data)
             return redirect('inventory:inventory')
         except ValueError:
             return render(request, 'inventory/itemdetail.html', {
@@ -135,6 +135,7 @@ def itemdetail(request, item_pk):
                 'tranform': TransactionCreateForm(),
                 'error':'You have some bad data in there, try again',
             })
+
     if 'tran' in request.POST:
         try:
             tranform = TransactionCreateForm(data=request.POST)
@@ -161,7 +162,6 @@ def itemdetail(request, item_pk):
 @login_required
 def typeinv(request):
     types = Type.objects.filter(user=request.user)
-    #REMOVED AS UNECSSARY ABOVE ".select_related('type', 'collection')" and ", status='A'"
     return render(request, 'inventory/typeinv.html', {
         'types': types,
     })
@@ -228,7 +228,7 @@ def typeitems(request, type_pk):
 @login_required
 def collinv(request):
     collections = Collection.objects.filter(user=request.user)
-    #REMOVED AS UNECSSARY ABOVE ".select_related('type', 'collection')" and ", status='A'"
+
     return render(request, 'inventory/collinv.html', {
         'collections': collections,
     })
@@ -237,12 +237,14 @@ def collinv(request):
 def collcreate(request):
     heading = 'Collection'
     button = 'Create'
+
     if request.method == 'GET':
         return render(request, 'inventory/create.html', {
             'form': CollectionCreateForm(),
             'heading': heading,
             'button': button,
         })
+
     else:
         try:
             form = CollectionCreateForm(request.POST)
@@ -261,12 +263,14 @@ def collcreate(request):
 @login_required
 def colldetail(request, coll_pk):
     collection = get_object_or_404(Collection, pk=coll_pk, user=request.user)
+
     if request.method == 'GET':
         form = CollectionCreateForm(instance=collection)
         return render(request, 'inventory/colldetail.html', {
             'collection': collection,
             'form': form,
         })
+
     else:
         try:
             form = CollectionCreateForm(request.POST, instance=collection)
@@ -297,11 +301,13 @@ def collitems(request, coll_pk):
 #AUTH
 def signupuser(request):
     heading = 'Sign Up'
+
     if request.method == 'GET':
         return render(request, 'inventory/signupuser.html', {
             'form': UserCreationForm(),
             'heading':heading,
         })
+
     else:
         if request.POST['password1'] == request.POST['password2']:
                 try:
@@ -325,6 +331,7 @@ def loginuser(request):
         return render(request, 'inventory/loginuser.html', {
             'form': AuthenticationForm(),
         })
+
     else:
         user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
         if user is None:
@@ -338,12 +345,14 @@ def loginuser(request):
 
 def edituser(request, user_pk):
     user = get_object_or_404(User, pk=user_pk)
+
     if request.method == 'GET':
         form = UserChangeForm(instance=user)
         return render(request, 'inventory/edituser.html', {
             'user': user,
             'form':form,
         })
+        
     else:
         try:
             form = UserChangeForm(request.POST, instance=user)

@@ -19,7 +19,7 @@
         <div class="card border-dark mb-3">
             <div class="card-header card-heade-sm">Item Detail</div>
             <div class="card-body">
-                <form method="POST">
+                <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                     <div class="row">
                         <div class="col">
@@ -59,10 +59,10 @@
 
                      <div class="row">
                         <div class="col">
-                            {% if item.image %}
-                                <img class="img-fluid item-image" src="{{item.image.url}}" alt="">
+                            {% if item.item_image %}
+                                <img class="img-fluid item-image" src="{{item.item_image.url}}" alt="">
                             {% endif %}
-                            {{ form.image|as_crispy_field }}</br>
+                            {{ form.item_image|as_crispy_field }}</br>
                         </div>
                     </div>
 
