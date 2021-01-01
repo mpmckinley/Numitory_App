@@ -61,7 +61,7 @@ class Transaction(models.Model):
     )
     date = models.DateField()
 
-    tran_item = models.OneToOneField("inventory.Item", on_delete=models.CASCADE)
+    tran_item = models.ForeignKey("inventory.Item", on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Type(models.Model):

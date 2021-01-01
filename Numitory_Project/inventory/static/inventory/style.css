@@ -9,9 +9,15 @@ body, html {
     padding-top: 1em;
 }
 
-.content {
+/* .content {
     height: 100%;
-}
+} */
+
+.centered {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 
 .navbar {
     padding-top: 0.1rem;

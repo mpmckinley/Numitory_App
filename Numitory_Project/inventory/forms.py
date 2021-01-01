@@ -4,6 +4,7 @@ from django.forms import ModelForm
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.hashers import make_password, check_password
 from django import forms
+from django.forms.widgets import HiddenInput, NumberInput
 from .models import Item, Collection, Transaction, Type
 
 class UserChangeForm(forms.ModelForm):
@@ -13,6 +14,7 @@ class UserChangeForm(forms.ModelForm):
         widget=forms.PasswordInput(),
         required=False,
     )
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['password'].required=False
@@ -88,6 +90,8 @@ class CollectionCreateForm(ModelForm):
         ]
 
 class TransactionCreateForm(ModelForm):
+
+    date = forms.DateField(widget=NumberInput(attrs={'type': 'date'}))
     class Meta:
         model = Transaction
         fields = [
@@ -96,3 +100,7 @@ class TransactionCreateForm(ModelForm):
             'tran_quantity',
             'tran_value',
         ]
+
+    # def __init__(self, *args, **kwargs):
+    #     super(TransactionCreateForm, self).__init__(**kwargs)
+    #     self.fields['tran_value_currency'].widget = HiddenInput()

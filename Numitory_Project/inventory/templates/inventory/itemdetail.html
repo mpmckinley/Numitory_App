@@ -60,7 +60,9 @@
                      <div class="row">
                         <div class="col">
                             {% if item.item_image %}
-                                <img class="img-fluid item-image" src="{{item.item_image.url}}" alt="">
+                                <a href="{{item.item_image.url}}">
+                                    <img class="img-fluid item-image" src="{{item.item_image.url}}" alt="">
+                                </a>
                             {% endif %}
                             {{ form.item_image|as_crispy_field }}</br>
                         </div>
