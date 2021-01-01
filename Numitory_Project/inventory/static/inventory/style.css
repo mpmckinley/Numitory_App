@@ -59,10 +59,16 @@ footer {
     color: rgba(22,125,56,0.96);
 }
 
-/* .btn-sm {
-    margin-top: .1em;
-    margin-bottom: .1em;
-} */
+.bi_welcome {
+    font-size: 1.5em;
+}
+
+#btn_welcome {
+    margin-right: 5em;
+    width: 10em;
+    font-size: 1em;
+    font-weight: 700;
+}
 
 .jumbo {
     padding-top: .5em;

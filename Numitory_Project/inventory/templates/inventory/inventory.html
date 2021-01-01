@@ -1,8 +1,8 @@
 {% extends 'inventory/base.html' %}
 
 {% block content %}
-
-    {% if not items %}
+    {% comment %} # ***[GIT issue: New User Workflow #17] THIS NEEDS FIXING TO BE LESS CIRCULAR WITH THE VIEW IF NOT--- CREATE A WORKFLOW THAT DISABLES BUTTON AS STARTING Db ENTRIES ARE MADE {% endcomment %}
+    {% if not items or not collections or not types %}
 
         {% include 'inventory/welcome.html' %}
 

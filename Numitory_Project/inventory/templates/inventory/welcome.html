@@ -3,26 +3,49 @@
             <h1 class="display-3">Welcome</h1>
             <p class="lead">We're excited to have you!</p>
             <hr class="my-4">
-            <p>No more spreadsheet, ledgers, random notes, or guessing</p>
-            <p>Numitory brings all of your collection management needs under one roof. Designed with simplicity and scale in mind - leverage our proprietary <text style="color: success; text-transform: uppercase; font-weight: bold;">Item <i class="bi bi-arrow-left-right"></i> Type <i class="bi bi-arrow-left-right"></i> Collection</text> methodology to seamlessly track and manage your bullion and numismatic collection - transactions, and cost basis.</p>
-            <p class="lead">
-                <a class="btn btn-primary btn-lg mt-3" href="{% url 'about' %}" role="button">Collection</a>
-                <a class="btn btn-success btn-lg mt-3" href="{% url 'signupuser' %}" role="button">Type</a>
-                <a class="btn btn-success btn-lg mt-3" href="{% url 'inventory:itemcreate' %}" role="button">Item</a>
+            <p>
+                No more spreadsheet, ledgers, random notes, or guessing
             </p>
+            <p>
+                Numitory brings all of your collection management needs under one roof. Designed with flexibility and scale in mind - use our proprietary <text style="color: success; text-transform: uppercase; font-weight: bold;">Item <i class="bi bi-arrow-left-right"></i> Type <i class="bi bi-arrow-left-right"></i> Collection</text> methodology to seamlessly track and manage your bullion and numismatic collection - transactions, and cost basis.
+            </p>
+            <p>
+                Looks like this is your first time here - welcome!!<br>
+                Thank you for joining us. While we design Numitory to LOREM ISPUM, we've found a quick overview of our methods and schema can prove valuable...<a href="{% url 'about' %}">About</a>
+            </p>
+            <div class="row">
+                <div class="col text-center">
+                    <a class={% if not collections %}"btn btn btn-outline-info"{% else %}"btn btn btn-outline-info disabled"{% endif %} id="btn_welcome" href="{% url 'inventory:collcreate' %}" role="button" aria-disabled="true"><i class="bi bi-plus bi_welcome"></i> Collection</a>
+                </div>
+                <div class="col text-center">
+                    <a class={% if not types %}"btn btn btn-outline-info"{% else %}"btn btn btn-outline-info disabled"{% endif %}  id="btn_welcome" href="{% url 'inventory:typecreate' %}" role="button"><i class="bi bi-plus bi_welcome"></i> Type</a>
+                </div>
+                <div class="col text-center">
+                    <a class={% if not items %}"btn btn btn-outline-info"{% else %}"btn btn btn-outline-info disabled"{% endif %}  id="btn_welcome" href="{% url 'inventory:itemcreate' %}" role="button"> <i class="bi bi-plus bi_welcome"></i>Item</a>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                    <div class="row">
+                        <p class="lead">
+                            All ITEMS must belong to a TYPE
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row">
+                    <p class="lead text-center">
+                        TYPES are broad classifications for ITEMS
+                    </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row">
+                    <p class="lead text-center">
+                        Any ITEM must belong to a COLLECTION
+                    <p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col">
-            All ITEMS must belong to a TYPE
-        </div>
-        <div class="col">
-            TYPES are broad classifications for ITEMS
-        </div>
-        <div class="col">
-            Any ITEM must belong to a COLLECTION
-        </div>
-    </div>
-    Looks like this is your first time here - welcome!!
-
-    Thank you for joining us. While we design Numitory to LOREM ISPUM, we've found a quick overview of our methods and schema can prove valuable...{% url 'inventory:about' %}
