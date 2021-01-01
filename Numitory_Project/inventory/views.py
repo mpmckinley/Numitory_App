@@ -37,14 +37,27 @@ def about(request):
 def inventory(request):
     heading = 'Active'
     items = Item.objects.filter(user=request.user, status='Active')
+    types = Type.objects.filter(user=request.user)
+    collections = Collection.objects.filter(user=request.user)
+
+    # ***[GIT issue: New User Workflow #17] THIS NEEDS FIXING TO BE LESS CIRCULAR WITH THE VIEW IF NOT--- CREATE A WORKFLOW THAT DISABLES BUTTON AS STARTING Db ENTRIES ARE MADE
+    if items is None or types is None or collections is None:
+        return redirect('inventory/inventory.html', {
+        'heading': heading,
+        'items': items,
+        'types': types,
+        'collections': collections,
+    })
 
     paginator = Paginator(items, 15)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
     return render(request, 'inventory/inventory.html', {
-        'items': items,
         'heading': heading,
+        'items': items,
+        'types': types,
+        'collections': collections,
         'page_obj': page_obj,
     })
 
@@ -92,8 +105,8 @@ def itemdetail(request, item_pk):
     item = get_object_or_404(Item, pk=item_pk, user=request.user)
     if request.method == 'GET':
         form = ItemCreateForm(user=request.user, instance=item)
-        trans = Transaction.objects.filter(user=request.user, tran_item_id=item_pk).order_by('-id')
         tranform = TransactionCreateForm(instance=item)
+        trans = Transaction.objects.filter(user=request.user, tran_item_id=item_pk).order_by('-id')
 
         total = Transaction.objects.filter(user=request.user, tran_item_id=item_pk).aggregate(Sum('tran_quantity'))
 
@@ -104,8 +117,8 @@ def itemdetail(request, item_pk):
         return render(request, 'inventory/itemdetail.html', {
             'item': item,
             'form': form,
-            'tranform': tranform,
             'trans': trans,
+            'tranform': tranform,
             'total': total,
             'page_obj': page_obj,
         })
@@ -113,6 +126,7 @@ def itemdetail(request, item_pk):
         try:
             form = ItemCreateForm(data=request.POST, files=request.FILES, user=request.user, instance=item)
             form.save()
+            # print (form.data)
             return redirect('inventory:inventory')
         except ValueError:
             return render(request, 'inventory/itemdetail.html', {
@@ -136,6 +150,7 @@ def itemdetail(request, item_pk):
                 'tranform': TransactionCreateForm(),
                 'error':'You had some bad data in your tran form, try again',
             })
+
     # ***TRANSECTION DELETE
     pk = request.POST['pk']
     if request.method == 'POST' and 'delete' in request.POST:

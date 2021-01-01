@@ -20,11 +20,11 @@
                         {{ heading }}
                     </div>
                     <div class="card-body">
-                    <form method="POST">
-                    {% csrf_token %}
-                        {{ form|crispy }}
-                        <button type="submit" class="btn btn-primary">{{ heading }}</button>
-                    </form>
+                        <form method="POST">
+                        {% csrf_token %}
+                            {{ form|crispy }}
+                            <button type="submit" class="btn btn-primary">{{ heading }}</button>
+                        </form>
                     <p class="card-text mt-4">
                         Already registered? Login <a href="{% url 'loginuser' %}">here</a>.
                     </p>

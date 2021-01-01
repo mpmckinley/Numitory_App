@@ -1,8 +1,8 @@
 {% extends 'inventory/base.html' %}
 
 {% block content %}
-
-    {% if not items %}
+    {% comment %} # ***[GIT issue: New User Workflow #17] THIS NEEDS FIXING TO BE LESS CIRCULAR WITH THE VIEW IF NOT--- CREATE A WORKFLOW THAT DISABLES BUTTON AS STARTING Db ENTRIES ARE MADE {% endcomment %}
+    {% if not items or not collections or not types %}
 
         {% include 'inventory/welcome.html' %}
 
@@ -24,9 +24,9 @@
                     <th scope="col">Item</th>
                     <th>Description</th>
                     <th>Quantity</th>
+                    <th>Value</th>
                     <th>Type</th>
                     <th>Collection</th>
-                    <th>Edit</th>
                 </tr>
             </thead>
             <tbody>
@@ -38,7 +38,9 @@
                         </a>
                     </td>
                     <td>{{ item.item_desc }}</td>
-                    <td>{{ item.quantity }}</td>
+                    {% comment %} ***INSERT QUANTITY AND VALUE SUMS FROM DETAILS PAGE {% endcomment %}
+                    <td><text style="color:rgba(236,27,20,0.96)">***INSERT QUANTITY SUM***</text></td>
+                    <td><text style="color:rgba(236,27,20,0.96)">***INSERT VALUE SUM***</text></td>
                     <td>
                         {% if heading == item.type.type_name %}
                             {{ item.type.type_name }}
@@ -56,11 +58,6 @@
                                 {{ item.collection.coll_name }}
                             </a>
                         {% endif %}        
-                    </td>
-                    <td>
-                        <a href="{% url 'inventory:itemdetail' item.id %}">
-                            Edit
-                        </a>
                     </td>
                 </tr>
                 {% endfor %}

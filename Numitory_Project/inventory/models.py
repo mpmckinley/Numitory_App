@@ -12,17 +12,25 @@ def upload_location(instance, filename):
     return "%s" %(filename)
 
 class Item(models.Model):
-    item_name = models.CharField("Name", max_length=50)
-    item_desc = models.TextField("Description", max_length=250)
-    image = models.ImageField(upload_to=upload_location, null=True, blank=True, default='empty.jpeg')
-    created = models.DateTimeField(auto_now_add=True)
     STATUS_CHOICES = [
         ('Active', 'Active'),
         ('Inactive', 'Inactive'),
     ]
+    GRADER_CHOICES = [
+        ('PCGS', 'PCGS'),
+        ('NGC', 'NGC'),
+        ('ANACS', 'ANACS'),
+        ('Other', 'Other'),
+    ]
+
+    item_name = models.CharField("Name", max_length=50)
+    item_desc = models.TextField("Description / Notes", max_length=250)
+    image = models.ImageField("", upload_to=upload_location, null=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
     #Attributes
     graded = models.BooleanField(default=False)
+    grader = models.CharField(max_length=5, blank=True, choices=GRADER_CHOICES)
     grade = models.CharField(max_length=6, blank=True)
     condition = models.CharField(max_length=25, blank=True)
 
@@ -72,6 +80,9 @@ class Type(models.Model):
         ('Palladium', 'Palladium'),
     ]
 
+    type_name = models.CharField("Name", max_length=100, unique=True)
+    type_desc = models.CharField("Description", max_length=250)
+    
     category = models.CharField(max_length=10, choices=CAT_CHOICES)
     metal = models.CharField(max_length=10, choices=METAL_CHOICES)
     metal_weight = models.DecimalField("Metal Weight (ozT)", max_digits=10, decimal_places=4)

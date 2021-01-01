@@ -56,6 +56,7 @@ class ItemCreateForm(ModelForm):
             'type',
             'status',
             'graded',
+            'grader',
             'grade',
             'condition',
             'image',

@@ -7,43 +7,61 @@
 <div class="row">
 
     <div class="card-deck p-2">
-            <div class="card bg-light">
-                <div class="card-body">
-                    <h5 class="card-title">Welcome, <strong>{{ user }}</strong></h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Overall Stats</h6>
-                    <p class="card-text">You currently have {{ itemtotal.id__count }} Items across {{ typetotal.id__count }} Types in {{ colltotal.id__count }} Collections.</p>
-                </div>
+        <div class="card bg-light pb-3">
+            <div class="card-body">
+                <h5 class="card-title">Welcome, <strong>{{ user }}</strong></h5>
+                <h6 class="card-subtitle mb-2 text-muted">Overall Stats</h6>
+                <p class="card-text">You currently have {{ itemtotal.id__count }} Items across {{ typetotal.id__count }} Types in {{ colltotal.id__count }} Collections.</p>
             </div>
-        
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Recent Activity</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
-                </div>
+        </div>
+    
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Recent Activity</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a>
             </div>
+        </div>
     </div>
+
+</div>
+
+<div class="row">
 
     <div class="card-deck p-2">
-            <div class="card border-primary mb-3">
-                <div class="card-header">Recent Activity</div>
-                <div class="card-body">
-                    <h4 class="card-title">Primary card title</h4>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
+        <div class="card border-primary pb-3">
+            <div class="card-header">Markets</div>
+            <div class="card-body">
+                <h4 class="card-title">Primary card title</h4>
+                <p class="card-text">
+                    <ul>
+                        <li>Silver</li>
+                        <li>Gold</li>
+                        <li>Platinum</li>
+                        <li>Palladium</li>
+                    </ul>
+                </p>
             </div>
-            
-            <div class="card border-primary mb-3" style="max-width: 20rem;">
-                <div class="card-header">Header</div>
-                <div class="card-body">
-                    <h4 class="card-title">Primary card title</h4>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-            </div>
-
+        </div>
     </div>
+
+</div>
+
+<div class="row">
+
+    <div class="card-deck p-2">
+        <div class="card border-primary mb-3" style="max-width: 20rem;">
+            <div class="card-header">News & Headlines</div>
+            <div class="card-body">
+                <h4 class="card-title">Primary card title</h4>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 {% else %}
 
