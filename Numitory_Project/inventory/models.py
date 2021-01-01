@@ -27,7 +27,7 @@ class Item(models.Model):
     item_desc = models.TextField("Description / Notes", max_length=250)
     item_image = models.ImageField("", upload_to=upload_location, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Active')
     #Attributes
     graded = models.BooleanField(default=False)
     grader = models.CharField(max_length=5, blank=True, choices=GRADER_CHOICES)
