@@ -76,7 +76,7 @@ def itemcreate(request):
         })
     else:
         try:
-            form = ItemCreateForm(data=request.POST, user=request.user)
+            form = ItemCreateForm(data=request.POST, files=request.FILES, user=request.user)
             newitem = form.save(commit=False)
             newitem.user = request.user
             newitem.save()
