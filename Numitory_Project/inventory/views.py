@@ -136,7 +136,7 @@ def itemdetail(request, item_pk):
                 'tranform': TransactionCreateForm(),
                 'error':'You had some bad data in your tran form, try again',
             })
-    # ***NEED TO WORK ON THIS
+    # ***TRANSECTION DELETE
     pk = request.POST['pk']
     if request.method == 'POST' and 'delete' in request.POST:
         tran = get_object_or_404(Transaction, pk=pk)
