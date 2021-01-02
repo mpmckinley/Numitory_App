@@ -12,16 +12,16 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
         <!-- JQuery -->
-        <script src="https://use.fontawesome.com/b21d62bcc1.js"></script>
         <script
-            src="https://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            crossorigin="anonymous"></script>
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+        
         <!-- Fonts -->
+        <script src="https://use.fontawesome.com/b21d62bcc1.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"> -->
 
         <!-- Additional Styles -->
         <style>
@@ -31,7 +31,7 @@
                 background-size:cover;
                 background-position:center;
                 background-attachment: fixed;
-                {% comment %} background-color: #636b6f; {% endcomment %}
+                background-color: rgba(37,37,39,1);
                 font-family: 'Nunito', sans-serif;
                 font-weight: 200;
                 /* margin-top: 1%; */
@@ -307,61 +307,71 @@
                     <section class="pricing">
                         <div class="container">
                             <div class="row pb-3">
-                            <!-- Monthly Tier -->
-                            <div class="col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title text-uppercase text-center">Monthly</h5>
-                                        <h6 class="card-price text-center">$3<span class="period">/month</span></h6>
-                                        <ul class="list-unstyled mt-3">
-                                            <li>Unlimited Storage</li>
-                                            <li>Daily Metal Prices</li>
-                                            <li>P&L Tracking</li>
-                                            <li>Integrated Analytics</li>
-                                            <li class="text-muted">Curated Type Attributes</li>
-                                            <li class="text-muted">Inventory Export</li>
-                                            <li class="text-muted">Dead Man&apos;s Switch</li>
-                                        </ul>
+                                <!-- Monthly Tier -->
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title text-uppercase text-center">Monthly</h5>
+                                            <h6 class="card-price text-center">$2<span class="period">/month</span></h6>
+                                            <ul class="list-unstyled mt-3">
+                                                <li>Unlimited Storage</li>
+                                                <li>Daily Metal Prices</li>
+                                                <li>P&L Tracking</li>
+                                                <li>Integrated Analytics</li>
+                                                <li class="text-muted">Curated Type Attributes</li>
+                                                <li class="text-muted">Inventory Export</li>
+                                                <li class="text-muted">Dead Man&apos;s Switch</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- Annual Tier -->
-                            <div class="col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title text-uppercase text-center">Annual</h5>
-                                        <h6 class="card-price text-center">$24<span class="period">/year</span></h6>
-                                        <ul class="list-unstyled mt-3">
-                                            <li>Unlimited Storage</li>
-                                            <li>Daily Metal Prices</li>
-                                            <li>P&L Tracking</li>
-                                            <li>Integrated Analytics</li>
-                                            <li>Curated Type Attributes</li>
-                                            <li>Inventory Export</li>
-                                            <li class="text-muted">Dead Man&apos;s Switch</li>
-                                        </ul>
+                                <!-- Annual Tier -->
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title text-uppercase text-center">Annual</h5>
+                                            <h6 class="card-price text-center">$20<span class="period">/year</span></h6>
+                                            <ul class="list-unstyled mt-3">
+                                                <li>Unlimited Storage</li>
+                                                <li>Daily Metal Prices</li>
+                                                <li>P&L Tracking</li>
+                                                <li>Integrated Analytics</li>
+                                                <li>Curated Type Attributes</li>
+                                                <li>Inventory Export</li>
+                                                <li class="text-muted">Dead Man&apos;s Switch</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- Lifetime Tier -->
-                            <div class="col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title text-uppercase text-center">Lifetime</h5>
-                                        <h6 class="card-price text-center">$800<span class="period">/lifetime</span></h6>
-                                        <ul class="list-unstyled mt-3">
-                                            <li>Unlimited Storage</li>
-                                            <li>Daily Metal Prices</li>
-                                            <li>P&L Tracking</li>
-                                            <li>Integrated Analytics</li>
-                                            <li>Curated Type Attributes</li>
-                                            <li>Inventory Export</li>
-                                            <li>Dead Man&apos;s Switch</li>
-                                        </ul>
+                                <!-- Lifetime Tier -->
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title text-uppercase text-center">Lifetime</h5>
+                                            <h6 class="card-price text-center">$100<span class="period">/lifetime</span></h6>
+                                            <ul class="list-unstyled mt-3">
+                                                <li>Unlimited Storage</li>
+                                                <li>Daily Metal Prices</li>
+                                                <li>P&L Tracking</li>
+                                                <li>Integrated Analytics</li>
+                                                <li>Curated Type Attributes</li>
+                                                <li>Inventory Export</li>
+                                                <li>Dead Man&apos;s Switch</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
+
                             </div>
-                            </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <i class="fa fa-btc" aria-hidden="true"></i>
+                                        <i class="fa fa-paypal" aria-hidden="true"></i>
+                                        <i class="fa fa-cc-stripe" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+
                         </div>
                     </section>
                     <hr>

@@ -34,6 +34,7 @@ class Item(models.Model):
     #Attributes
     graded = models.BooleanField(default=False)
     grader = models.CharField(max_length=5, blank=True, choices=GRADER_CHOICES)
+    grader_id = models.CharField("ID#", max_length=50, blank=True)
     grade = models.CharField(max_length=6, blank=True)
     condition = models.CharField(max_length=25, blank=True)
 
@@ -101,7 +102,16 @@ class Type(models.Model):
         ('Palladium', 'Palladium'),
     ]
     MINT_CHOICES = [
+        ('N/A', 'N/A'),
         ('Philadelphia', 'Philadelphia'),
+        ('Charlotte', 'Charlotte'),
+        ('Dahlonega', 'Dahlonega'),
+        ('New Orleans', 'New Orleans'),
+        ('Carson City', 'Carson City'),
+        ('San Francisco', 'San Francisco'),
+        ('Denver', 'Denver'),
+        ('West Point', 'West Point'),
+        ('Manila', 'Manila'),
     ]
 
     type_name = models.CharField("Name", max_length=100, unique=True)
@@ -112,7 +122,7 @@ class Type(models.Model):
     metal = models.CharField(max_length=10, choices=METAL_CHOICES)
     metal_weight = models.DecimalField("Metal Weight (ozT)", max_digits=10, decimal_places=4)
     purity = models.DecimalField(max_digits=5, decimal_places=4)
-    mint = MultiSelectField(choices=MINT_CHOICES, max_length=12, null=True)
+    mint = MultiSelectField(choices=MINT_CHOICES, blank=True, null=True)
     face_value = MoneyField(
         "Face Value",
         max_digits=5,
