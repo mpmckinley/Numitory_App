@@ -147,3 +147,5 @@ LOGIN_URL = '/login'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+CURRENCIES = ('USD', 'EUR', 'NOK')
+
