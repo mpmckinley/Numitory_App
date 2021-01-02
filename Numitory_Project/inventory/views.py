@@ -32,6 +32,9 @@ def home(request):
 def about(request):
     return render(request, 'inventory/about.html')
 
+def landing(request):
+    return render(request, 'inventory/landing.html')
+
 #APPLICATION
 @login_required
 def inventory(request):
@@ -41,13 +44,13 @@ def inventory(request):
     collections = Collection.objects.filter(user=request.user)
 
     # ***[GIT issue: New User Workflow #17] THIS NEEDS FIXING TO BE LESS CIRCULAR WITH THE VIEW IF NOT--- CREATE A WORKFLOW THAT DISABLES BUTTON AS STARTING Db ENTRIES ARE MADE
-    if items is None or types is None or collections is None:
-        return redirect('inventory/inventory.html', {
-        'heading': heading,
-        'items': items,
-        'types': types,
-        'collections': collections,
-    })
+    # if items is None or types is None or collections is None:
+    #     return redirect('inventory/inventory.html', {
+    #     'heading': heading,
+    #     'items': items,
+    #     'types': types,
+    #     'collections': collections,
+    # })
 
     paginator = Paginator(items, 15)
     page_number = request.GET.get('page')
