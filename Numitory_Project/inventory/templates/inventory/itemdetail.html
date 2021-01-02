@@ -17,7 +17,7 @@
         {% endif %}
 
         <div class="card border-dark mb-3">
-            <div class="card-header card-heade-sm">Item Detail</div>
+            <div class="card-header card-header-sm">Item Detail</div>
             <div class="card-body">
                 <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -76,7 +76,7 @@
         </div>
 
         <div class="card border-dark mb-3">
-            <div class="card-header card-heade-sm">{{ item.type }} Type Detail</div>
+            <div class="card-header card-header-sm">{{ item.type }} Type Detail</div>
             <div class="card-body">
                 <!-- ***INSERT TYPE DETAILS (not form fields) -->
                 <text style="color:rgba(236,27,20,0.96)">***INSERT TYPE DETAILS (not form fields)***</text>
@@ -88,7 +88,7 @@
     <div class="col">
 
         <div class="card border-dark mb-3">
-            <div class="card-header card-heade-sm">Item Stats</div>
+            <div class="card-header card-header-sm">Item Stats</div>
             <div class="card-body">
                 <table>
                     <tr>
@@ -108,7 +108,7 @@
         </div>
 
         <div class="card border-dark mb-3">
-            <div class="card-header card-heade-sm">Transaction</div>
+            <div class="card-header card-header-sm">Transaction</div>
             <div class="card-body">
                 <form method="POST">
                 {% csrf_token %}

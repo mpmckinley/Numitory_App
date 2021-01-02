@@ -9,7 +9,7 @@
             <tr>
                 <th scope="col">Name</th>
                 <th>Description</th>
-                <th>Edit</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -23,7 +23,7 @@
                 <td>{{ collection.coll_desc }}</td>
                 <td>
                     <a href="{% url 'inventory:colldetail' collection.id %}">
-                        Edit
+                        <i class="bi bi-pencil-square"></i>
                     </a>
                 </td>
             </tr>

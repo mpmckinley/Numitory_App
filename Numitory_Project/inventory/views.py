@@ -84,7 +84,7 @@ def itemcreate(request):
     heading = 'Item'
     button = 'Create'
     if request.method == 'GET':
-        return render(request, 'inventory/create.html', {
+        return render(request, 'inventory/itemcreate.html', {
             'form': ItemCreateForm(user=request.user),
             'heading': heading,
             'button': button,
@@ -97,7 +97,7 @@ def itemcreate(request):
             newitem.save()
             return redirect('inventory:inventory')
         except ValueError:
-            return render(request, 'inventory/create.html', {
+            return render(request, 'inventory/itemcreate.html', {
                 'form': ItemCreateForm(user=request.user),
                 'error': "Field validation error",
             })
@@ -173,12 +173,14 @@ def typeinv(request):
 def typecreate(request):
     heading = 'Type'
     button = 'Create'
+
     if request.method == 'GET':
-        return render(request, 'inventory/create.html', {
+        return render(request, 'inventory/typecreate.html', {
             'form': TypeCreateForm(),
             'heading': heading,
             'button': button,
         })
+        
     else:
         try:
             form = TypeCreateForm(request.POST)
@@ -187,7 +189,7 @@ def typecreate(request):
             newtype.save()
             return redirect('inventory:typeinv')
         except ValueError:
-            return render(request, 'inventory/create.html', {
+            return render(request, 'inventory/typecreate.html', {
                 'form': TypeCreateForm(),
                 'error': "Data validation error",
             })
@@ -195,12 +197,14 @@ def typecreate(request):
 @login_required
 def typedetail(request, type_pk):
     type = get_object_or_404(Type, pk=type_pk, user=request.user)
+
     if request.method == 'GET':
         form = TypeCreateForm(instance=type)
         return render(request, 'inventory/typedetail.html', {
             'type': type,
             'form': form,
         })
+
     else:
         try:
             form = TypeCreateForm(request.POST, instance=type)
@@ -242,7 +246,7 @@ def collcreate(request):
     button = 'Create'
 
     if request.method == 'GET':
-        return render(request, 'inventory/create.html', {
+        return render(request, 'inventory/collcreate.html', {
             'form': CollectionCreateForm(),
             'heading': heading,
             'button': button,
@@ -258,7 +262,7 @@ def collcreate(request):
         # except IntegrityError:
         #     return render(request, 'inventory/collectioncreate.html', {'form':CollectionCreateForm(), 'error':"Data duplication error."})
         except ValueError:
-            return render(request, 'inventory/create.html', {
+            return render(request, 'inventory/collcreate.html', {
                 'form': CollectionCreateForm(),
                 'error': "Data validation error.",
             })

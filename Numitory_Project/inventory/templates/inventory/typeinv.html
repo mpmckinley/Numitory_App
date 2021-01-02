@@ -13,7 +13,7 @@
                 <th>Metal</th>
                 <th>Purity</th>
                 <th>Weight</th>
-                <th>Edit</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -31,7 +31,7 @@
                 <td>{{ type.metal_weight }}</td>
                 <td>
                     <a href="{% url 'inventory:typedetail' type.id %}">
-                        Edit
+                        <i class="bi bi-pencil-square"></i>
                     </a>
                 </td>
             </tr>
