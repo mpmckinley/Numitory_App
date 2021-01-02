@@ -7,9 +7,11 @@ Numitory brings all of your collection management needs under one roof. Designed
 
 ![image](https://user-images.githubusercontent.com/6133032/103433165-94076180-4ba9-11eb-9dc8-a794bef6296e.png)
 
-* #### MySQL Db
-* #### Dependencies via requirements.txt
+**Development**
+* MySQL
+* Dependencies via requirements.txt
+* See [issues](https://github.com/mpmckinley/Numitory_Django/issues) prior to development, validate assignment first
 
-***FUTURE***:
+**Future Features**:
 * Marketplace - p2p exchange facilitation, party governance and assurance, escrow. Integration with Inventory app. _Buy, sell, trade with confidence and without the premium of the other guys._
 * Community/Forum - low moderation community to drive stickiness, share inventory details, pics, etc.
