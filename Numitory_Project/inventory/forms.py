@@ -61,6 +61,7 @@ class ItemCreateForm(ModelForm):
             'grader_id',
             'grade',
             'condition',
+            'mint',
             'type',
             'collection',
         ]
@@ -69,7 +70,9 @@ class ItemCreateForm(ModelForm):
         super(ItemCreateForm, self).__init__(**kwargs)
         self.fields['type'].queryset = Type.objects.filter(user=user)
         self.fields['collection'].queryset = Collection.objects.filter(user=user)
-        self.fields['item_desc'].widget.attrs = {'rows': 2}
+        self.fields['item_desc'].widget.attrs = {'rows': 5}
+        # ***Mint conditional choices based on Type selection
+        # self.fields['mint'].queryset = Type.objects.filter(id=Type.id)
 
 class TypeCreateForm(ModelForm):
     class Meta:

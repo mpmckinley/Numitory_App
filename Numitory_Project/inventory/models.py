@@ -37,6 +37,7 @@ class Item(models.Model):
     grader_id = models.CharField("ID#", max_length=50, blank=True)
     grade = models.CharField(max_length=6, blank=True)
     condition = models.CharField(max_length=25, blank=True)
+    mint = models.CharField("***MINT***", max_length=20, blank=True)
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
@@ -60,7 +61,7 @@ class Transaction(models.Model):
     )
     tran_quantity = models.IntegerField("Quantity")
     tran_value = MoneyField(
-        "Value",
+        "***VALUE***",
         max_digits=50,
         decimal_places=2,
         default_currency='USD',

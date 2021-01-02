@@ -21,13 +21,13 @@
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link disabled" href="#" disabled>Boards</a>
+            <a class="nav-link disabled" href="#">Numipedia</a>
         </li>
         <li class="nav-item">
             <a class="nav-link disabled" href="#">Marketplace</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link disabled" href="#">Reading</a>
+            <a class="nav-link disabled" href="#" disabled>Boards</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{% url 'about' %}">About</a>
@@ -38,7 +38,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle nav_btn_pad" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                         {% comment %} <i class="bi bi-plus-circle bi_nav"></i> {% endcomment %}
-                        <i class="fa fa-plus-square-o bi_nav" aria-hidden="true"></i>
+                        <i class="far fa-plus-square bi_nav"></i>
                     </a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{% url 'inventory:itemcreate' %}">Item</a>

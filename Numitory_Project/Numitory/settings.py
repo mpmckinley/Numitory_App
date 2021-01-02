@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'djmoney',
     'multiselectfield',
+    'django_static_fontawesome',
 ]
 
 MIDDLEWARE = [

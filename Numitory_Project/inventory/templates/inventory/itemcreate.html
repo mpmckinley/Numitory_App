@@ -41,6 +41,10 @@
                             <div class="col">
                                 {{ form.type|as_crispy_field }}
                             </div>
+                            <div class="col">
+                            {% comment %} ***Needs to be conditional selection where choices based on Type selection {% endcomment %}
+                                {{ form.mint|as_crispy_field }}
+                            </div>
                         </div>
 
                         <div class="row">
