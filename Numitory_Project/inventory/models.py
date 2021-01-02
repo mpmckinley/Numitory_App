@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.deletion import CASCADE
 from djmoney.models.fields import MoneyField
+from multiselectfield import MultiSelectField
 
 def upload_location(instance, filename):
     filebase, extension = filename.split(".")
@@ -15,6 +16,8 @@ class Item(models.Model):
     STATUS_CHOICES = [
         ('Active', 'Active'),
         ('Inactive', 'Inactive'),
+        ('WTB', 'WTB'),
+        ('WTS', 'WTS'),
     ]
     GRADER_CHOICES = [
         ('PCGS', 'PCGS'),
@@ -26,8 +29,8 @@ class Item(models.Model):
     item_name = models.CharField("Name", max_length=50)
     item_desc = models.TextField("Description / Notes", max_length=250)
     item_image = models.ImageField("", upload_to=upload_location, null=True, blank=True)
-    created = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Active')
+    
     #Attributes
     graded = models.BooleanField(default=False)
     grader = models.CharField(max_length=5, blank=True, choices=GRADER_CHOICES)
@@ -35,6 +38,7 @@ class Item(models.Model):
     condition = models.CharField(max_length=25, blank=True)
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
     type = models.ForeignKey("inventory.Type", on_delete=models.RESTRICT)
     collection = models.ForeignKey("inventory.Collection", on_delete=models.RESTRICT)
 
@@ -48,6 +52,7 @@ class Transaction(models.Model):
         ('Trade', 'Trade'),
     ]
 
+    date = models.DateField()
     direction = models.CharField(
         max_length=10,
         choices=DIR_CHOICES,
@@ -59,19 +64,35 @@ class Transaction(models.Model):
         decimal_places=2,
         default_currency='USD',
     )
-    date = models.DateField()
 
     tran_item = models.ForeignKey("inventory.Item", on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Type(models.Model):
-    type_name = models.CharField("Name", max_length=100, unique=True)
-    type_desc = models.CharField("Description", max_length=250)
-    
-    CAT_CHOICES = [
+    CLASS_CHOICES = [
         ('Bullion', 'Bullion'),
-        ('Numi', 'Numi'),
+        ('Numismatic', 'Numismatic'),
         ('Other', 'Other'),
+    ]
+    NUMI_CAT_CHOICES = [
+        ('Half-Cents', 'Half-Cents'),
+        ('Cents', 'Cents'),
+        ('Two Cents', 'Two Cents'),
+        ('Three Cents', 'Three Cents'),
+        ('Nickels', 'Nickels'),
+        ('Half-Dimes', 'Half-Dimes'),
+        ('Dimes', 'Dimes'),
+        ('Quarters', 'Quarters'),
+        ('Half Dollars', 'Half Dollars'),
+        ('Dollars', 'Dollars'),
+        ('Gold Coins', 'Gold Coins'),
+        ('Commemoratives', 'Commemoratives'),
+        ('Bullion Coins', 'Bullion Coins'),
+        ('Proof & Mint Sets', 'Proof & Mint Sets'),
+        ('Colonials', 'Colonials'),
+        ('Territorial', 'Territorial'),
+        ('Patterns', 'Patterns'),
+        ('Miscellaneous', 'Miscellaneous'),
     ]
     METAL_CHOICES = [
         ('Silver', 'Silver'),
@@ -79,18 +100,34 @@ class Type(models.Model):
         ('Platinum', 'Platinum'),
         ('Palladium', 'Palladium'),
     ]
+    MINT_CHOICES = [
+        ('Philadelphia', 'Philadelphia'),
+    ]
 
     type_name = models.CharField("Name", max_length=100, unique=True)
     type_desc = models.CharField("Description", max_length=250)
+    classification = models.CharField(max_length=10, choices=CLASS_CHOICES)
     
-    category = models.CharField(max_length=10, choices=CAT_CHOICES)
+    category = models.CharField("Category", max_length=20, choices=NUMI_CAT_CHOICES)
     metal = models.CharField(max_length=10, choices=METAL_CHOICES)
     metal_weight = models.DecimalField("Metal Weight (ozT)", max_digits=10, decimal_places=4)
     purity = models.DecimalField(max_digits=5, decimal_places=4)
-    
+    mint = MultiSelectField(choices=MINT_CHOICES, max_length=12, null=True)
+    face_value = MoneyField(
+        "Face Value",
+        max_digits=5,
+        decimal_places=3,
+        default_currency='USD',
+    )
+
+    url_pcgs = models.CharField("PCGS url", max_length=250, blank=True, null=True)
+    url_ngc = models.CharField("NGC url", max_length=250, blank=True, null=True)
+    url_other = models.CharField("Other url", max_length=250, blank=True, null=True)
+
+    recycled = models.BooleanField(default=False)
+
     created = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    recycled = models.BooleanField(default=False)
 
     def __str__(self):
         return self.type_name

@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     #3rd Party
     'crispy_forms',
     'djmoney',
+    'multiselectfield',
 ]
 
 MIDDLEWARE = [

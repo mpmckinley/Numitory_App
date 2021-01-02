@@ -54,14 +54,14 @@ class ItemCreateForm(ModelForm):
         fields = [
             'item_name',
             'item_desc',
-            'collection',
-            'type',
+            'item_image',
             'status',
             'graded',
             'grader',
             'grade',
             'condition',
-            'item_image',
+            'type',
+            'collection',
         ]
 
     def __init__(self, user, **kwargs):
@@ -76,11 +76,19 @@ class TypeCreateForm(ModelForm):
         fields = [
             'type_name',
             'type_desc',
+            'classification',
             'category',
             'metal',
             'metal_weight',
             'purity',
+            'mint',
+            'face_value',
+            'url_pcgs',
+            'url_ngc',
+            'url_other',
+            'recycled',
         ]
+
 class CollectionCreateForm(ModelForm):
     class Meta:
         model = Collection
