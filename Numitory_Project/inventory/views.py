@@ -16,6 +16,7 @@ from itertools import chain
 
 
 def home(request):
+
     if request.user.is_authenticated:
         itemtotal = Item.objects.filter(user=request.user, status='Active').aggregate(Count('id'))
         typetotal = Type.objects.filter(user=request.user).aggregate(Count('id'))
@@ -34,6 +35,15 @@ def home(request):
     else:
         return render(request, 'inventory/home.html')
 
+# ***ATTEMPT AT API CALL
+# def navbar(request):
+#     import requests
+#     import json
+    
+#     api_request = requests.get('https://www.quandl.com/api/v3/datasets/BTER/BTMETH?start_date=2017-11-08&end_date=2017-11-08&api_key=driYA7Q4oEw7sxoomJVG')
+#     api = json.loads(api_request.content)
+#     print(api)
+#     return render(request, 'inventory/navbar.html', {'api': api})
 
 def about(request):
     return render(request, 'inventory/about.html')

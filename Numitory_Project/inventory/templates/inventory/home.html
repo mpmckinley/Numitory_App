@@ -7,105 +7,123 @@
 {% if user.is_authenticated %}
 
 <div class="row">
+    <div class="col">
 
-    <div class="card-deck p-2">
-        <div class="card bg-light pb-3">
-            <div class="card-body">
-                <h5 class="card-title">Welcome, <strong>{{ user }}</strong></h5>
-                <h6 class="card-subtitle mb-2 text-muted">Overall Stats</h6>
-                <p class="card-text">
-                    You currently have {{ itemtotal.id__count|apnumber }} Items across {{ typetotal.id__count|apnumber }} Types in {{ colltotal.id__count|apnumber }} Collections.
-                </p>
-                <p class="card-text">
-                    <div class="row">
-                        <div class="col">
+        <div class="card-deck p-2">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h5 class="card-title">Welcome, <strong>{{ user }}</strong></h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Overall Stats</h6>
+                    <p class="card-text">
+                        You currently have {{ itemtotal.id__count|apnumber }} Items across {{ typetotal.id__count|apnumber }} Types in {{ colltotal.id__count|apnumber }} Collections.
+                    </p>
+                    <p class="card-text">
+                        <div class="row">
+                            <div class="col">
 
+                            </div>
                         </div>
-                    </div>
-                </p>
+                    </p>
+                </div>
             </div>
-        </div>
     
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <i class="fas fa-exchange-alt"></i>
-                    Activity
-                </h5>
-                <h6 class="card-subtitle mb-2 text-muted">Five most recently entered transactions</h6>
-                <p class="card-text">
-                    <table class="table-hover table_card">
-                        <thead>
-                            <th>Item</th>
-                            <th>Date</th>
-                            <th>Action</th>
-                            <th>Quantity</th>
-                            <th>Value</th>
-                        </thead>
-                        {% for transaction in transactions %}
-                            <tr>
-                                <td>
-                                    <a href="{% url 'inventory:itemdetail' transaction.tran_item.id %}">
-                                        {{ transaction.tran_item.id }}
-                                    </a>
-                                </td>
-                                <td>{{ transaction.date|naturalday }}</td>
-                                <td>{{ transaction.direction }}</td>
-                                <td>{{ transaction.tran_quantity|intcomma }}</td>
-                                <td>{{ transaction.tran_value }}</td>
-                            </tr>
-                        {% endfor %}
-                    </table>
-                </p>
-                <p class="card-text">
-                    Some quick example text to build on the card title and make up the bulk of the card's content.
-                    <br>
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
-                </p>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-exchange-alt"></i>
+                        Activity
+                    </h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Five most recently entered transactions</h6>
+                    <p class="card-text">
+                        <table class="table-hover table_card">
+                            <thead>
+                                <th>Item</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                                <th>Quantity</th>
+                                <th>Value</th>
+                            </thead>
+                            {% for transaction in transactions %}
+                                <tr>
+                                    <td>
+                                        <a href="{% url 'inventory:itemdetail' transaction.tran_item.id %}">
+                                            {{ transaction.tran_item.id }}
+                                        </a>
+                                    </td>
+                                    <td>{{ transaction.date|naturalday }}</td>
+                                    <td>{{ transaction.direction }}</td>
+                                    <td>{{ transaction.tran_quantity|intcomma }}</td>
+                                    <td>{{ transaction.tran_value }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </p>
+                    <p class="card-text">
+                        Some quick example text to build on the card title and make up the bulk of the card's content.
+                        <br>
+                        <a href="#" class="card-link">Card link</a>
+                        <a href="#" class="card-link">Another link</a>
+                    </p>
+                </div>
             </div>
         </div>
-    </div>
 
+    </div>
 </div>
 
 <div class="row">
+    <div class="col-4">
 
-    <div class="card-deck p-2">
-        <div class="card border-primary pb-3">
-            <div class="card-header">
-                <i class="fas fa-chart-line"></i>
-                Markets
-            </div>
-            <div class="card-body">
-                <h4 class="card-title">Primary card title</h4>
-                <p class="card-text">
-                    <ul>
-                        <li>Silver</li>
-                        <li>Gold</li>
-                        <li>Platinum</li>
-                        <li>Palladium</li>
-                    </ul>
-                </p>
+        <div class="card-deck p-2">
+            <div class="card border-primary">
+                <div class="card-header">
+                    <i class="fas fa-chart-line"></i>
+                    Markets
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">Primary card title</h4>
+                    <p class="card-text">
+                        <ul>
+                            <li>Silver</li>
+                            <li>Gold</li>
+                            <li>Platinum</li>
+                            <li>Palladium</li>
+                        </ul>
+                    </p>
+                </div>
             </div>
         </div>
+
+        <div class="card-deck p-2">
+            <div class="card border-primary">
+                <div class="card-header">
+                    <i class="fas fa-newspaper"></i>
+                    News & Headlines
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">Primary card title</h4>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+        </div>
+
     </div>
-
-</div>
-
-<div class="row">
-
-    <div class="card-deck p-2">
-        <div class="card border-primary mb-3" style="max-width: 20rem;">
-            <div class="card-header">
-                <i class="fas fa-newspaper"></i>
-                 News & Headlines
-            </div>
-            <div class="card-body">
-                <h4 class="card-title">Primary card title</h4>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    
+    <div class="col-8">
+        
+        <div class="card-deck p-2">
+            <div class="card border-primary">
+                <div class="card-header">
+                    <i class="fas fa-newspaper"></i>
+                    Some Key Summary Data
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">Maybe an inventory recap...</h4>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
             </div>
         </div>
+
     </div>
 
 </div>
