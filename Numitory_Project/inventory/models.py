@@ -3,6 +3,7 @@ from django.db import models
 from django.db.models.deletion import CASCADE
 from djmoney.models.fields import MoneyField
 from multiselectfield import MultiSelectField
+from django.db.models import Sum
 
 def upload_location(instance, filename):
     filebase, extension = filename.split(".")
@@ -26,7 +27,7 @@ class Item(models.Model):
         ('Other', 'Other'),
     ]
 
-    item_name = models.CharField("Name", max_length=50)
+    item_name = models.CharField("Name", max_length=50, null=True, blank=True)
     item_desc = models.TextField("Description / Notes", max_length=250)
     item_image = models.ImageField("", upload_to=upload_location, null=True, blank=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Active')
@@ -36,6 +37,7 @@ class Item(models.Model):
     grader = models.CharField(max_length=5, blank=True, choices=GRADER_CHOICES)
     grader_id = models.CharField("ID#", max_length=50, blank=True)
     grade = models.CharField(max_length=6, blank=True)
+    CAC = models.BooleanField(default=False)
     condition = models.CharField(max_length=25, blank=True)
     mint = models.CharField("***MINT***", max_length=20, blank=True)
 
@@ -46,6 +48,14 @@ class Item(models.Model):
 
     def __str__(self):
         return self.item_name + ' ->  ' + self.item_desc
+
+    @property
+    def quantity(self):
+        return Transaction.objects.filter(user=self.user, tran_item_id=self.id).aggregate(Sum('tran_quantity'))
+
+    @property
+    def value(self):
+        return Transaction.objects.filter(user=self.user, tran_item_id=self.id).aggregate(Sum('tran_value'))
 
 class Transaction(models.Model):
     DIR_CHOICES = [

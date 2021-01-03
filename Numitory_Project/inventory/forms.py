@@ -61,6 +61,7 @@ class ItemCreateForm(ModelForm):
             'grader_id',
             'grade',
             'condition',
+            'CAC',
             'mint',
             'type',
             'collection',

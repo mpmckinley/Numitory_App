@@ -23,6 +23,9 @@
                 <tr>
                     <th scope="col">Item</th>
                     <th>Description</th>
+                    <th>Year</th>
+                    <th>Mint</th>
+                    <th>Condition</th>
                     <th>Quantity</th>
                     <th>Value</th>
                     <th>Type</th>
@@ -34,13 +37,37 @@
                 <tr>
                     <td>
                         <a href="{% url 'inventory:itemdetail' item.id %}">
-                            {{ item.item_name }}
+                            {% if item.item_name is None %}
+                                {{ item.id }}
+                            {% else %}
+                                {{ item.item_name }}
+                            {% endif %}
                         </a>
                     </td>
                     <td>{{ item.item_desc }}</td>
+                    <td><text style="color:rgba(236,27,20,0.96)">***YEAR***</text></td>
+                    <td><text style="color:rgba(236,27,20,0.96)">***MINT***</text></td>
+                    <td>
+                        {% if item.graded is False %}
+                            {{ item.condition }}
+                        {% else %}
+                            {{ item.grade }}
+                        {% endif %}
+                    </td>
                     {% comment %} ***INSERT QUANTITY AND VALUE SUMS FROM DETAILS PAGE {% endcomment %}
-                    <td><text style="color:rgba(236,27,20,0.96)">***INSERT QUANTITY SUM***</text></td>
-                    <td><text style="color:rgba(236,27,20,0.96)">***INSERT VALUE SUM***</text></td>
+                    <td>
+                        {% if item.quantity.tran_quantity__sum is None %}
+                            -
+                        {% else %}
+                            {{ item.quantity.tran_quantity__sum }}</td>
+                        {% endif %}
+                    <td>
+                        {% if item.value.tran_value__sum is None %}
+                            -
+                        {% else %}
+                            ${{ item.value.tran_value__sum }}</td>
+                        {% endif %}
+                    </td>
                     <td>
                         {% if heading == item.type.type_name %}
                             {{ item.type.type_name }}
