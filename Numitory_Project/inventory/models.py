@@ -52,10 +52,10 @@ class Item(models.Model):
     @property
     def quantity(self):
         return Transaction.objects.filter(user=self.user, tran_item_id=self.id).aggregate(Sum('tran_quantity'))
-
-    @property
     def value(self):
         return Transaction.objects.filter(user=self.user, tran_item_id=self.id).aggregate(Sum('tran_value'))
+    # def count(self):
+    #     return Item.objects.filter(user=self.user, status='Active').aggregate(Count('id'))
 
 class Transaction(models.Model):
     DIR_CHOICES = [
@@ -77,6 +77,7 @@ class Transaction(models.Model):
         default_currency='USD',
     )
 
+    created = models.DateTimeField(auto_now_add=True)
     tran_item = models.ForeignKey("inventory.Item", on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 

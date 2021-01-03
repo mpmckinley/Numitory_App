@@ -27,7 +27,8 @@
                     <th>Mint</th>
                     <th>Condition</th>
                     <th>Quantity</th>
-                    <th>Value</th>
+                    <th>Tran. Value</th>
+                    <th>Est. Mkt  Value</th>
                     <th>Type</th>
                     <th>Collection</th>
                 </tr>
@@ -49,7 +50,11 @@
                     <td><text style="color:rgba(236,27,20,0.96)">***MINT***</text></td>
                     <td>
                         {% if item.graded is False %}
-                            {{ item.condition }}
+                            {% if item.condition %}
+                                {{ item.condition }}
+                            {% else %}
+                                -
+                            {% endif %}
                         {% else %}
                             {{ item.grade }}
                         {% endif %}
@@ -68,6 +73,7 @@
                             ${{ item.value.tran_value__sum }}</td>
                         {% endif %}
                     </td>
+                    <td>***To Do***</td>
                     <td>
                         {% if heading == item.type.type_name %}
                             {{ item.type.type_name }}

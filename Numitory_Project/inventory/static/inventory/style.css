@@ -100,3 +100,14 @@ footer {
 td:first-child {
     font-weight: bold
   }
+
+.table-striped {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.table-striped td {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}

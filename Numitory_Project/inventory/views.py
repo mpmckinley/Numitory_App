@@ -12,6 +12,7 @@ from django.contrib.auth import login, logout, authenticate,update_session_auth_
 from .forms import ItemCreateForm, TransactionCreateForm, TypeCreateForm, CollectionCreateForm, UserChangeForm
 from .models import Transaction, Type, Collection, Item
 from django.contrib.auth.decorators import login_required
+from itertools import chain
 
 
 def home(request):
@@ -19,11 +20,16 @@ def home(request):
         itemtotal = Item.objects.filter(user=request.user, status='Active').aggregate(Count('id'))
         typetotal = Type.objects.filter(user=request.user).aggregate(Count('id'))
         colltotal = Collection.objects.filter(user=request.user).aggregate(Count('id'))
+        items = Item.objects.filter(user=request.user, status='Active')
+        transactions = Transaction.objects.filter(user=request.user).order_by('-created')[:5]
+        # tran_chain = list(chain(items, transactions))
 
         return render(request, 'inventory/home.html', {
             'itemtotal': itemtotal,
             'typetotal': typetotal,
             'colltotal': colltotal,
+            'transactions': transactions,
+            # 'tran_chain': tran_chain,
         })
     else:
         return render(request, 'inventory/home.html')
@@ -110,7 +116,7 @@ def itemdetail(request, item_pk):
         tranform = TransactionCreateForm(instance=item)
         trans = Transaction.objects.filter(user=request.user, tran_item_id=item_pk).order_by('-id')
 
-        total = Transaction.objects.filter(user=request.user, tran_item_id=item_pk).aggregate(Sum('tran_quantity'))
+        total = Transaction.objects.filter(user=request.user, tran_item_id=item_pk).aggregate(Count('id'))
 
         paginator = Paginator(trans, 10)
         page_number = request.GET.get('page')

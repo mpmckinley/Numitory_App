@@ -103,20 +103,60 @@
                 Item Stats
             </div>
             <div class="card-body">
-                <table>
-                    <tr>
-                        <td>Total Quantity:</td>
-                        <td>{{ total.tran_quantity__sum }}</td>
-                    </tr>
-                    <tr>
-                        <td>Total Value:</td>
-                        <td><text style="color:rgba(236,27,20,0.96)">***INSERT TRAN VALUE SUM***</text></td>
-                    </tr>
-                    <tr>
-                        <td>Tran Count:</td>
-                        <td><text style="color:rgba(236,27,20,0.96)">***INSERT TRAN COUNT***</text></td>
-                    </tr>
-                </table>
+                <div class="row">
+                    <div class="col">
+                        <table>
+                            <tr>
+                                <td>Total Quantity:</td>
+                                <td>
+                                    {% if item.quantity.tran_quantity__sum is None %}
+                                        -
+                                    {% else %}
+                                        {{ item.quantity.tran_quantity__sum }}</td>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tran Value:</td>
+                                <td>
+                                    {% if item.value.tran_value__sum is None %}
+                                        -
+                                        {% else %}
+                                        ${{ item.value.tran_value__sum }}</td>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tran Count:</td>
+                                <td>{{ total.id__count }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col">
+                        <text style="color:rgba(236,27,20,0.96)">
+                        <table>                                
+                            <tr>
+                                <td>Melt Value:</td>
+                                <td>{{ total.tran_quantity__sum }}</td>
+                            </tr>
+                            <tr>
+                                <td>Est. Market Value:</td>
+                                <td>
+                                    <text style="color:rgba(236,27,20,0.96)">
+                                    </text>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Another Metric:</td>
+                                <td>
+                                    <text style="color:rgba(236,27,20,0.96)">
+                                    </text>
+                                </td>
+                            </tr>
+                        </table>
+                    </text>
+                    </div>
+                </div>
             </div>
         </div>
 
