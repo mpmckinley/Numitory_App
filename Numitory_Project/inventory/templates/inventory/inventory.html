@@ -1,4 +1,5 @@
 {% extends 'inventory/base.html' %}
+{% load humanize %}
 
 {% block content %}
     {% comment %} # ***[GIT issue: New User Workflow #17] THIS NEEDS FIXING TO BE LESS CIRCULAR WITH THE VIEW IF NOT--- CREATE A WORKFLOW THAT DISABLES BUTTON AS STARTING Db ENTRIES ARE MADE {% endcomment %}
@@ -64,7 +65,7 @@
                         {% if item.quantity.tran_quantity__sum is None %}
                             -
                         {% else %}
-                            {{ item.quantity.tran_quantity__sum }}</td>
+                            {{ item.quantity.tran_quantity__sum|intcomma }}</td>
                         {% endif %}
                     <td>
                         {% if item.value.tran_value__sum is None %}
@@ -73,7 +74,7 @@
                             ${{ item.value.tran_value__sum }}</td>
                         {% endif %}
                     </td>
-                    <td>***To Do***</td>
+                    <td><text style="color:rgba(236,27,20,0.96)">***To Do***</text></td>
                     <td>
                         {% if heading == item.type.type_name %}
                             {{ item.type.type_name }}
