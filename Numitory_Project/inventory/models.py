@@ -105,7 +105,7 @@ class Type(models.Model):
         ('Colonials', 'Colonials'),
         ('Territorial', 'Territorial'),
         ('Patterns', 'Patterns'),
-        ('Miscellaneous', 'Miscellaneous'),
+        ('Other', 'Other'),
     ]
     METAL_CHOICES = [
         ('Silver', 'Silver'),
@@ -135,6 +135,8 @@ class Type(models.Model):
     metal_weight = models.DecimalField("Metal Weight (ozT)", max_digits=10, decimal_places=4)
     purity = models.DecimalField(max_digits=5, decimal_places=4)
     mint = MultiSelectField(choices=MINT_CHOICES, blank=True, null=True)
+    designer = models.CharField(max_length=30, blank=True, null=True)
+    coin_weight = models.DecimalField("Coin Weight (g)", max_digits=10, decimal_places=2, blank=True, null=True)
     face_value = MoneyField(
         "Face Value",
         max_digits=5,

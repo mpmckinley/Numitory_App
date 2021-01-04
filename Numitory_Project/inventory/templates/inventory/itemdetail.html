@@ -1,6 +1,7 @@
 {% extends 'inventory/base.html' %}
 {% load crispy_forms_tags %}
 {% load static %}
+{% load humanize %}
 
 {% block content %}
 
@@ -86,7 +87,10 @@
         </div>
 
         <div class="card border-dark mb-3">
-            <div class="card-header text-white bg-secondary">{{ item.type }} Type Detail</div>
+            <div class="card-header text-white bg-secondary">
+                <i class="fas fa-info-circle"></i>
+                {{ item.type }} Type Detail
+            </div>
             <div class="card-body">
                 <!-- ***INSERT TYPE DETAILS (not form fields) -->
                 <text style="color:rgba(236,27,20,0.96)">***INSERT TYPE DETAILS (not form fields)***</text>
@@ -112,7 +116,7 @@
                                     {% if item.quantity.tran_quantity__sum is None %}
                                         -
                                     {% else %}
-                                        {{ item.quantity.tran_quantity__sum }}</td>
+                                        {{ item.quantity.tran_quantity__sum|intcomma }}</td>
                                     {% endif %}
                                 </td>
                             </tr>
@@ -122,7 +126,7 @@
                                     {% if item.value.tran_value__sum is None %}
                                         -
                                         {% else %}
-                                        ${{ item.value.tran_value__sum }}</td>
+                                        ${{ item.value.tran_value__sum|intcomma }}</td>
                                     {% endif %}
                                 </td>
                             </tr>
@@ -133,16 +137,21 @@
                         </table>
                     </div>
                     <div class="col">
-                        <text style="color:rgba(236,27,20,0.96)">
                         <table>                                
                             <tr>
                                 <td>Melt Value:</td>
-                                <td>{{ total.tran_quantity__sum }}</td>
+                                <td>
+                                    <text style="color:rgba(236,27,20,0.96)">
+                                        ***
+                                        {% comment %} {{ total.tran_quantity__sum }} {% endcomment %}
+                                    </text>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Est. Market Value:</td>
                                 <td>
                                     <text style="color:rgba(236,27,20,0.96)">
+                                        ***
                                     </text>
                                 </td>
                             </tr>
@@ -150,11 +159,11 @@
                                 <td>Another Metric:</td>
                                 <td>
                                     <text style="color:rgba(236,27,20,0.96)">
+                                        ***
                                     </text>
                                 </td>
                             </tr>
                         </table>
-                    </text>
                     </div>
                 </div>
             </div>
