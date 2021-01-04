@@ -1,2 +1,7 @@
 Numitory_Project/media/
 Numitory_Project/.env
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py

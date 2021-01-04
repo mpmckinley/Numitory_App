@@ -271,9 +271,9 @@ def collcreate(request):
     else:
         try:
             form = CollectionCreateForm(request.POST)
-            newtype = form.save(commit=False)
-            newtype.user = request.user
-            newtype.save()
+            newcoll = form.save(commit=False)
+            newcoll.user = request.user
+            newcoll.save()
             return redirect('inventory:collinv')
         # except IntegrityError:
         #     return render(request, 'inventory/collectioncreate.html', {'form':CollectionCreateForm(), 'error':"Data duplication error."})

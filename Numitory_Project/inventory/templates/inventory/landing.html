@@ -1,4 +1,5 @@
 {% load static %}
+{% load crispy_forms_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,8 +7,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <meta name="Numitory" content="Bullion and Numismatic collection management on your terms."/>
-        <link rel="icon" type="ico" href="{% static 'inventory/favicon.ico' %}">
+        <meta name="Numitory" content="Coin, Bullion, and Numismatic collection inventory management on your terms."/>
+        <link rel="icon" type="ico" href="{% static 'landing/favicon.ico' %}">
         <title>Numitory</title>
 
         <!-- Bootstrap -->
@@ -28,7 +29,7 @@
         <!-- Additional Styles -->
         <style>
             html, body {
-                background-image: url({% static 'inventory/bg3.jpg' %});
+                background-image: url({% static 'landing/bg3.jpg' %});
                 background-repeat:no-repeat;
                 background-size:cover;
                 background-position:center;
@@ -151,8 +152,8 @@
             }
 
             .tight {
-                margin-right: 10%;
-                margin-left: 10%;
+                margin-right: 5%;
+                margin-left: 5%;
             }
 
         </style>
@@ -161,13 +162,24 @@
     <body>
         <div class="flex-center position-ref full-height">
 
+
             <div class="content">
                 <div class="title m-b-md">
-                    <img src="{% static 'inventory/logo2_navbar.png' %}" width="800px">
+                    <img src="{% static 'landing/logo2_navbar.png' %}" width="800px">
                 </div>
 
                 <div class="content">
                     <h4><strong>Coin & bullion collection management on your terms</strong></h4>
+                    {% if messages %}
+                        {% for messages in messages %}
+                            <div class="alert alert-dismissible alert-success">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                <h4 class="alert-heading">You have great taste...</h4>
+                                <p class="mb-0">{{ message }}<a class="alert-link">You're In!</a></p>
+                                <h4 class="alert-heading">Keep an eye on your inbox and we'll let you know the moment the cat is out of the bag.</h4>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                 </div>
 
                 <div class="index-content mt-2">
@@ -178,16 +190,16 @@
                         <div class="col mt-2">
                             <div class="row">
                                 <div class="col mt-1">
-                                    <h5><strong>Sign Up to stay informed of our upcoming release</strong></h5>
+                                    <h5><strong>Sign up to stay informed of our upcoming release</strong></h5>
                                 </div>
                             </div>
                             <div class="row justify-content-center">
                                 <div class="col-8">
-                                    <form class="form" action="" method="POST">
-                                    {% csrf_token %}
-                                        <div class="form">
-                                            <input type="email" class="form-control" name="email" id="betaemail" placeholder="Email">
-                                        </div>
+                                    <div class="form">
+                                        <form class="form" action="" method="POST">
+                                        {% csrf_token %}
+                                            {{ form|crispy }}
+                                    </div>
                                 </div>
                                 <div class="col-4">
                                         <button type="submit" class="btn btn-success">Stay Informed</button>
@@ -218,15 +230,15 @@
                     <div class="row align-items-center mt-4">
                         <div class="col">
                             <p class="tight">
-                                Numitory brings collectors, hobbyists, stackers, and numismatists alike a first-of-its-kind lightweight, flexible, and fully independent coin and bullion collection management solution.
+                                Numitory brings collectors, hobbyists, stackers, and numismatists alike a first-of-its-kind flexible and fully independent coin and bullion collection management solution.
                             </p>
                             <p class="tight">
-                                Using modern web technologies, we&apos;ve created a unique experience allowing users to dynamically track, securely integrate with 3rd party data sources, and manage P&L and values for stacks and collections of all types, sizes, and goals.
+                                Using modern technologies, we&apos;ve created an experience allowing users to flexibly track, securely integrate with 3rd party data sources, manage P&L and value for stacks and collections of all types, sizes, and goals.
                             </p>
                             <p class="tight">
-                                Raw or graded, bullion or numismatic - we&apos;ve created a seemless inventory management solution.
+                                Raw, junk, graded, bullion or numismatic - Numitory is your seemless inventory management solution.
                             </p>
-                            <p>
+                            <p class="tight">
                                 Our unique database structure allows you to choose what and how you want to track. All the while maintaining core integrations and relationships across the entire database.
                             </p>
                         </div>
@@ -314,14 +326,14 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <h5 class="card-title text-uppercase text-center">Monthly</h5>
-                                            <h6 class="card-price text-center">$2<span class="period">/month</span></h6>
+                                            <h6 class="card-price text-center">$1<span class="period">/month</span></h6>
                                             <ul class="list-unstyled mt-3">
                                                 <li>Unlimited Storage</li>
                                                 <li>Daily Metal Prices</li>
                                                 <li>P&L Tracking</li>
                                                 <li>Integrated Analytics</li>
-                                                <li class="text-muted">Curated Type Attributes</li>
-                                                <li class="text-muted">Inventory Export</li>
+                                                <li>Curated Type Attributes</li>
+                                                <li>Inventory Export</li>
                                                 <li class="text-muted">Dead Man&apos;s Switch</li>
                                             </ul>
                                         </div>
@@ -332,7 +344,7 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <h5 class="card-title text-uppercase text-center">Annual</h5>
-                                            <h6 class="card-price text-center">$20<span class="period">/year</span></h6>
+                                            <h6 class="card-price text-center">$10<span class="period">/year</span></h6>
                                             <ul class="list-unstyled mt-3">
                                                 <li>Unlimited Storage</li>
                                                 <li>Daily Metal Prices</li>
@@ -350,7 +362,7 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <h5 class="card-title text-uppercase text-center">Lifetime</h5>
-                                            <h6 class="card-price text-center">$100<span class="period">/lifetime</span></h6>
+                                            <h6 class="card-price text-center">$50<span class="period">/lifetime</span></h6>
                                             <ul class="list-unstyled mt-3">
                                                 <li>Unlimited Storage</li>
                                                 <li>Daily Metal Prices</li>
@@ -386,7 +398,7 @@
                             {% csrf_token %}
                                 <div class="form-group mx-4">
                                     <label for="betaemail" class="sr-only">Email</label>
-                                    <input type="email" class="form-control" name="email" id="betaemail" placeholder="Email">
+                                    {{ form }}
                                 </div>
                                 <button type="submit" class="btn btn-success">Stay Informed</button>
                             </form>

@@ -1,11 +1,11 @@
 from django.contrib import admin
 from .models import Item, Type, Collection
 
-class TodoAdmin(admin.ModelAdmin):
+class InventoryAdmin(admin.ModelAdmin):
     readonly_fields = ('created',)
 
-admin.site.register(Item, TodoAdmin)
+admin.site.register(Item, InventoryAdmin)
 
-admin.site.register(Type, TodoAdmin)
+admin.site.register(Type, InventoryAdmin)
 
-admin.site.register(Collection, TodoAdmin)
+admin.site.register(Collection, InventoryAdmin)

@@ -47,7 +47,11 @@
                                 <tr>
                                     <td>
                                         <a href="{% url 'inventory:itemdetail' transaction.tran_item.id %}">
-                                            {{ transaction.tran_item.id }}
+                                            {% if transaction.tran_item.item_name %}
+                                                {{ transaction.tran_item.item_name }}
+                                            {% else %}
+                                                {{ transaction.tran_item.type }}
+                                            {% endif %}
                                         </a>
                                     </td>
                                     <td>{{ transaction.date|naturalday }}</td>
