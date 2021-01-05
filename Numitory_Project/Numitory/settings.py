@@ -36,6 +36,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    #Numitory
+    'inventory',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,15 +47,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
 
-    #Numitory
-    'inventory',
-
     #3rd Party
     'crispy_forms',
     'djmoney',
     'multiselectfield',
     'django_static_fontawesome',
 ]
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -151,3 +153,4 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 CURRENCIES = ('USD', 'EUR', 'NOK')
 
+AUTH_PROFILE_MODULE = 'app.UserExtended'

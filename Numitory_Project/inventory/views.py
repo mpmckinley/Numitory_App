@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.db.models import Sum
 from django.contrib.auth import login, logout, authenticate,update_session_auth_hash
-from .forms import ItemCreateForm, TransactionCreateForm, TypeCreateForm, CollectionCreateForm, UserChangeForm
+from .forms import ItemCreateForm, TransactionCreateForm, TypeCreateForm, CollectionCreateForm, UserChangeForm,ExtendedUserForm
 from .models import Transaction, Type, Collection, Item
 from django.contrib.auth.decorators import login_required
 from itertools import chain
@@ -324,28 +324,53 @@ def collitems(request, coll_pk):
 #AUTH
 def signupuser(request):
     heading = 'Sign Up'
-
     if request.method == 'GET':
         return render(request, 'inventory/signupuser.html', {
-            'form': UserCreationForm(),
+            'form':UserCreationForm(),
+            'e_form': ExtendedUserForm(),
             'heading':heading,
         })
 
     else:
         if request.POST['password1'] == request.POST['password2']:
                 try:
-                    user = User.objects.create_user(request.POST['username'], password=request.POST['password1'])
-                    user.save()
-                    login(request, user)
-                    return redirect('/inventory/')
+                    e_form=ExtendedUserForm(request.POST)
+                    if(e_form.is_valid()):
+                        user = User.objects.create_user(request.POST['username'], password=request.POST['password1'])
+                        not_empty_data_e = [ k for k,v in e_form.cleaned_data.items() if v ]
+                        if(len(not_empty_data_e)==0):
+                            user.save()
+                            extended_u.save(update_fields=not_empty_data_e,commit=False)
+                            extended_u.user = user
+                            extended_u.save()                        
+                            login(request, user)
+                            return redirect('/inventory/')
+                        else:
+                            return render(request, 'inventory/signupuser.html', {
+                                'form':UserCreationForm(),
+                                'e_form': ExtendedUserForm(),
+                                'heading':heading,
+                                'error': "User Type is Required",
+                            })
+                    else:
+                        er_str=""
+                        return render(request, 'inventory/signupuser.html', {
+                            'form': UserCreationForm(),
+                            'e_form':ExtendedUserForm(),
+                            'heading':heading,
+                            'error':e_form.errors.get("__all__")
+                        })  
                 except IntegrityError:
                     return render(request, 'inventory/signupuser.html', {
-                        'form': UserCreationForm(),
+                        'form':UserCreationForm(),
+                        'e_form': ExtendedUserForm(),
                         'error': "Username alerady taken - select another.",
                     })
         else:
             return render(request, 'inventory/signupuser.html', {
-                'form': UserCreationForm(),
+                'form':UserCreationForm(),
+                'e_form': ExtendedUserForm(),
+                'heading':heading,
                 'error': "Passwords did not match.",
             })
 
@@ -371,18 +396,31 @@ def edituser(request, user_pk):
 
     if request.method == 'GET':
         form = UserChangeForm(instance=user)
+        e_form = ExtendedUserForm(instance=user.profile)
         return render(request, 'inventory/edituser.html', {
             'user': user,
             'form':form,
+            'e_form':e_form
         })
         
     else:
         try:
             form = UserChangeForm(request.POST, instance=user)
+            e_form = ExtendedUserForm(request.POST,instance=user.profile)
             if(form.is_valid()):
                 not_empty_data = [ k for k,v in form.cleaned_data.items() if v ]
                 form.save(update_fields=not_empty_data)
-                # form.save()
+                if(e_form.is_valid()):                
+                    not_empty_data_e = [ k for k,v in e_form.cleaned_data.items() if v ]
+                    e_form.save(update_fields=not_empty_data_e)
+                else:
+                    er_str=""
+                    return render(request, 'inventory/edituser.html', {
+                        'user': user,
+                        'form': UserChangeForm(instance=user),
+                        'e_form':ExtendedUserForm(instance=user.profile),
+                        'error':e_form.errors.get("__all__")
+                    })  
                 update_session_auth_hash(request,user_pk)
                 return redirect('inventory:inventory')
             else:
@@ -390,12 +428,14 @@ def edituser(request, user_pk):
                 return render(request, 'inventory/edituser.html', {
                     'user': user,
                     'form': UserChangeForm(instance=user),
+                    'e_form':ExtendedUserForm(instance=user.profile),
                     'error':form.errors.get("__all__")
                 })  
         except ValueError as e:
             return render(request, 'inventory/edituser.html', {
                 'user': user,
-                'form': UserChangeForm(instance=user),
+                'e_form':ExtendedUserForm(instance=user),
+                'form': UserChangeForm(instance=user.profile),
                 'error':str(e)
             })
 

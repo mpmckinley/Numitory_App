@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.hashers import make_password, check_password
 from django import forms
 from django.forms.widgets import HiddenInput, NumberInput
-from .models import Item, Collection, Transaction, Type
+from .models import Item, Collection, Transaction, Type,UserExtended
 
 class UserChangeForm(forms.ModelForm):
     password_confirmation = forms.CharField(
@@ -57,6 +57,23 @@ class UserChangeForm(forms.ModelForm):
         widgets = {
             'password': forms.PasswordInput()
         }
+
+class ExtendedUserForm(forms.ModelForm):
+    class Meta:
+        model = UserExtended
+        fields = ['user_type']
+        
+    def save(self, **kwargs):
+        not_empty_data = [ k for k,v in self.cleaned_data.items() if (v and v!="")]
+        self.instance.save(update_fields=not_empty_data)
+        
+    def clean(self):
+        cleaned_data = super(ExtendedUserForm, self).clean()
+        type = cleaned_data.get("user_type")
+        # print(type==None)
+        if (type==None or type=='' or type==0):
+            raise forms.ValidationError("User Type is Required")
+        
 
 class ItemCreateForm(ModelForm):
     class Meta:

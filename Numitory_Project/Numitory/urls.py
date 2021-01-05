@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
+from django.conf.urls import url
 from inventory import views
 from django.contrib.auth import views as auth_views
 
@@ -39,10 +40,10 @@ urlpatterns = [
     path('login/', views.loginuser, name="loginuser"),
     path('logout/', views.logoutuser, name="logoutuser"),
     path('user/<int:user_pk>/', views.edituser, name="edituser"),
-    # path('user/forgot/password', auth_views.password_reset, name="forgot_password"),
-    # path('/reset/password', auth_views.password_reset_done, name="reset_password"),
-    # path(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', auth_views.password_reset_confirm, name="password_reset_confirm"),
-    # path('/reset/password', auth_views.password_reset_complete, name="save_new_password"),
+    url(r'^password_reset/$', auth_views.PasswordResetView.as_view(), name='password_reset'),
+    url(r'^password_reset/done/$', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
+    path('reset_password_confirm/<uidb64>/<token>/',auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    url(r'^reset/done/$', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 ]
 
 if settings.DEBUG:
