@@ -1,7 +1,8 @@
 {% extends 'inventory/base.html' %}
+{% load humanize %}
 
 {% block content %}
-
+    {% comment %} # ***[GIT issue: New User Workflow #17] THIS NEEDS FIXING TO BE LESS CIRCULAR WITH THE VIEW IF NOT--- CREATE A WORKFLOW THAT DISABLES BUTTON AS STARTING Db ENTRIES ARE MADE {% endcomment %}
     {% if not items %}
 
         {% include 'inventory/welcome.html' %}
@@ -18,15 +19,19 @@
 
         <h2>{{ heading }} Inventory</h2>
 
-        <table class="table table-striped" style="width:100%" id="main_table">
+        <table class="table table-hover main_table" style="width:100%">
             <thead>
                 <tr>
                     <th scope="col">Item</th>
                     <th>Description</th>
+                    <th>Year</th>
+                    <th>Mint</th>
+                    <th>Condition</th>
                     <th>Quantity</th>
+                    <th>Tran. Value</th>
+                    <th>Est. Mkt  Value</th>
                     <th>Type</th>
                     <th>Collection</th>
-                    <th>Edit</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,11 +39,42 @@
                 <tr>
                     <td>
                         <a href="{% url 'inventory:itemdetail' item.id %}">
-                            {{ item.item_name }}
+                            {% if item.item_name is None %}
+                                {{ item.id }}
+                            {% else %}
+                                {{ item.item_name }}
+                            {% endif %}
                         </a>
                     </td>
                     <td>{{ item.item_desc }}</td>
-                    <td>{{ item.quantity }}</td>
+                    <td><text style="color:rgba(236,27,20,0.96)">***YEAR***</text></td>
+                    <td><text style="color:rgba(236,27,20,0.96)">***MINT***</text></td>
+                    <td>
+                        {% if item.graded is False %}
+                            {% if item.condition %}
+                                {{ item.condition }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        {% else %}
+                            {{ item.grade }}
+                        {% endif %}
+                    </td>
+                    {% comment %} ***INSERT QUANTITY AND VALUE SUMS FROM DETAILS PAGE {% endcomment %}
+                    <td>
+                        {% if item.quantity.tran_quantity__sum is None %}
+                            -
+                        {% else %}
+                            {{ item.quantity.tran_quantity__sum|intcomma }}</td>
+                        {% endif %}
+                    <td>
+                        {% if item.value.tran_value__sum is None %}
+                            -
+                        {% else %}
+                            ${{ item.value.tran_value__sum|intcomma }}</td>
+                        {% endif %}
+                    </td>
+                    <td><text style="color:rgba(236,27,20,0.96)">***To Do***</text></td>
                     <td>
                         {% if heading == item.type.type_name %}
                             {{ item.type.type_name }}
@@ -56,11 +92,6 @@
                                 {{ item.collection.coll_name }}
                             </a>
                         {% endif %}        
-                    </td>
-                    <td>
-                        <a href="{% url 'inventory:itemdetail' item.id %}">
-                            Edit
-                        </a>
                     </td>
                 </tr>
                 {% endfor %}

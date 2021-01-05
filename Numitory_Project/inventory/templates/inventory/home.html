@@ -1,14 +1,143 @@
 {% extends 'inventory/base.html' %}
 
+{% load humanize %}
+
 {% block content %}
 
 {% if user.is_authenticated %}
 
-<p>
-    <h4>Welcome back, <strong>{{ user }}</strong></h4>
-    <br>
-    You currently have {{ itemtotal.id__count }} Items in your inventory across {{ typetotal.id__count }} Types, in {{ colltotal.id__count }} Collections.
-</p>
+<div class="row">
+    <div class="col-lg">
+
+        <div class="p-2">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h5 class="card-title">Welcome, <strong>{{ user }}</strong></h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Overall Stats</h6>
+                    <p class="card-text">
+                        You currently have {{ itemtotal.id__count|apnumber }} Items across {{ typetotal.id__count|apnumber }} Types in {{ colltotal.id__count|apnumber }} Collections.
+                    </p>
+                    <p class="card-text">
+                        <div class="row">
+                            <div class="col">
+
+                            </div>
+                        </div>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-lg">
+
+        <div class="p-2">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-exchange-alt"></i>
+                        Activity
+                    </h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Five most recently entered transactions</h6>
+                    <p class="card-text">
+                        <table class="table-hover table_card">
+                            <thead>
+                                <th>Item</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                                <th>Quantity</th>
+                                <th>Value</th>
+                            </thead>
+                            {% for transaction in transactions %}
+                                <tr>
+                                    <td>
+                                        <a href="{% url 'inventory:itemdetail' transaction.tran_item.id %}">
+                                            {% if transaction.tran_item.item_name %}
+                                                {{ transaction.tran_item.item_name }}
+                                            {% else %}
+                                                {{ transaction.tran_item.type }}
+                                            {% endif %}
+                                        </a>
+                                    </td>
+                                    <td>{{ transaction.date|naturalday }}</td>
+                                    <td>{{ transaction.direction }}</td>
+                                    <td>{{ transaction.tran_quantity|intcomma }}</td>
+                                    <td>{{ transaction.tran_value }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </p>
+                    <p class="card-text">
+                        Some quick example text to build on the card title and make up the bulk of the card's content.
+                        <br>
+                        <a href="#" class="card-link">Card link</a>
+                        <a href="#" class="card-link">Another link</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-4">
+
+        <div class="p-2">
+            <div class="card border-primary">
+                <div class="card-header">
+                    <i class="fas fa-chart-line"></i>
+                    Markets
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">Primary card title</h4>
+                    <p class="card-text">
+                        <ul>
+                            <li>Silver</li>
+                            <li>Gold</li>
+                            <li>Platinum</li>
+                            <li>Palladium</li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-2">
+            <div class="card border-primary">
+                <div class="card-header">
+                    <i class="fas fa-newspaper"></i>
+                    News & Headlines
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">Primary card title</h4>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="col-8">
+        
+        <div class="p-2">
+            <div class="card border-primary">
+                <div class="card-header">
+                    <i class="fa fa-bars" aria-hidden="true"></i>
+                    Some Key Summary Data
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">Maybe an inventory recap...</h4>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
 
 {% else %}
 

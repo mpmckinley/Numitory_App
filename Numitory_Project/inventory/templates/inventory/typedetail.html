@@ -3,12 +3,6 @@
 
 {% block content %}
 
-    <h1>TYPE Detail</h1>
-
-    {% comment %} {{ item.item_name }}<br>
-    {{ item.item_desc }}<br>
-    {{ item.collection.coll_name }} {% endcomment %}
-
     {% if error %}
         <div class="alert alert-dismissible alert-warning">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -17,11 +11,18 @@
         </div>
     {% endif %}
 
-    <br>
-    <form method="POST">
-    {% csrf_token %}
-        {{ form|crispy }}
-        <button type="submit" class="btn btn-primary">Update</button>
-    </form>
+    <div class="card border-dark mb-3">
+        <div class="card-header card-heade-sm">Type Detail</div>
+        <div class="card-body">
+
+            <form method="POST">
+            {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+
+        </div>
+    </div>
+
 
 {% endblock content %}

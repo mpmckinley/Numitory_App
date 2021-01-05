@@ -4,6 +4,7 @@ from django.forms import ModelForm
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.hashers import make_password, check_password
 from django import forms
+from django.forms.widgets import HiddenInput, NumberInput
 from .models import Item, Collection, Transaction, Type
 
 class UserChangeForm(forms.ModelForm):
@@ -13,6 +14,7 @@ class UserChangeForm(forms.ModelForm):
         widget=forms.PasswordInput(),
         required=False,
     )
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['password'].required=False
@@ -62,29 +64,26 @@ class ItemCreateForm(ModelForm):
         fields = [
             'item_name',
             'item_desc',
-            'collection',
-            'type',
+            'item_image',
             'status',
-            'image',
             'graded',
+            'grader',
+            'grader_id',
             'grade',
             'condition',
+            'CAC',
+            'mint',
+            'type',
+            'collection',
         ]
-    
-    item_desc = forms.CharField(
-        widget=(
-            forms.Textarea(
-                attrs={
-                    'rows':1
-                }
-            )
-        )
-    )
 
     def __init__(self, user, **kwargs):
         super(ItemCreateForm, self).__init__(**kwargs)
         self.fields['type'].queryset = Type.objects.filter(user=user)
         self.fields['collection'].queryset = Collection.objects.filter(user=user)
+        self.fields['item_desc'].widget.attrs = {'rows': 5}
+        # ***Mint conditional choices based on Type selection
+        # self.fields['mint'].queryset = Type.objects.filter(id=Type.id)
 
 class TypeCreateForm(ModelForm):
     class Meta:
@@ -92,11 +91,19 @@ class TypeCreateForm(ModelForm):
         fields = [
             'type_name',
             'type_desc',
+            'classification',
             'category',
             'metal',
             'metal_weight',
             'purity',
+            'mint',
+            'face_value',
+            'url_pcgs',
+            'url_ngc',
+            'url_other',
+            'recycled',
         ]
+
 class CollectionCreateForm(ModelForm):
     class Meta:
         model = Collection
@@ -106,6 +113,8 @@ class CollectionCreateForm(ModelForm):
         ]
 
 class TransactionCreateForm(ModelForm):
+
+    date = forms.DateField(widget=NumberInput(attrs={'type': 'date'}))
     class Meta:
         model = Transaction
         fields = [
@@ -114,3 +123,7 @@ class TransactionCreateForm(ModelForm):
             'tran_quantity',
             'tran_value',
         ]
+
+    # def __init__(self, *args, **kwargs):
+    #     super(TransactionCreateForm, self).__init__(**kwargs)
+    #     self.fields['tran_value_currency'].widget = HiddenInput()

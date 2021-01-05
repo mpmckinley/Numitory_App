@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
 
     #Numitory
     'inventory',
@@ -49,6 +50,8 @@ INSTALLED_APPS = [
     #3rd Party
     'crispy_forms',
     'djmoney',
+    'multiselectfield',
+    'django_static_fontawesome',
 ]
 
 MIDDLEWARE = [
@@ -93,7 +96,7 @@ DATABASES = {
         'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '3306',
-        'options': {
+        'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
         }
     }
@@ -146,4 +149,5 @@ LOGIN_URL = '/login'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+CURRENCIES = ('USD', 'EUR', 'NOK')
 

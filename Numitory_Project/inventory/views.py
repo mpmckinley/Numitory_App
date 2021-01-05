@@ -12,39 +12,71 @@ from django.contrib.auth import login, logout, authenticate,update_session_auth_
 from .forms import ItemCreateForm, TransactionCreateForm, TypeCreateForm, CollectionCreateForm, UserChangeForm
 from .models import Transaction, Type, Collection, Item
 from django.contrib.auth.decorators import login_required
+from itertools import chain
 
 
 def home(request):
+
     if request.user.is_authenticated:
         itemtotal = Item.objects.filter(user=request.user, status='Active').aggregate(Count('id'))
         typetotal = Type.objects.filter(user=request.user).aggregate(Count('id'))
         colltotal = Collection.objects.filter(user=request.user).aggregate(Count('id'))
+        items = Item.objects.filter(user=request.user, status='Active')
+        transactions = Transaction.objects.filter(user=request.user).order_by('-created')[:5]
+        # tran_chain = list(chain(items, transactions))
 
         return render(request, 'inventory/home.html', {
             'itemtotal': itemtotal,
             'typetotal': typetotal,
             'colltotal': colltotal,
+            'transactions': transactions,
+            # 'tran_chain': tran_chain,
         })
     else:
         return render(request, 'inventory/home.html')
 
+# ***ATTEMPT AT API CALL
+# def navbar(request):
+#     import requests
+#     import json
+    
+#     api_request = requests.get('https://www.quandl.com/api/v3/datasets/BTER/BTMETH?start_date=2017-11-08&end_date=2017-11-08&api_key=driYA7Q4oEw7sxoomJVG')
+#     api = json.loads(api_request.content)
+#     print(api)
+#     return render(request, 'inventory/navbar.html', {'api': api})
 
 def about(request):
     return render(request, 'inventory/about.html')
+
+def landing(request):
+    return render(request, 'inventory/landing.html')
 
 #APPLICATION
 @login_required
 def inventory(request):
     heading = 'Active'
     items = Item.objects.filter(user=request.user, status='Active')
+    types = Type.objects.filter(user=request.user)
+    collections = Collection.objects.filter(user=request.user)
 
-    paginator = Paginator(items, 20)
+    # ***[GIT issue: New User Workflow #17] THIS NEEDS FIXING TO BE LESS CIRCULAR WITH THE VIEW IF NOT--- CREATE A WORKFLOW THAT DISABLES BUTTON AS STARTING Db ENTRIES ARE MADE
+    # if items is None or types is None or collections is None:
+    #     return redirect('inventory/inventory.html', {
+    #     'heading': heading,
+    #     'items': items,
+    #     'types': types,
+    #     'collections': collections,
+    # })
+
+    paginator = Paginator(items, 15)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
     return render(request, 'inventory/inventory.html', {
-        'items': items,
         'heading': heading,
+        'items': items,
+        'types': types,
+        'collections': collections,
         'page_obj': page_obj,
     })
 
@@ -57,7 +89,6 @@ def recycle(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    #REMOVED AS UNECSSARY ABOVE ".select_related('type', 'collection')"
     return render(request, 'inventory/inventory.html', {
         'items': items,
         'heading': heading,
@@ -69,20 +100,20 @@ def itemcreate(request):
     heading = 'Item'
     button = 'Create'
     if request.method == 'GET':
-        return render(request, 'inventory/create.html', {
+        return render(request, 'inventory/itemcreate.html', {
             'form': ItemCreateForm(user=request.user),
             'heading': heading,
             'button': button,
         })
     else:
         try:
-            form = ItemCreateForm(data=request.POST, user=request.user)
+            form = ItemCreateForm(data=request.POST, files=request.FILES, user=request.user)
             newitem = form.save(commit=False)
             newitem.user = request.user
             newitem.save()
             return redirect('inventory:inventory')
         except ValueError:
-            return render(request, 'inventory/create.html', {
+            return render(request, 'inventory/itemcreate.html', {
                 'form': ItemCreateForm(user=request.user),
                 'error': "Field validation error",
             })
@@ -92,10 +123,10 @@ def itemdetail(request, item_pk):
     item = get_object_or_404(Item, pk=item_pk, user=request.user)
     if request.method == 'GET':
         form = ItemCreateForm(user=request.user, instance=item)
-        trans = Transaction.objects.filter(user=request.user, tran_item_id=item_pk).order_by('-id')
         tranform = TransactionCreateForm(instance=item)
+        trans = Transaction.objects.filter(user=request.user, tran_item_id=item_pk).order_by('-id')
 
-        total = Transaction.objects.filter(user=request.user, tran_item_id=item_pk).aggregate(Sum('tran_quantity'))
+        total = Transaction.objects.filter(user=request.user, tran_item_id=item_pk).aggregate(Count('id'))
 
         paginator = Paginator(trans, 10)
         page_number = request.GET.get('page')
@@ -104,15 +135,17 @@ def itemdetail(request, item_pk):
         return render(request, 'inventory/itemdetail.html', {
             'item': item,
             'form': form,
-            'tranform': tranform,
             'trans': trans,
+            'tranform': tranform,
             'total': total,
             'page_obj': page_obj,
         })
+
     if 'item' in request.POST:
         try:
-            form = ItemCreateForm(data=request.POST, user=request.user, instance=item)
+            form = ItemCreateForm(data=request.POST, files=request.FILES, user=request.user, instance=item)
             form.save()
+            print (form.data)
             return redirect('inventory:inventory')
         except ValueError:
             return render(request, 'inventory/itemdetail.html', {
@@ -121,6 +154,7 @@ def itemdetail(request, item_pk):
                 'tranform': TransactionCreateForm(),
                 'error':'You have some bad data in there, try again',
             })
+
     if 'tran' in request.POST:
         try:
             tranform = TransactionCreateForm(data=request.POST)
@@ -136,7 +170,8 @@ def itemdetail(request, item_pk):
                 'tranform': TransactionCreateForm(),
                 'error':'You had some bad data in your tran form, try again',
             })
-    # ***NEED TO WORK ON THIS
+
+    # ***TRANSECTION DELETE
     pk = request.POST['pk']
     if request.method == 'POST' and 'delete' in request.POST:
         tran = get_object_or_404(Transaction, pk=pk)
@@ -146,7 +181,6 @@ def itemdetail(request, item_pk):
 @login_required
 def typeinv(request):
     types = Type.objects.filter(user=request.user)
-    #REMOVED AS UNECSSARY ABOVE ".select_related('type', 'collection')" and ", status='A'"
     return render(request, 'inventory/typeinv.html', {
         'types': types,
     })
@@ -155,12 +189,14 @@ def typeinv(request):
 def typecreate(request):
     heading = 'Type'
     button = 'Create'
+
     if request.method == 'GET':
-        return render(request, 'inventory/create.html', {
+        return render(request, 'inventory/typecreate.html', {
             'form': TypeCreateForm(),
             'heading': heading,
             'button': button,
         })
+        
     else:
         try:
             form = TypeCreateForm(request.POST)
@@ -169,7 +205,7 @@ def typecreate(request):
             newtype.save()
             return redirect('inventory:typeinv')
         except ValueError:
-            return render(request, 'inventory/create.html', {
+            return render(request, 'inventory/typecreate.html', {
                 'form': TypeCreateForm(),
                 'error': "Data validation error",
             })
@@ -177,12 +213,14 @@ def typecreate(request):
 @login_required
 def typedetail(request, type_pk):
     type = get_object_or_404(Type, pk=type_pk, user=request.user)
+
     if request.method == 'GET':
         form = TypeCreateForm(instance=type)
         return render(request, 'inventory/typedetail.html', {
             'type': type,
             'form': form,
         })
+
     else:
         try:
             form = TypeCreateForm(request.POST, instance=type)
@@ -213,7 +251,7 @@ def typeitems(request, type_pk):
 @login_required
 def collinv(request):
     collections = Collection.objects.filter(user=request.user)
-    #REMOVED AS UNECSSARY ABOVE ".select_related('type', 'collection')" and ", status='A'"
+
     return render(request, 'inventory/collinv.html', {
         'collections': collections,
     })
@@ -222,23 +260,25 @@ def collinv(request):
 def collcreate(request):
     heading = 'Collection'
     button = 'Create'
+
     if request.method == 'GET':
-        return render(request, 'inventory/create.html', {
+        return render(request, 'inventory/collcreate.html', {
             'form': CollectionCreateForm(),
             'heading': heading,
             'button': button,
         })
+
     else:
         try:
             form = CollectionCreateForm(request.POST)
-            newtype = form.save(commit=False)
-            newtype.user = request.user
-            newtype.save()
+            newcoll = form.save(commit=False)
+            newcoll.user = request.user
+            newcoll.save()
             return redirect('inventory:collinv')
         # except IntegrityError:
         #     return render(request, 'inventory/collectioncreate.html', {'form':CollectionCreateForm(), 'error':"Data duplication error."})
         except ValueError:
-            return render(request, 'inventory/create.html', {
+            return render(request, 'inventory/collcreate.html', {
                 'form': CollectionCreateForm(),
                 'error': "Data validation error.",
             })
@@ -246,12 +286,14 @@ def collcreate(request):
 @login_required
 def colldetail(request, coll_pk):
     collection = get_object_or_404(Collection, pk=coll_pk, user=request.user)
+
     if request.method == 'GET':
         form = CollectionCreateForm(instance=collection)
         return render(request, 'inventory/colldetail.html', {
             'collection': collection,
             'form': form,
         })
+
     else:
         try:
             form = CollectionCreateForm(request.POST, instance=collection)
@@ -282,11 +324,13 @@ def collitems(request, coll_pk):
 #AUTH
 def signupuser(request):
     heading = 'Sign Up'
+
     if request.method == 'GET':
         return render(request, 'inventory/signupuser.html', {
             'form': UserCreationForm(),
             'heading':heading,
         })
+
     else:
         if request.POST['password1'] == request.POST['password2']:
                 try:
@@ -310,6 +354,7 @@ def loginuser(request):
         return render(request, 'inventory/loginuser.html', {
             'form': AuthenticationForm(),
         })
+
     else:
         user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
         if user is None:
@@ -323,12 +368,14 @@ def loginuser(request):
 
 def edituser(request, user_pk):
     user = get_object_or_404(User, pk=user_pk)
+
     if request.method == 'GET':
         form = UserChangeForm(instance=user)
         return render(request, 'inventory/edituser.html', {
             'user': user,
             'form':form,
         })
+        
     else:
         try:
             form = UserChangeForm(request.POST, instance=user)

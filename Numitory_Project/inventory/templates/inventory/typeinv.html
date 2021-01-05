@@ -9,11 +9,12 @@
             <tr>
                 <th scope="col">Name</th>
                 <th>Description</th>
+                <th>Classification</th>
                 <th>Category</th>
                 <th>Metal</th>
                 <th>Purity</th>
                 <th>Weight</th>
-                <th>Edit</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -25,13 +26,14 @@
                     </a>
                 </td>
                 <td>{{ type.type_desc }}</td>
+                <td>{{ type.classification }}</td>
                 <td>{{ type.category }}</td>
                 <td>{{ type.metal }}</td>
                 <td>{{ type.purity }}</td>
                 <td>{{ type.metal_weight }}</td>
                 <td>
                     <a href="{% url 'inventory:typedetail' type.id %}">
-                        Edit
+                        <i class="bi bi-pencil-square"></i>
                     </a>
                 </td>
             </tr>

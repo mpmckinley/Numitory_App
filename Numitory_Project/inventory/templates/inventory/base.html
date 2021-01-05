@@ -1,27 +1,29 @@
 {% load static %}
+{% load humanize %}
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="Description" content="Enter your description here"/>
+    <meta name="Numitory" content="Bullion and Numismatic collection management on your terms."/>
     <link rel="icon" type="ico" href="{% static 'inventory/favicon.ico' %}">
+    <title>Numitory</title>
 
     <!-- THEMED  Bootstrap -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.5.3/sandstone/bootstrap.min.css">
     <!-- VANILLA Bootstrap -->
     {% comment %} <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> {% endcomment %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <!-- Bootstrap Icon/Font -->
+    <!-- Icon/Font -->
     <link rel="stylesheet" type="text/css" href="{% static 'inventory/icons/font/bootstrap-icons.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'fontawesome/css/all.min.css' %}"/>
+    <script src="https://use.fontawesome.com/e7f216b497.js"></script>
     <!-- Numitory Style -->
     <link rel="stylesheet" type="text/css" href="{% static 'inventory/style.css' %}"/>
-
-    <title>Numitory</title>
-
 
 </head>
 
@@ -30,22 +32,23 @@
 {% include 'inventory/navbar.html' %}
     
     <div class="container-fluid h-100">
+
         {% block content %}
-            
+
         {% endblock content %}
+
+
     </div>
+
+    {% if user.is_authenticated %}
+
+        {% include 'inventory/navfooter.html' %}
+
+    {% endif %}
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.min.js"></script>
-    {% comment %} <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script> {% endcomment %}
-
-{% if user.is_authenticated %}
-
-    {% include 'inventory/navfooter.html' %}
-
-{% endif %}
-
 </body>
 
 {% block scripts %}

@@ -3,7 +3,7 @@
 
 {% block content %}
 
-    <h1>Edit User Form</h1>
+    <div class="container h-100">
 
     {% if error %}
         <div class="alert alert-dismissible alert-warning">
@@ -20,11 +20,24 @@
         </div>
     {% endif %}
     
-    <form method="POST">
-    {% csrf_token %}
-		{{ data }}
-        {{ form|crispy }}
-        <button type="submit" class="btn btn-primary">Update</button>
-    </form>
+    <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-6">
+            <div class="card bg-light mb-4">
+                <div class="card-header">
+                    User Profile
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                    {% csrf_token %}
+                        {{ data }}
+                        {{ form|crispy }}
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
 
 {% endblock content %}

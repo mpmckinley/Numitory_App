@@ -1,0 +1,417 @@
+{% load static %}
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="Numitory" content="Coin, Bullion, and Numismatic collection inventory management on your terms."/>
+        <link rel="icon" type="ico" href="{% static 'landing/favicon.ico' %}">
+        <title>Numitory</title>
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <!-- JQuery -->
+        <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        
+        <!-- Fonts -->
+        <script src="https://use.fontawesome.com/b21d62bcc1.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"> -->
+
+        <!-- Additional Styles -->
+        <style>
+            html, body {
+                background-image: url({% static 'landing/bg3.jpg' %});
+                background-repeat:no-repeat;
+                background-size:cover;
+                background-position:center;
+                background-attachment: fixed;
+                background-color: rgba(37,37,39,1);
+                font-family: 'Nunito', sans-serif;
+                font-weight: 200;
+                /* margin-top: 1%; */
+                margin-bottom: 1%;
+            }
+
+            /* .full-height {
+            } */
+
+            .flex-center {
+                align-items: center;
+                display: flex;
+                justify-content: center;
+            }
+
+            .position-ref {
+                position: relative;
+            }
+
+            .top-right {
+                position: absolute;
+                right: 10px;
+                top: 18px;
+            }
+
+            .content {
+                color: #f2f4f7;
+                font-size: 3em;
+                text-align: center;
+            }
+
+            .index-content {
+                color: #f2f4f7;
+                font-size: 19px;
+                text-align: center;
+                margin-right:2%;
+                margin-left:2%;
+            }
+
+            .title {
+                color: #f2f4f7;
+                font-size: 120px;
+            }
+
+            .links > a {
+                color: #f2f4f7;
+                padding: 0 30px;
+                font-size: 19px;
+                font-weight: 500;
+                letter-spacing: .1rem;
+                text-decoration: none;
+                text-transform: uppercase;
+            }
+
+            .links > a:hover {
+                color: #f2f4f7;
+                text-shadow: 0 0 1px #f2f4f7, 0 0 1px #f2f4f7;
+            }
+
+            .m-b-md {
+                margin-bottom: 20px;
+            }
+
+            /* section.pricing {
+              } */
+
+            .pricing .card {
+            border: none;
+            background-color: rgba(241,245,247,0.87);
+            border-radius: 1rem;
+            box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+            }
+
+            .pricing hr {
+            margin: 1.5rem 0;
+            color: rgba(40,40,41,1);
+            }
+
+            .pricing .card-title {
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+            letter-spacing: .1rem;
+            font-weight: bold;
+            color: black;
+            }
+
+            .pricing .card-price {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 0;
+            color: black;
+            }
+
+            .pricing .card-price .period {
+            font-size: 0.8rem;
+            color: black;
+            }
+
+            .pricing .list-unstyled {
+            color: black;
+            }
+
+            .pricing .text-muted {
+            color: black;
+            opacity: 0.5;
+            }
+
+            modal-dialog {
+                margin-left: 50%;
+                transform: translateX(-50%);
+            }
+
+            hr {
+                border-top: 1px solid lightgray;
+            }
+
+            .tight {
+                margin-right: 5%;
+                margin-left: 5%;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <div class="flex-center position-ref full-height">
+
+
+            <div class="content">
+                <div class="title m-b-md">
+                    <img src="{% static 'landing/logo2_navbar.png' %}" width="800px">
+                </div>
+
+                <div class="content">
+                    <h4><strong>Coin & bullion collection management on your terms</strong></h4>
+                    {% if messages %}
+                        {% for messages in messages %}
+                            <div class="alert alert-dismissible alert-success">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                <h4 class="alert-heading">You have great taste...</h4>
+                                <p class="mb-0">{{ message }}<a class="alert-link">You're In!</a></p>
+                                <h4 class="alert-heading">Keep an eye on your inbox and we'll let you know the moment the cat is out of the bag.</h4>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <div class="index-content mt-2">
+                    <div class="row">
+                        <div class="col-8 pt-3 align-self-center">
+                            <h1 class="display4">We&apos;re hard at work, bringing you something great!</h1>
+                        </div>
+                        <div class="col mt-2">
+                            <div class="row">
+                                <div class="col mt-1">
+                                    <h5><strong>Sign up to stay informed of our upcoming release</strong></h5>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-8">
+                                    <div class="form">
+                                        <form class="form" action="" method="POST">
+                                        {% csrf_token %}
+                                            {{ form|crispy }}
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                        <button type="submit" class="btn btn-success">Stay Informed</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row mt-4">
+                        <div class="col align-self-center">
+                            <h3><strong>Independent<br> & Secure</strong></h3>
+                        </div>
+                        <div class="col align-self-center">
+                            <h3><strong>Modern design</strong></h3>
+                        </div>
+                        <div class="col align-self-center">
+                            <h3><strong>No affiliates or referrals</strong></h3>
+                        </div>
+                        <div class="col align-self-center">
+                            <h3><strong>100% Ad free</strong></h3>
+                        </div>
+                        <div class="col align-self-center">
+                            <h3><strong>Feature rich</strong></h3>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row align-items-center mt-4">
+                        <div class="col">
+                            <p class="tight">
+                                Numitory brings collectors, hobbyists, stackers, and numismatists alike a first-of-its-kind flexible and fully independent coin and bullion collection management solution.
+                            </p>
+                            <p class="tight">
+                                Using modern technologies, we&apos;ve created an experience allowing users to flexibly track, securely integrate with 3rd party data sources, manage P&L and value for stacks and collections of all types, sizes, and goals.
+                            </p>
+                            <p class="tight">
+                                Raw, junk, graded, bullion or numismatic - Numitory is your seemless inventory management solution.
+                            </p>
+                            <p class="tight">
+                                Our unique database structure allows you to choose what and how you want to track. All the while maintaining core integrations and relationships across the entire database.
+                            </p>
+                        </div>
+                        
+                        <div class="col align-self-center">
+                            
+                            <div class="row justify-content-center mb-4">
+                                <div class="col-4">
+                                    <p class="">
+                                        Organize, sort, and search
+                                    </p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                      </svg>
+                                </div>
+                                <div class="col-4">
+                                    <p class="">
+                                        Consolidated asset views
+                                    </p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-view-list" viewBox="0 0 16 16">
+                                        <path d="M3 4.5h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H3zM1 2a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 2zm0 12a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 14z"/>
+                                      </svg>
+                                </div>
+                                <div class="col-4">
+                                    <p class="">
+                                        Flexible form design
+                                    </p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-input-cursor-text" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M5 2a.5.5 0 0 1 .5-.5c.862 0 1.573.287 2.06.566.174.099.321.198.44.286.119-.088.266-.187.44-.286A4.165 4.165 0 0 1 10.5 1.5a.5.5 0 0 1 0 1c-.638 0-1.177.213-1.564.434a3.49 3.49 0 0 0-.436.294V7.5H9a.5.5 0 0 1 0 1h-.5v4.272c.1.08.248.187.436.294.387.221.926.434 1.564.434a.5.5 0 0 1 0 1 4.165 4.165 0 0 1-2.06-.566A4.561 4.561 0 0 1 8 13.65a4.561 4.561 0 0 1-.44.285 4.165 4.165 0 0 1-2.06.566.5.5 0 0 1 0-1c.638 0 1.177-.213 1.564-.434.188-.107.335-.214.436-.294V8.5H7a.5.5 0 0 1 0-1h.5V3.228a3.49 3.49 0 0 0-.436-.294A3.166 3.166 0 0 0 5.5 2.5.5.5 0 0 1 5 2z"/>
+                                        <path d="M10 5h4a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-4v1h4a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-4v1zM6 5V4H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v-1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h4z"/>
+                                      </svg>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col mt-3 mb-3">
+                                    <h4><strong>Features that bring your tracking off the spreadsheet</strong></h4>
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-center mt-4">
+                                <div class="col-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-file-earmark-spreadsheet" viewBox="0 0 16 16">
+                                        <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V9H3V2a1 1 0 0 1 1-1h5.5v2zM3 12v-2h2v2H3zm0 1h2v2H4a1 1 0 0 1-1-1v-1zm3 2v-2h3v2H6zm4 0v-2h3v1a1 1 0 0 1-1 1h-2zm3-3h-3v-2h3v2zm-7 0v-2h3v2H6z"/>
+                                      </svg>
+                                    <p class="mt-3">
+                                        Collection export
+                                    </p>
+                                </div>
+                                <div class="col-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-tag" viewBox="0 0 16 16">
+                                        <path d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0z"/>
+                                        <path d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1zm0 5.586l7 7L13.586 9l-7-7H2v4.586z"/>
+                                      </svg>
+                                    <p class="mt-3">
+                                        Live metal prices
+                                    </p>
+                                </div>
+                                <div class="col-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-file-bar-graph" viewBox="0 0 16 16">
+                                        <path d="M4.5 12a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-1zm3 0a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1zm3 0a.5.5 0 0 1-.5-.5v-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-.5.5h-1z"/>
+                                        <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+                                      </svg>
+                                    <p class="mt-3">
+                                        Fully integrated data
+                                    </p>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col">
+                            <hr>
+                            <h1 class="display4">Straight forward pricing - cancel anytime</h1>
+                            <p class="lead">Our pricing enables your data to remain yours - no tracking, no 3rd party cookies, no retargeting, no ads - EVER!</p>
+                        </div>
+                    </div>
+                    <section class="pricing">
+                        <div class="container">
+                            <div class="row pb-3">
+                                <!-- Monthly Tier -->
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title text-uppercase text-center">Monthly</h5>
+                                            <h6 class="card-price text-center">$1<span class="period">/month</span></h6>
+                                            <ul class="list-unstyled mt-3">
+                                                <li>Unlimited Storage</li>
+                                                <li>Daily Metal Prices</li>
+                                                <li>P&L Tracking</li>
+                                                <li>Integrated Analytics</li>
+                                                <li>Curated Type Attributes</li>
+                                                <li>Inventory Export</li>
+                                                <li class="text-muted">Dead Man&apos;s Switch</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Annual Tier -->
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title text-uppercase text-center">Annual</h5>
+                                            <h6 class="card-price text-center">$10<span class="period">/year</span></h6>
+                                            <ul class="list-unstyled mt-3">
+                                                <li>Unlimited Storage</li>
+                                                <li>Daily Metal Prices</li>
+                                                <li>P&L Tracking</li>
+                                                <li>Integrated Analytics</li>
+                                                <li>Curated Type Attributes</li>
+                                                <li>Inventory Export</li>
+                                                <li class="text-muted">Dead Man&apos;s Switch</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Lifetime Tier -->
+                                <div class="col-lg-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title text-uppercase text-center">Lifetime</h5>
+                                            <h6 class="card-price text-center">$50<span class="period">/lifetime</span></h6>
+                                            <ul class="list-unstyled mt-3">
+                                                <li>Unlimited Storage</li>
+                                                <li>Daily Metal Prices</li>
+                                                <li>P&L Tracking</li>
+                                                <li>Integrated Analytics</li>
+                                                <li>Curated Type Attributes</li>
+                                                <li>Inventory Export</li>
+                                                <li>Dead Man&apos;s Switch</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <i class="fa fa-btc" aria-hidden="true"></i>
+                                        <i class="fa fa-paypal" aria-hidden="true"></i>
+                                        <i class="fa fa-cc-stripe" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+
+                        </div>
+                    </section>
+                    <hr>
+                    <div class="row align-items-center mb-5">
+                        <div class="col-8 mt-3 align-self-center">
+                            <h4 class="display4"><strong>Enter your email to be on the shortlist for our upcoming, no obligation, <text style="text-decoration: underline">free</text> BETA!!!</strong></h4>
+                        </div>
+                        <div class="col">
+                            <form class="form-inline" action="" method="POST">
+                            {% csrf_token %}
+                                <div class="form-group mx-4">
+                                    <label for="betaemail" class="sr-only">Email</label>
+                                    {{ form }}
+                                </div>
+                                <button type="submit" class="btn btn-success">Stay Informed</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
