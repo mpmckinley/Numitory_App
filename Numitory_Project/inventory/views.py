@@ -333,8 +333,10 @@ def edituser(request, user_pk):
         try:
             form = UserChangeForm(request.POST, instance=user)
             if(form.is_valid()):
-                form.save()
-                update_session_auth_hash(request,user)
+                not_empty_data = [ k for k,v in form.cleaned_data.items() if v ]
+                form.save(update_fields=not_empty_data)
+                # form.save()
+                update_session_auth_hash(request,user_pk)
                 return redirect('inventory:inventory')
             else:
                 er_str=""

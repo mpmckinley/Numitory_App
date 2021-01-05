@@ -11,6 +11,12 @@ def upload_location(instance, filename):
 
     return "%s" %(filename)
 
+# class UserExtended(models.Model):
+    # user = models.OneToOneField(User)
+    # user_type=models.CharField(
+        # max_length=1, choices=(('1', _('Basic')),('2', _('Stacker')), ('3', _('Lifer'))),
+        # blank=False, null=False)
+
 class Item(models.Model):
     item_name = models.CharField(max_length=50)
     item_desc = models.CharField(max_length=250)

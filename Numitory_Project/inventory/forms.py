@@ -19,7 +19,8 @@ class UserChangeForm(forms.ModelForm):
         
     def clean_password(self):
         data = self.cleaned_data['password']
-        data = make_password(data)
+        if(data!=""):
+            data = make_password(data)
         return data
 		
     def clean(self):
@@ -27,11 +28,20 @@ class UserChangeForm(forms.ModelForm):
         password = cleaned_data.get("password")
         confirm_password = cleaned_data.get("password_confirmation")
         if(password!="" and confirm_password!=""):
-            # raise forms.ValidationError(confirm_password)
             if(check_password(confirm_password,password)==False):
                 raise forms.ValidationError(
                     "New password and confirm password do not match")
-			
+        elif(password!='' and confirm_password==''):
+            raise forms.ValidationError(
+                    "Please Confirm Your new password")
+        elif(password=='' and confirm_password!=''):
+            raise forms.ValidationError(
+                    "Please Enter your Password if you want to Change the Password")
+                    
+    def save(self, **kwargs):
+        not_empty_data = [ k for k,v in self.cleaned_data.items() if (v and v!="" and k!='password_confirmation')]
+        self.instance.save(update_fields=not_empty_data)
+    
     class Meta:
         password = forms.CharField(widget=forms.PasswordInput(),required=False)
         model = User
