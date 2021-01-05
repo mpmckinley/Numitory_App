@@ -48,6 +48,7 @@
                     <div class="row">
                         <div class="col">
                             {{ form.graded|as_crispy_field }}
+                            {{ form.CAC|as_crispy_field }}
                         </div>
                         <div class="col">
                             {{ form.grader|as_crispy_field }}
@@ -60,9 +61,6 @@
                         </div>
                         <div class="col">
                             {{ form.condition|as_crispy_field }}
-                        </div>
-                        <div class="col">
-                            {{ form.CAC|as_crispy_field }}
                         </div>
                     </div>
 
