@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User,Group
 from django.db.models import fields
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserChangeForm
@@ -58,9 +58,18 @@ class UserChangeForm(forms.ModelForm):
             'password': forms.PasswordInput()
         }
 
+
+
 class ExtendedUserForm(forms.ModelForm):
+    user_type = forms.ModelChoiceField(queryset=Group.objects.all(),required=True)
+    
+    def __init__(self,user,**kwargs):
+        super(ExtendedUserForm, self).__init__(**kwargs)
+        if(user):
+            self.initial['user_type']=Group.objects.filter(user=user)[0]
+    
     class Meta:
-        model = UserExtended
+        model = User
         fields = ['user_type']
         
     def save(self, **kwargs):
@@ -70,7 +79,6 @@ class ExtendedUserForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super(ExtendedUserForm, self).clean()
         type = cleaned_data.get("user_type")
-        # print(type==None)
         if (type==None or type=='' or type==0):
             raise forms.ValidationError("User Type is Required")
         

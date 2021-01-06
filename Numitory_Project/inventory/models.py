@@ -1,13 +1,13 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User,AbstractUser,Group
 from django.db import models
 from django.db.models.deletion import CASCADE
 from djmoney.models.fields import MoneyField
 from multiselectfield import MultiSelectField
 from django.db.models import Sum
 
-User._meta.get_field('email')._unique = True
-User._meta.get_field('email').blank = False
-User._meta.get_field('email').null = False
+# User._meta.get_field('email')._unique = True
+# User._meta.get_field('email').blank = False
+# User._meta.get_field('email').null = False
 
 def upload_location(instance, filename):
     filebase, extension = filename.split(".")
@@ -17,10 +17,17 @@ def upload_location(instance, filename):
 
     return "%s" %(filename)
 
+def getGroupNames():
+    groups = Group.objects.all().values_list('name', flat=True)
+    id = Group.objects.all().values_list('id', flat=True)
+    # print(zip(id, groups))
+    return zip(id, groups)    
+
 class UserExtended(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')
+    # id=models.AutoField(primary_key=True)
+    # user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')
     user_type=models.CharField(
-        max_length=1, choices=(('1','Basic'),('2', 'Stacker'), ('3','Lifer')),
+        max_length=1, choices=getGroupNames(),
         blank=False, null=False)
 
 class Item(models.Model):
