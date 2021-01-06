@@ -91,7 +91,7 @@ footer {
     padding-top: .5em;
     padding-bottom: 1em;
     margin-bottom: 1.5em;
-    max-height: 45vh;
+    /* max-height: 45vh; */
 }
   
 /* Item Image */
@@ -133,4 +133,45 @@ td:first-child {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+}
+
+.pricing .card {
+    border: none;
+    background-color: rgba(241,245,247,0.87);
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+    }
+
+.pricing hr {
+    margin: 1.5rem 0;
+    color: rgba(40,40,41,1);
+}
+
+.pricing .card-title {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+    letter-spacing: .1rem;
+    font-weight: bold;
+    color: black;
+}
+
+.pricing .card-price {
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 0;
+    color: black;
+}
+
+.pricing .card-price .period {
+    font-size: 0.8rem;
+    color: black;
+}
+
+.pricing .list-unstyled {
+    color: black;
+}
+
+.pricing .text-muted {
+    color: black;
+    opacity: 0.5;
 }

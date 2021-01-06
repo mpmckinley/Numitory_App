@@ -3,7 +3,8 @@
 
 {% block content %}
 
-    <div class="container h-100">
+    <div class="row justify-content-center">
+        <div class="col-lg-4">
 
         {% if error %}
             <div class="alert alert-dismissible alert-warning">
@@ -13,27 +14,24 @@
             </div>
         {% endif %}
     
-        <div class="row h-100 justify-content-center align-items-center">
-            <div class="col-5">
-                <div class="card bg-light mb-4">
-                    <div class="card-header">
-                        {{ heading }}
-                    </div>
-                    <div class="card-body">
-                        <form method="POST">
-                        {% csrf_token %}
-                            {{ form|crispy }}
-                            {{ e_form|crispy }}
-                            <button type="submit" class="btn btn-primary">{{ heading }}</button>
-                        </form>
+            <div class="card bg-light mb-4">
+                <div class="card-header">
+                    {{ heading }}
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                    {% csrf_token %}
+                        {{ form|crispy }}
+                        {{ e_form|crispy }}
+                        <button type="submit" class="btn btn-primary">{{ heading }}</button>
+                    </form>
                     <p class="card-text mt-4">
                         Already registered? Login <a href="{% url 'loginuser' %}">here</a>.
                     </p>
                 </div>
             </div>
-            </div>
+            
         </div>
-
     </div>
 
 {% endblock content %}

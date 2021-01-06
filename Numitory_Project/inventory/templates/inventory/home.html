@@ -7,142 +7,120 @@
 {% if user.is_authenticated %}
 
 <div class="row">
-    <div class="col-lg">
 
-        <div class="p-2">
-            <div class="card bg-light">
-                <div class="card-body">
-                    <h5 class="card-title">Welcome, <strong>{{ user }}</strong></h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Overall Stats</h6>
-                    <p class="card-text">
-                        You currently have {{ itemtotal.id__count|apnumber }} Items across {{ typetotal.id__count|apnumber }} Types in {{ colltotal.id__count|apnumber }} Collections.
-                    </p>
-                    <p class="card-text">
-                        <div class="row">
-                            <div class="col">
-
-                            </div>
+    <div class="col-lg-4">
+        
+        <div class="card bg-light mt-2">
+            <div class="card-body">
+                <h5 class="card-title">Welcome, <strong>{{ user }}</strong></h5>
+                <h6 class="card-subtitle mb-2 text-muted">Overall Stats</h6>
+                <p class="card-text">
+                    You currently have {{ itemtotal.id__count|apnumber }} Item{{ itemtotal.id__count|pluralize }} across {{ typetotal.id__count|apnumber }} Type{{ typetotal.id__count|pluralize }} in {{ colltotal.id__count|apnumber }} Collection{{ colltotal.id__count|pluralize}}.
+                </p>
+                <p class="card-text">
+                    <div class="row">
+                        <div class="col">
+                            
                         </div>
-                    </p>
-                </div>
+                    </div>
+                </p>
             </div>
         </div>
-
-    </div>
-
-    <div class="col-lg">
-
-        <div class="p-2">
-            {% comment %} <div class="card"> {% endcomment %}
-                <div class="card border-primary">
-                    <div class="card-header">
-                        <i class="fas fa-exchange-alt"></i>
-                        Activity
-                    </div>
-                    <div class="card-body">
-                    <p class="text-muted">Five most recently entered transactions</p>
-                        <table class="table-hover table_card">
-                            <thead>
-                                <th>Item</th>
-                                <th>Date</th>
-                                <th>Action</th>
-                                <th>Quantity</th>
-                                <th>Value</th>
-                            </thead>
-                            {% for transaction in transactions %}
-                                <tr>
-                                    <td>
-                                        <a href="{% url 'inventory:itemdetail' transaction.tran_item.id %}">
-                                            {% if transaction.tran_item.item_name %}
-                                                {{ transaction.tran_item.item_name }}
-                                            {% else %}
-                                                {{ transaction.tran_item.type }}
-                                            {% endif %}
-                                        </a>
-                                    </td>
-                                    <td>{{ transaction.date|naturalday }}</td>
-                                    <td>{{ transaction.direction }}</td>
-                                    <td>{{ transaction.tran_quantity|intcomma }}</td>
-                                    <td>{{ transaction.tran_value }}</td>
-                                </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                    <div class="card-body">
-                        Some quick example text to build on the card title and make up the bulk of the card's content.
-                        <br>
-                        <a href="#" class="card-link">Card link</a>
-                        <a href="#" class="card-link">Another link</a>
-                    </div>
-                </div>
-            {% comment %} </div> {% endcomment %}
-        </div>
-
-    </div>
-
-</div>
-
-<div class="row">
-    <div class="col-md-4">
-
-        <div class="p-2">
-            <div class="card border-primary">
-                <div class="card-header">
-                    <i class="fas fa-chart-line"></i>
-                    Markets
-                </div>
-                <div class="card-body">
-                    <h4 class="card-title">Primary card title</h4>
-                    <p class="card-text">
-                        <ul>
-                            <li>Silver</li>
-                            <li>Gold</li>
-                            <li>Platinum</li>
-                            <li>Palladium</li>
-                        </ul>
-                    </p>
-                </div>
+        
+        <div class="card border-primary mt-2">
+            <div class="card-header">
+                <i class="fas fa-chart-line"></i>
+                Markets
+            </div>
+            <div class="card-body">
+                <h4 class="card-title">Primary card title</h4>
+                <p class="card-text">
+                    <ul>
+                        <li>Silver</li>
+                        <li>Gold</li>
+                        <li>Platinum</li>
+                        <li>Palladium</li>
+                    </ul>
+                </p>
             </div>
         </div>
-
-        <div class="p-2">
-            <div class="card border-primary">
-                <div class="card-header">
-                    <i class="fas fa-newspaper"></i>
-                    News & Headlines
-                </div>
-                <div class="card-body">
-                    <h4 class="card-title">Primary card title</h4>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
+        
+        <div class="card border-primary mt-2">
+            <div class="card-header">
+                <i class="fas fa-newspaper"></i>
+                News & Headlines
+            </div>
+            <div class="card-body">
+                <h4 class="card-title">Primary card title</h4>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
             </div>
         </div>
 
     </div>
     
     <div class="col-lg-8">
-        
-        <div class="p-2">
-            <div class="card border-primary">
-                <div class="card-header">
-                    <i class="fa fa-bars" aria-hidden="true"></i>
-                    Some Key Summary Data
-                </div>
-                <div class="card-body">
-                    <h4 class="card-title">Maybe an inventory recap...</h4>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
+
+        <div class="card border-primary mt-2">
+            <div class="card-header">
+                <i class="fas fa-exchange-alt"></i>
+                Activity
+            </div>
+            <div class="card-body">
+            <p class="text-muted">Five most recently entered transactions</p>
+                <table class="table-hover table_card">
+                    <thead>
+                        <th>Item</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                        <th>Quantity</th>
+                        <th>Value</th>
+                    </thead>
+                    {% for transaction in transactions %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'inventory:itemdetail' transaction.tran_item.id %}">
+                                    {% if transaction.tran_item.item_name %}
+                                        {{ transaction.tran_item.item_name }}
+                                    {% else %}
+                                        {{ transaction.tran_item.type }}
+                                    {% endif %}
+                                </a>
+                            </td>
+                            <td>{{ transaction.date|naturalday }}</td>
+                            <td>{{ transaction.direction }}</td>
+                            <td>{{ transaction.tran_quantity|intcomma }}</td>
+                            <td>{{ transaction.tran_value }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <p class="ml-3">
+                Some quick example text to build on the card title and make up the bulk of the card's content.
+                <br>
+                <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a>
+            </p>
+        </div>
+
+        <div class="card border-primary mt-2">
+            <div class="card-header">
+                <i class="fa fa-bars" aria-hidden="true"></i>
+                Some Key Summary Data
+            </div>
+            <div class="card-body">
+                <h4 class="card-title">Maybe an inventory recap...</h4>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
             </div>
         </div>
 
     </div>
 
 </div>
-
+    
 {% else %}
 
     <div class="jumbotron jumbotron-fluid jumbo">
-        <div class="container-fluid">
+        <div class="p-3">
             <h1 class="display-3">Numitory</h1>
             <p class="lead">Bullion and Numismatic collection management on your terms.</p>
             <hr class="my-4">
@@ -156,24 +134,100 @@
         </div>
     </div>
 
-    <div class="row justify-content-center">
-        <div class="col-4">
-            <p class="homelist">
-                <ul>
-                    <li>First something</li>
-                    <li>Second something</li>
-                </ul>
-            </p>
+    <div class="row justify-content-between ml-3">
+        
+        <div class="col-8">
+
+            <div class="row justify-content-around">
+                <div class="col-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                </div>
+                <div class="col">
+                <p class="homelist">
+                    <ul>
+                        <li>First something</li>
+                        <li>Second something</li>
+                    </ul>
+                </p>
+                </div>
+    
+                <div class="col-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-view-list" viewBox="0 0 16 16">
+                        <path d="M3 4.5h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H3zM1 2a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 2zm0 12a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 14z"/>
+                    </svg>
+                </div>
+                <div class="col">
+                    <p class="homelist">
+                        <ul>
+                            <li>Third something</li>
+                            <li>Fourth something</li>
+                        </ul>
+                    </p>
+                </div>
+    
+                <div class="col-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-view-list" viewBox="0 0 16 16">
+                        <path d="M3 4.5h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H3zM1 2a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 2zm0 12a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 14z"/>
+                    </svg>
+                </div>
+                <div class="col">
+                    <p class="homelist">
+                        <ul>
+                            <li>Third something</li>
+                            <li>Fourth something</li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+    
+            <div class="row justify-content-around">
+                <div class="col-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                </div>
+                <div class="col">
+                <p class="homelist">
+                    <ul>
+                        <li>First something</li>
+                        <li>Second something</li>
+                    </ul>
+                </p>
+                </div>
+    
+                <div class="col-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-view-list" viewBox="0 0 16 16">
+                        <path d="M3 4.5h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H3zM1 2a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 2zm0 12a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 14z"/>
+                    </svg>
+                </div>
+                <div class="col">
+                    <p class="homelist">
+                        <ul>
+                            <li>Third something</li>
+                            <li>Fourth something</li>
+                        </ul>
+                    </p>
+                </div>
+    
+                <div class="col-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-view-list" viewBox="0 0 16 16">
+                        <path d="M3 4.5h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H3zM1 2a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 2zm0 12a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 14z"/>
+                    </svg>
+                </div>
+                <div class="col">
+                    <p class="homelist">
+                        <ul>
+                            <li>Third something</li>
+                            <li>Fourth something</li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
         </div>
-        <div class="col-4">
-            <p class="homelist">
-                <ul>
-                    <li>Third something</li>
-                    <li>Fourth something</li>
-                </ul>
-            </p>
-        </div>
-        <div class="col">
+
+        <div class="col-md-4">
             <div class="card border-dark mb-2" style="max-width: 25rem;">
                 <div class="card-header">Latest Release Notes</div>
                 <div class="card-body">
@@ -182,6 +236,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 
 {% endif %}
