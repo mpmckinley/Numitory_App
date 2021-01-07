@@ -11,10 +11,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='userextended',
-            name='user',
-        ),
+        # migrations.RemoveField(
+        #     model_name='userextended',
+        #     name='user',
+        # ),
         migrations.AlterField(
             model_name='collection',
             name='id',
