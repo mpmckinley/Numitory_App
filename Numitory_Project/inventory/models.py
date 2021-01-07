@@ -4,6 +4,7 @@ from django.db.models.deletion import CASCADE
 from djmoney.models.fields import MoneyField
 from multiselectfield import MultiSelectField
 from django.db.models import Sum
+import uuid
 
 # User._meta.get_field('email')._unique = True
 # User._meta.get_field('email').blank = False
@@ -31,6 +32,8 @@ class UserExtended(models.Model):
         blank=False, null=False)
 
 class Item(models.Model):
+    id = models.CharField(max_length=36, default=uuid.uuid4, primary_key=True, null=False)
+    
     STATUS_CHOICES = [
         ('Active', 'Active'),
         ('Inactive', 'Inactive'),
@@ -99,6 +102,8 @@ class Transaction(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Type(models.Model):
+    id = models.CharField(max_length=36, default=uuid.uuid4, primary_key=True, null=False)
+    
     CLASS_CHOICES = [
         ('Bullion', 'Bullion'),
         ('Numismatic', 'Numismatic'),
@@ -174,6 +179,7 @@ class Type(models.Model):
         return self.type_name
 
 class Collection(models.Model):
+    id = models.CharField(max_length=36, default=uuid.uuid4, primary_key=True, null=False)
     coll_name = models.CharField("Name", max_length=100, unique=True)
     coll_desc = models.CharField("Description", max_length=250)
 
