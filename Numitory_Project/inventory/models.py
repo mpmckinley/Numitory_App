@@ -36,8 +36,8 @@ class MetalPrices(models.Model):
 
 
 class UserExtended(models.Model):
-    # id=models.AutoField(primary_key=True)
-    # user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')
+    id=models.AutoField(primary_key=True)
+    user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')
     user_type=models.CharField(
         max_length=1, choices=getGroupNames(),
         blank=False, null=False)
