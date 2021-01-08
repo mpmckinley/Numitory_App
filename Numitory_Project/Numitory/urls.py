@@ -35,6 +35,8 @@ urlpatterns = [
     # INVENTORY.URLS
     path('inventory/', include('inventory.urls')),
 
+    #Latest Prices
+    path('get/latest/prices/', views.get_latest_prices, name='get_latest_prices'),
     # AUTH
     path('signup/', views.signupuser, name="signupuser"),
     path('login/', views.loginuser, name="loginuser"),

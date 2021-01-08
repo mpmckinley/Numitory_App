@@ -27,7 +27,7 @@
                     User Profile
                 </div>
                 <div class="card-body">
-                    <form method="POST">
+                    <form method="POST" autocomplete="off">
                     {% csrf_token %}
                         {{ data }}
                         {{ form|crispy }}

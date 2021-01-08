@@ -1,7 +1,7 @@
 from django.contrib import auth
 from django.db.models.aggregates import Count
 from django.db.models.expressions import OrderBy
-from django.http import response, HttpResponseRedirect
+from django.http import response, HttpResponseRedirect,JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.core.paginator import Paginator
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -10,9 +10,10 @@ from django.db import IntegrityError
 from django.db.models import Sum
 from django.contrib.auth import login, logout, authenticate,update_session_auth_hash
 from .forms import ItemCreateForm, TransactionCreateForm, TypeCreateForm, CollectionCreateForm, UserChangeForm,ExtendedUserForm
-from .models import Transaction, Type, Collection, Item,UserExtended
+from .models import Transaction, Type, Collection, Item,UserExtended,MetalPrices
 from django.contrib.auth.decorators import login_required
 from itertools import chain
+import datetime
 
 
 def home(request):
@@ -35,6 +36,21 @@ def home(request):
     else:
         return render(request, 'inventory/home.html')
 
+
+def get_latest_prices(request):
+    prices=MetalPrices.objects.order_by('-updated_at')[:1].values()
+    if(not prices):
+        prices=[]
+    else:
+        prices.get()
+        # print(prices)
+        prices[0]['updated_at']=prices[0]['updated_at'].strftime('%m/%d/%y %H:%M:%S')
+    return JsonResponse({'prices':list(prices)})
+    
+    
+# def refresh_latest_pricing(request):
+    
+    
 # ***ATTEMPT AT API CALL
 # def navbar(request):
 #     import requests

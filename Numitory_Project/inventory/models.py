@@ -23,6 +23,17 @@ def getGroupNames():
     # print(zip(id, groups))
     return zip(id, groups)    
 
+
+
+class MetalPrices(models.Model):
+    gold_price=models.FloatField()
+    silver_price=models.FloatField()
+    platinum_price=models.FloatField()
+    palladium_price=models.FloatField()
+    updated_at=models.DateTimeField(auto_now_add=True)
+    
+
+
 class UserExtended(models.Model):
     # id=models.AutoField(primary_key=True)
     # user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')
