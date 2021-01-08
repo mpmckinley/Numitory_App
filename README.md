@@ -5,6 +5,8 @@
 
 Numitory brings all of your collection management needs under one roof. Designed with simplicity and scale in mind - and purpose built - use our proprietary ITEM | TYPE | COLLECTION methodology to seamlessly track and manage your bullion and numismatic collection; transactions, and cost basis.
 
+![image](https://user-images.githubusercontent.com/6133032/103970821-5d3fc700-5126-11eb-8f9c-d040158e50cc.png)
+
 ![image](https://user-images.githubusercontent.com/6133032/103433165-94076180-4ba9-11eb-9dc8-a794bef6296e.png)
 
 **Draft Schema**
