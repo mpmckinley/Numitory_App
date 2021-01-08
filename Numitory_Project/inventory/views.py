@@ -15,7 +15,6 @@ from django.contrib.auth.decorators import login_required
 from itertools import chain
 import datetime
 
-
 def home(request):
 
     if request.user.is_authenticated:
@@ -24,13 +23,14 @@ def home(request):
         colltotal = Collection.objects.filter(user=request.user).aggregate(Count('id'))
         items = Item.objects.filter(user=request.user, status='Active')
         transactions = Transaction.objects.filter(user=request.user).order_by('-created')[:5]
-        # tran_chain = list(chain(items, transactions))
 
         return render(request, 'inventory/home.html', {
             'itemtotal': itemtotal,
             'typetotal': typetotal,
             'colltotal': colltotal,
             'transactions': transactions,
+            'page_title': 'Numitory - Home'
+
             # 'tran_chain': tran_chain,
         })
     else:
@@ -62,10 +62,14 @@ def get_latest_prices(request):
 #     return render(request, 'inventory/navbar.html', {'api': api})
 
 def about(request):
-    return render(request, 'inventory/about.html')
+    return render(request, 'inventory/about.html', {
+        'page_title': 'Numitory - About'
+    })
 
 def landing(request):
-    return render(request, 'inventory/landing.html')
+    return render(request, 'inventory/landing.html', {
+        'page_title': 'Numitory'
+    })
 
 #APPLICATION
 @login_required
@@ -94,6 +98,8 @@ def inventory(request):
         'types': types,
         'collections': collections,
         'page_obj': page_obj,
+        'page_title': 'Numitory - My Inventory'
+
     })
 
 @login_required
@@ -109,6 +115,8 @@ def recycle(request):
         'items': items,
         'heading': heading,
         'page_obj': page_obj,
+        'page_title': 'Numitory - Recycled Inventory'
+
     })
 
 @login_required
@@ -120,6 +128,8 @@ def itemcreate(request):
             'form': ItemCreateForm(user=request.user),
             'heading': heading,
             'button': button,
+            'page_title': 'Numitory - Item Create'
+
         })
     else:
         try:
@@ -155,6 +165,8 @@ def itemdetail(request, item_pk):
             'tranform': tranform,
             'total': total,
             'page_obj': page_obj,
+            'page_title': 'Numitory - Item Detail'
+
         })
 
     if 'item' in request.POST:
@@ -199,6 +211,8 @@ def typeinv(request):
     types = Type.objects.filter(user=request.user)
     return render(request, 'inventory/typeinv.html', {
         'types': types,
+        'page_title': 'Numitory - My Types'
+
     })
 
 @login_required
@@ -211,6 +225,8 @@ def typecreate(request):
             'form': TypeCreateForm(),
             'heading': heading,
             'button': button,
+            'page_title': 'Numitory - Type Create'
+
         })
         
     else:
@@ -235,6 +251,8 @@ def typedetail(request, type_pk):
         return render(request, 'inventory/typedetail.html', {
             'type': type,
             'form': form,
+            'page_title': 'Numitory - Type Detail'
+
         })
 
     else:
@@ -262,6 +280,8 @@ def typeitems(request, type_pk):
         'items': items,
         'heading': heading,
         'page_obj': page_obj,
+        'page_title': 'Numitory - My Inventory, Types'
+
     })
 
 @login_required
@@ -270,6 +290,8 @@ def collinv(request):
 
     return render(request, 'inventory/collinv.html', {
         'collections': collections,
+        'page_title': 'Numitory - My Collections'
+
     })
 
 @login_required
@@ -282,6 +304,8 @@ def collcreate(request):
             'form': CollectionCreateForm(),
             'heading': heading,
             'button': button,
+            'page_title': 'Numitory - Collection Create'
+
         })
 
     else:
@@ -308,6 +332,8 @@ def colldetail(request, coll_pk):
         return render(request, 'inventory/colldetail.html', {
             'collection': collection,
             'form': form,
+            'page_title': 'Numitory - Collection Detail'
+
         })
 
     else:
@@ -335,6 +361,8 @@ def collitems(request, coll_pk):
         'items': items,
         'heading': heading,
         'page_obj': page_obj,
+        'page_title': 'Numitory - My Inventory'
+
     })
 
 #AUTH
@@ -345,6 +373,8 @@ def signupuser(request):
             'form':UserCreationForm(),
             'e_form': ExtendedUserForm(user=''),
             'heading':heading,
+            'page_title': 'Numitory - Sign Up'
+
         })
     else:
         if request.POST['password1'] == request.POST['password2']:
@@ -382,6 +412,8 @@ def loginuser(request):
     if request.method == 'GET':
         return render(request, 'inventory/loginuser.html', {
             'form': AuthenticationForm(),
+            'page_title': 'Numitory - Login'
+
         })
 
     else:
@@ -403,7 +435,9 @@ def edituser(request, user_pk):
         return render(request, 'inventory/edituser.html', {
             'user': user,
             'form':form,
-            'e_form':e_form
+            'e_form':e_form,
+            'page_title': 'Numitory - My Profile'
+
         })
     else:
         try:
