@@ -24,14 +24,18 @@ def home(request):
         items = Item.objects.filter(user=request.user, status='Active')
         transactions = Transaction.objects.filter(user=request.user).order_by('-created')[:5]
 
+        paginator = Paginator(items, 10)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+
         return render(request, 'inventory/home.html', {
             'itemtotal': itemtotal,
             'typetotal': typetotal,
             'colltotal': colltotal,
+            'page_obj': page_obj,
             'transactions': transactions,
             'page_title': 'Numitory - Home'
-
-            # 'tran_chain': tran_chain,
         })
     else:
         return render(request, 'inventory/home.html')

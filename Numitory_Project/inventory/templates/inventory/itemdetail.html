@@ -7,7 +7,7 @@
 
 <div class="row">
 
-    <div class="col">
+    <div class="col-lg">
 
         {% if error %}
             <div class="alert alert-dismissible alert-warning">
@@ -93,7 +93,7 @@
                 {{ item.type }} Type Detail
             </div>
             <div class="card-body">
-                <text style="color:rgba(236,27,20,0.96)">***INSERT TYPE DETAILS (not form fields)***</text><br>
+                <text style="color:rgba(236,27,20,0.96)">***Elaborate/Refine***</text><br>
                 {% comment %} Name: {{ detail.type_name }}<br> {% endcomment %}
                 <div class="row">
                     <div class="col">
@@ -130,13 +130,13 @@
                                 <td>Links:</td>
                                 <td>
                                     {% if detail.url_pcgs %}
-                                        <a href="{{ detail.url_pcgs }}"><i class="fa fa-shield fa-2x fa-pull-left fa-border" aria-hidden="true"></i></a>
+                                        <a href="{{ detail.url_pcgs }}"><i class="fa fa-shield fa-1x fa-pull-left fa-border" aria-hidden="true"></i></a>
                                     {% endif %}
                                     {% if detail.url_ngc %}
-                                        <a href="{{ detail.url_ngc }}"><i class="fa fa-balance-scale fa-2x fa-pull-left fa-border" aria-hidden="true"></i></a>
+                                        <a href="{{ detail.url_ngc }}"><i class="fa fa-balance-scale fa-1x fa-pull-left fa-border" aria-hidden="true"></i></a>
                                     {% endif %}
                                     {% if detail.url_other %}
-                                        <a href="{{ detail.url_other }}"><i class="fa fa-link fa-2x fa-pull-left fa-border" aria-hidden="true"></i></a>
+                                        <a href="{{ detail.url_other }}"><i class="fa fa-link fa-1x fa-pull-left fa-border" aria-hidden="true"></i></a>
                                     {% endif %}
                                 </td>
                             </tr>
