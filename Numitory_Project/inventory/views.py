@@ -154,6 +154,9 @@ def itemdetail(request, item_pk):
 
         total = Transaction.objects.filter(user=request.user, tran_item_id=item_pk).aggregate(Count('id'))
 
+        # detail = Type.objects.filter(user=request.user, id=item.type_id)
+        detail = get_object_or_404(Type, user=request.user, id=item.type_id)
+
         paginator = Paginator(trans, 10)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
@@ -164,6 +167,7 @@ def itemdetail(request, item_pk):
             'trans': trans,
             'tranform': tranform,
             'total': total,
+            'detail': detail,
             'page_obj': page_obj,
             'page_title': 'Numitory - Item Detail'
 
@@ -237,8 +241,9 @@ def typecreate(request):
             newtype = form.save(commit=False)
             newtypedetl = form_detl.save(commit=False)
             newtype.user = request.user
-            newtypedetl.user = request.user
             newtype.save()
+            newtypedetl.user = request.user
+            newtypedetl.type_id = newtype.id
             newtypedetl.save()
             return redirect('inventory:typeinv')
         except ValueError:

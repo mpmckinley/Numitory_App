@@ -3,7 +3,7 @@
 
 {% block content %}
 
-    <div class="container h-100">
+    <!-- <div class="container h-100"> -->
 
     {% if error %}
         <div class="alert alert-dismissible alert-warning">
@@ -33,10 +33,10 @@
                     
                         <div class="row">
                             <div class="col">
-                                {{ form.country|as_crispy_field }}
+                                {{ form.classification|as_crispy_field }}
                             </div>
                             <div class="col">
-                                {{ form.classification|as_crispy_field }}
+                                {{ form.country|as_crispy_field }}
                             </div>
                             <div class="col">
                                 {{ form.category|as_crispy_field }}
@@ -173,6 +173,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    <!-- </div> -->
 
 {% endblock content %}
