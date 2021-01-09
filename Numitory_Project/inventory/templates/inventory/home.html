@@ -61,8 +61,15 @@
                 News & Headlines
             </div>
             <div class="card-body">
-                <h4 class="card-title">Primary card title</h4>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                {% comment %} <h4 class="card-title">Primary card title</h4> {% endcomment %}
+                <p class="card-text">
+                    {% for headline in top_headlines.articles|slice:":8" %}
+                        {{ headline.publishedAt|naturalday }}
+                        <a href="{{ headline.url }}">{{ headline.title }}</a>
+                        <br>
+                    {% endfor %}
+                    {% comment %} {{ top_headlines }} {% endcomment %}
+                </p>
             </div>
         </div>
 

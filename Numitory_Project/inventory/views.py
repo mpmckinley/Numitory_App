@@ -13,7 +13,9 @@ from .forms import ItemCreateForm, TransactionCreateForm, TypeCreateForm, TypeDe
 from .models import Transaction, Type, Collection, Item, UserExtended, MetalPrices
 from django.contrib.auth.decorators import login_required
 from itertools import chain
+from newsapi import NewsApiClient
 import datetime
+from decouple import config
 
 def home(request):
 
@@ -28,6 +30,18 @@ def home(request):
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
 
+        news_key = config("API_KEY")
+        newsapi = NewsApiClient(api_key=news_key)
+        
+        top_headlines = newsapi.get_everything(q='silver OR gold OR platinum OR palladium OR numismatic OR coin AND bullion NOT witcher NOT movies',
+            # sources='bbc-news,the-verge',
+            # category='business',
+            language='en',
+            # country='us',
+            sort_by='publishedAt',
+            # pageSize=5,
+            page=1,
+        )
 
         return render(request, 'inventory/home.html', {
             'itemtotal': itemtotal,
@@ -35,7 +49,8 @@ def home(request):
             'colltotal': colltotal,
             'page_obj': page_obj,
             'transactions': transactions,
-            'page_title': 'Numitory - Home'
+            'page_title': 'Numitory - Home',
+            'top_headlines': top_headlines
         })
     else:
         return render(request, 'inventory/home.html')
