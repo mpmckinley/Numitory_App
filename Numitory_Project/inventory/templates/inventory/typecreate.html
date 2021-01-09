@@ -22,8 +22,8 @@
     {% endif %}
 
     <div class="row h-100 justify-content-center align-items-center">
-        <div class="col-10">
-            <div class="card bg-light mb-4">
+        <div class="col-6">
+            <div class="card bg-light">
                 <div class="card-header">
                     {{ heading }} Create
                 </div>
@@ -34,16 +34,22 @@
                         <div class="row">
                             <div class="col">
                                 {{ form.country|as_crispy_field }}
+                            </div>
+                            <div class="col">
                                 {{ form.classification|as_crispy_field }}
+                            </div>
+                            <div class="col">
                                 {{ form.category|as_crispy_field }}
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col">
                                 {{ form.type_name|as_crispy_field }}
                             </div>
-                            <div class="col">
+                            <div class="col-4">
                                 {{ form.type_desc|as_crispy_field }}
                             </div>
-                            <div class="col-2">
+                            <div class="col">
                                 {{ form.type_dates|as_crispy_field }}
                             </div>
                         </div>
@@ -55,11 +61,34 @@
                             <div class="col">
                                 {{ form.face_value|as_crispy_field }}
                             </div>
-                            {% comment %} <div class="col">
-                                {{ form.metal|as_crispy_field }}
-                            </div> {% endcomment %}
                         </div>
-
+                        
+                        
+                        <div class="row">
+                            <div class="col">
+                                {{ form.url_pcgs|as_crispy_field }}</br>
+                            </div>
+                            <div class="col">
+                                {{ form.url_ngc|as_crispy_field }}</br>
+                            </div>
+                            <div class="col">
+                                {{ form.url_other|as_crispy_field }}</br>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    
+                <div class="col-6">
+                    <div class="card bg-light">
+                        <div class="card-header">
+                            {{ heading }} Variety Create
+                        </div>
+                        <div class="card-body">
+                    
+                        {% comment %} <div class="col">
+                            {{ form.metal|as_crispy_field }}
+                        </div> {% endcomment %}
                         {% comment %} <div class="row">
                             <div class="col">
                                 {{ form.metal_weight|as_crispy_field }}
@@ -74,22 +103,69 @@
                                 {{ form.face_value|as_crispy_field }}
                             </div>
                         </div> {% endcomment %}
-
+                        
                         <div class="row">
                             <div class="col">
-                                {{ form.url_pcgs|as_crispy_field }}</br>
+                                Variety Detail:
+                            </div>
+                        </div>  
+                        <div class="row">
+                            <div class="col">
+                                {{ form_detl.var_name|as_crispy_field }}
                             </div>
                             <div class="col">
-                                {{ form.url_ngc|as_crispy_field }}</br>
+                                {{ form_detl.var_desc|as_crispy_field }}
                             </div>
                             <div class="col">
-                                {{ form.url_other|as_crispy_field }}</br>
+                                {{ form_detl.year|as_crispy_field }}
+                            </div>
+                            <div class="col">
+                                {{ form_detl.mint|as_crispy_field }}
                             </div>
                         </div>
-
+                        <div class="row">
+                            <div class="col">
+                                {{ form_detl.comp|as_crispy_field }}
+                            </div>
+                            <div class="col">
+                                {{ form_detl.weight|as_crispy_field }}
+                            </div>
+                            <div class="col">
+                                {{ form_detl.precious_type|as_crispy_field }}
+                            </div>
+                            <div class="col">
+                                {{ form_detl.precious_purity|as_crispy_field }}
+                            </div>
+                            <div class="col">
+                                {{ form_detl.precious_weight|as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                {{ form_detl.edge|as_crispy_field }}
+                            </div>
+                            <div class="col">
+                                {{ form_detl.mintage|as_crispy_field }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                {{ form_detl.url_pcgs|as_crispy_field }}</br>
+                            </div>
+                            <div class="col">
+                                {{ form_detl.url_ngc|as_crispy_field }}</br>
+                            </div>
+                            <div class="col">
+                                {{ form_detl.url_other|as_crispy_field }}</br>
+                            </div>
+                        </div>
+                        
                         <div class="row">
                             <div class="col">
                                 <button type="submit" class="btn btn-primary">{{ button }}</button>
+                            </div>
+                            <div class="col">
+                                {{ form_detl.recycled|as_crispy_field }}</br>
                             </div>
                         </div>
 

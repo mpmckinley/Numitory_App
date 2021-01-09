@@ -9,8 +9,8 @@ from django.contrib.auth.models import User,Group
 from django.db import IntegrityError
 from django.db.models import Sum
 from django.contrib.auth import login, logout, authenticate,update_session_auth_hash
-from .forms import ItemCreateForm, TransactionCreateForm, TypeCreateForm, CollectionCreateForm, UserChangeForm,ExtendedUserForm
-from .models import Transaction, Type, Collection, Item,UserExtended,MetalPrices
+from .forms import ItemCreateForm, TransactionCreateForm, TypeCreateForm, TypeDetlForm, CollectionCreateForm, UserChangeForm, ExtendedUserForm
+from .models import Transaction, Type, Collection, Item, UserExtended, MetalPrices
 from django.contrib.auth.decorators import login_required
 from itertools import chain
 import datetime
@@ -223,6 +223,7 @@ def typecreate(request):
     if request.method == 'GET':
         return render(request, 'inventory/typecreate.html', {
             'form': TypeCreateForm(),
+            'form_detl': TypeDetlForm(),
             'heading': heading,
             'button': button,
             'page_title': 'Numitory - Type Create'
@@ -232,13 +233,18 @@ def typecreate(request):
     else:
         try:
             form = TypeCreateForm(request.POST)
+            form_detl = TypeDetlForm(request.POST)
             newtype = form.save(commit=False)
+            newtypedetl = form_detl.save(commit=False)
             newtype.user = request.user
+            newtypedetl.user = request.user
             newtype.save()
+            newtypedetl.save()
             return redirect('inventory:typeinv')
         except ValueError:
             return render(request, 'inventory/typecreate.html', {
                 'form': TypeCreateForm(),
+                'form_detl': TypeDetlForm(),
                 'error': "Data validation error",
             })
 
