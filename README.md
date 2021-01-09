@@ -10,7 +10,7 @@ Numitory brings all of your collection management needs under one roof. Designed
 ![image](https://user-images.githubusercontent.com/6133032/103433165-94076180-4ba9-11eb-9dc8-a794bef6296e.png)
 
 **Draft Schema:**
-![image](https://user-images.githubusercontent.com/6133032/103969046-4ac38e80-5122-11eb-912b-7fdedbf19d30.png)
+![image](https://user-images.githubusercontent.com/6133032/104080864-dfdc8b00-51e7-11eb-82f2-201f17b9696d.png)
 
 **Development:**
 * MySQL

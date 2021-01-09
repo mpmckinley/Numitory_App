@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.hashers import make_password, check_password
 from django import forms
 from django.forms.widgets import HiddenInput, NumberInput
-from .models import Item, Collection, Transaction, Type,UserExtended
+from .models import Item, Collection, Transaction, Type, Type_Detl, UserExtended
 
 class UserChangeForm(forms.ModelForm):
     password_confirmation = forms.CharField(
@@ -58,8 +58,6 @@ class UserChangeForm(forms.ModelForm):
             'password': forms.PasswordInput()
         }
 
-
-
 class ExtendedUserForm(forms.ModelForm):
     user_type = forms.ModelChoiceField(queryset=Group.objects.all(),required=True)
     
@@ -81,7 +79,6 @@ class ExtendedUserForm(forms.ModelForm):
         type = cleaned_data.get("user_type")
         if (type==None or type=='' or type==0):
             raise forms.ValidationError("User Type is Required")
-        
 
 class ItemCreateForm(ModelForm):
     class Meta:
@@ -114,18 +111,38 @@ class TypeCreateForm(ModelForm):
     class Meta:
         model = Type
         fields = [
-            'type_name',
-            'type_desc',
+            'country',
             'classification',
             'category',
-            'metal',
-            'metal_weight',
-            'purity',
-            'mint',
+            'type_name',
+            'type_desc',
+            'type_dates',
+            'mints',
             'face_value',
             'url_pcgs',
             'url_ngc',
             'url_other',
+        ]
+
+class TypeDetlForm(ModelForm):
+    class Meta:
+        model = Type_Detl
+        fields = [
+            'var_name',
+            'var_desc',
+            'year',
+            'mint',
+            'comp',
+            'weight',
+            'precious_type',
+            'precious_purity',
+            'precious_weight',
+            'edge',
+            'mintage',
+            'url_ngc',
+            'url_other',
+            'url_pcgs',
+            'designer',
             'recycled',
         ]
 
