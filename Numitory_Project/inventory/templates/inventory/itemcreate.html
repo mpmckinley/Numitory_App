@@ -42,8 +42,10 @@
                                 {{ form.type|as_crispy_field }}
                             </div>
                             <div class="col">
-                            {% comment %} ***Needs to be conditional selection where choices based on Type selection {% endcomment %}
-                                {{ form.mint|as_crispy_field }}
+                                <text style="color:rgba(236,27,20,0.96)">***Conditional Variety dropdown from Type***</text>
+                            </div>
+                            <div class="col">
+                                <text style="color:rgba(236,27,20,0.96)">***Conditional selection based on Type& Variety selection</text>{{ form.mint|as_crispy_field }}
                             </div>
                         </div>
 
@@ -80,6 +82,12 @@
                         <div class="row">
                             <div class="col">
                                 {{ form.item_image|as_crispy_field }}</br>
+                            </div>
+                        </div>
+
+                        <div class="row pb-4">
+                            <div class="col">
+                                <text style="color:rgba(236,27,20,0.96)">***Insert Transaction Form for initial transaction entry at ITEM create</text><br>
                             </div>
                         </div>
 
