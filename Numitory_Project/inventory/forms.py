@@ -114,19 +114,17 @@ class TypeCreateForm(ModelForm):
     class Meta:
         model = Type
         fields = [
-            'type_name',
-            'type_desc',
+            'country',
             'classification',
             'category',
-            'metal',
-            'metal_weight',
-            'purity',
-            'mint',
+            'type_name',
+            'type_desc',
+            'type_dates',
+            'mints',
             'face_value',
             'url_pcgs',
             'url_ngc',
             'url_other',
-            'recycled',
         ]
 
 class CollectionCreateForm(ModelForm):
