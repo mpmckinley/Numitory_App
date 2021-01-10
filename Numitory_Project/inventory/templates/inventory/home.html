@@ -8,7 +8,7 @@
 
 <div class="row align-content-center">
 
-    <div class="col-lg-4">
+    <div class="col-lg-3">
         
         <div class="card bg-light mt-2">
             <div class="card-body">
@@ -37,45 +37,48 @@
                 <p class="card-text">
                     <div class="row text-center mb-3">
                         <div class="col">
-                            <i class="fa fa-line-chart fa-5x" aria-hidden="true"></i><br>Silver
+                            <i class="fa fa-line-chart fa-5x" aria-hidden="true"></i><br>Silver: $27.65
                         </div>
                         <div class="col">
-                            <i class="fa fa-area-chart fa-5x" aria-hidden="true"></i><br>Gold
+                            <i class="fa fa-area-chart fa-5x" aria-hidden="true"></i><br>Gold: $1980.34
                         </div>
                     </div>
                     <div class="row text-center">
                         <div class="col">
-                            <i class="fa fa-area-chart fa-5x" aria-hidden="true"></i><br>Platinum
+                            <i class="fa fa-area-chart fa-5x" aria-hidden="true"></i><br>Platinum: $1082.00
                         </div>
                         <div class="col">
-                            <i class="fa fa-line-chart fa-5x" aria-hidden="true"></i><br>Palladium
+                            <i class="fa fa-line-chart fa-5x" aria-hidden="true"></i><br>Palladium: $2363.43
                         </div>
                     </div>
                 </p>
             </div>
         </div>
         
-        <div class="card border-primary mt-2">
-            <div class="card-header">
-                <i class="fas fa-newspaper"></i>
-                News & Headlines
+        {% if top_headlines %}
+            <div class="card border-primary mt-2">
+                <div class="card-header">
+                    <i class="fas fa-newspaper"></i>
+                    News & Headlines
+                </div>
+                {% comment %} <div class="card-body"> {% endcomment %}
+                    {% comment %} <h4 class="card-title">Primary card title</h4> {% endcomment %}
+                    {% comment %} <p class="card-text"> {% endcomment %}
+                        <ul class="list-group-flush pb-0 pt-2 pl-2 pr-2">
+                        {% for headline in top_headlines.articles|slice:":8" %}
+                        {% comment %} {{ headline.publishedAt|naturalday }} {% endcomment %}
+                            <li class="list-group-item p-0"><a href="{{ headline.url }}">{{ headline.title }}</a></lI>
+                        {% endfor %}
+                        </ul>
+                        {% comment %} {{ top_headlines }} {% endcomment %}
+                    {% comment %} </p> {% endcomment %}
+                {% comment %} </div> {% endcomment %}
             </div>
-            <div class="card-body">
-                {% comment %} <h4 class="card-title">Primary card title</h4> {% endcomment %}
-                <p class="card-text">
-                    {% for headline in top_headlines.articles|slice:":8" %}
-                        {{ headline.publishedAt|naturalday }}
-                        <a href="{{ headline.url }}">{{ headline.title }}</a>
-                        <br>
-                    {% endfor %}
-                    {% comment %} {{ top_headlines }} {% endcomment %}
-                </p>
-            </div>
-        </div>
+        {% endif %}
 
     </div>
     
-    <div class="col-lg-8">
+    <div class="col-lg-6">
 
         <div class="card border-primary mt-2">
             <div class="card-header">
@@ -172,6 +175,89 @@
             </div>
         </div>
 
+    </div>
+
+    <div class="col">
+        <div class="card border-primary mt-2 mb-0">
+            <div class="card-header">
+                <i class="fa fa-money" aria-hidden="true"></i>
+                Inventory Value
+            </div>
+            <div class="card-body text-center">
+                <i class="fa fa-line-chart fa-5x" aria-hidden="true"></i>
+            </div>
+            <div class="card-body pt-0">
+                <div class="row">
+                    <div class="col">
+                        <table>
+                            <tr>
+                                <td>Total Quantity:</td>
+                                <td>
+                                    <text style="color:rgba(236,27,20,0.96)">
+                                        ***
+                                    </text>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tran Value:</td>
+                                <td>
+                                    <text style="color:rgba(236,27,20,0.96)">
+                                        ***
+                                    </text>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tran Count:</td>
+                                <td>
+                                    <text style="color:rgba(236,27,20,0.96)">
+                                        ***
+                                    </text>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col">
+                        <table>                                
+                            <tr>
+                                <td>Melt Value:</td>
+                                <td>
+                                    <text style="color:rgba(236,27,20,0.96)">
+                                        ***
+                                        {% comment %} {{ total.tran_quantity__sum }} {% endcomment %}
+                                    </text>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Est. Market Value:</td>
+                                <td>
+                                    <text style="color:rgba(236,27,20,0.96)">
+                                        ***
+                                    </text>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Another Metric:</td>
+                                <td>
+                                    <text style="color:rgba(236,27,20,0.96)">
+                                        ***
+                                    </text>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="card border-primary mt-2 mb-0">
+            <div class="card-header">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                Quick Add
+            </div>
+            <div class="card-body">
+            </div>
+        </div>
+        
     </div>
 
 </div>

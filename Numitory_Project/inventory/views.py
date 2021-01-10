@@ -34,13 +34,13 @@ def home(request):
         newsapi = NewsApiClient(api_key=news_key)
         
         top_headlines = newsapi.get_everything(q='silver OR gold OR platinum OR palladium OR numismatic OR coin AND bullion NOT witcher NOT movies',
+            language='en',
+            sort_by='publishedAt',
+            page=1,
             # sources='bbc-news,the-verge',
             # category='business',
-            language='en',
             # country='us',
-            sort_by='publishedAt',
             # pageSize=5,
-            page=1,
         )
 
         return render(request, 'inventory/home.html', {
