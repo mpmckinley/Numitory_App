@@ -45,7 +45,7 @@ class UserExtended(models.Model):
 class Item(models.Model):
     id = models.CharField(max_length=36, default=uuid.uuid4, primary_key=True, null=False)
     type = models.ForeignKey("inventory.Type", on_delete=models.RESTRICT)
-    type_detl = models.ForeignKey("inventory.Type_detl", on_delete=models.RESTRICT)
+    type_detl = models.ForeignKey("inventory.Type_Detl", on_delete=models.RESTRICT)
     collection = models.ForeignKey("inventory.Collection", on_delete=models.RESTRICT)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 

@@ -29,7 +29,7 @@ def home(request):
         news_key = config("API_KEY")
         newsapi = NewsApiClient(api_key=news_key)
         
-        top_headlines = newsapi.get_everything(q='silver OR gold OR platinum OR palladium OR numismatic OR coin AND bullion NOT witcher NOT movies',
+        top_headlines = newsapi.get_everything(q='silver OR gold OR platinum OR palladium OR numismatic OR coin OR coins OR PCGS OR NGC OR ANACS OR bullion AND precious NOT witcher NOT movies',
             language='en',
             sort_by='publishedAt',
             page=1,

@@ -35,11 +35,9 @@
                         <div class="col">
                             {{ form.type|as_crispy_field }}
                         </div>
-                        {% comment %} <div class="col">
-                            {{ form.type_detl|as_crispy_field }}
-                        </div> {% endcomment %}
                         <div class="col">
                             <text style="color:rgba(236,27,20,0.96)">***Conditional Variety dropdown from Type***</text>
+                            {{ form.type_detl|as_crispy_field }}
                         </div>
                     </div>
                     <div class="row">
