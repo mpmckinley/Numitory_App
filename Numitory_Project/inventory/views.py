@@ -23,12 +23,8 @@ def home(request):
         itemtotal = Item.objects.filter(user=request.user, status='Active').aggregate(Count('id'))
         typetotal = Type.objects.filter(user=request.user).aggregate(Count('id'))
         colltotal = Collection.objects.filter(user=request.user).aggregate(Count('id'))
-        items = Item.objects.filter(user=request.user, status='Active')
+        items = Item.objects.filter(user=request.user, status='Active').order_by('-created')[:10]
         transactions = Transaction.objects.filter(user=request.user).order_by('-created')[:5]
-
-        paginator = Paginator(items, 10)
-        page_number = request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
 
         news_key = config("API_KEY")
         newsapi = NewsApiClient(api_key=news_key)
@@ -47,7 +43,7 @@ def home(request):
             'itemtotal': itemtotal,
             'typetotal': typetotal,
             'colltotal': colltotal,
-            'page_obj': page_obj,
+            'items': items,
             'transactions': transactions,
             'page_title': 'Numitory - Home',
             'top_headlines': top_headlines

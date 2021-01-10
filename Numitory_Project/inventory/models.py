@@ -14,7 +14,7 @@ def upload_location(instance, filename):
     filebase, extension = filename.split(".")
     return "%s/%s.%s" %(instance.item_name, instance.item_name, extension)
     ItemModel = instance.__class__
-    new_id = ItemModel.objects.order_by("instance.item_name").last().id + 1
+    new_id = ItemModel.objects.order_by("instance.item_name").last().id
 
     return "%s" %(filename)
 
@@ -74,6 +74,7 @@ class Item(models.Model):
     CAC = models.BooleanField(default=False)
     item_image = models.ImageField("", upload_to=upload_location, null=True, blank=True)
     mint = models.CharField("***MINT***", max_length=20, blank=True)
+    year = models.IntegerField()
 
     def __str__(self):
         return self.item_name + ' ->  ' + self.item_desc

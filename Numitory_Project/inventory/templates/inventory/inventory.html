@@ -22,6 +22,7 @@
         <table class="table table-hover main_table" style="width:100%">
             <thead>
                 <tr>
+                    <th width=19px></th>
                     <th scope="col">Item</th>
                     <th>Description</th>
                     <th>Year</th>
@@ -37,6 +38,14 @@
             <tbody>
                 {% for item in page_obj %}
                 <tr>
+                    <td>
+                        {% if item.item_image  %}
+                            <a href="{{ item.item_image.url }}">
+                                <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                            </a>
+                        {% else %}
+                        {% endif %}
+                    </td>
                     <td>
                         <a href="{% url 'inventory:itemdetail' item.id %}">
                             {% if item.item_name is None %}
