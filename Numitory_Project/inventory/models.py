@@ -45,7 +45,7 @@ class UserExtended(models.Model):
 class Item(models.Model):
     id = models.CharField(max_length=36, default=uuid.uuid4, primary_key=True, null=False)
     type = models.ForeignKey("inventory.Type", on_delete=models.RESTRICT)
-    # ***needs TYPE_DETL model connection
+    type_detl = models.ForeignKey("inventory.Type_detl", on_delete=models.RESTRICT)
     collection = models.ForeignKey("inventory.Collection", on_delete=models.RESTRICT)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -74,7 +74,7 @@ class Item(models.Model):
     CAC = models.BooleanField(default=False)
     item_image = models.ImageField("", upload_to=upload_location, null=True, blank=True)
     mint = models.CharField("***MINT***", max_length=20, blank=True)
-    year = models.IntegerField()
+    year = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return self.item_name + ' ->  ' + self.item_desc
@@ -171,6 +171,7 @@ class Type(models.Model):
         return self.type_name
 
 class Type_Detl(models.Model):
+    # id = models.CharField(max_length=36, default=uuid.uuid4, primary_key=True, null=False)
     type = models.ForeignKey("inventory.Type", on_delete=models.RESTRICT)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -197,7 +198,7 @@ class Type_Detl(models.Model):
 
     var_name = models.CharField(max_length=50)
     var_desc = models.CharField(max_length=50, blank=True, null=True)
-    year = models.IntegerField("Year", blank=True, null=True)
+    years = models.CharField("Years", max_length=50, blank=True, null=True)
     mint = MultiSelectField(choices=MINT_CHOICES, blank=True, null=True)
     comp = models.CharField("Composition", max_length=50)
     weight = models.DecimalField("Weight (ozT)", max_digits=10, decimal_places=4)
