@@ -65,7 +65,7 @@
                     {% comment %} <h4 class="card-title">Primary card title</h4> {% endcomment %}
                     {% comment %} <p class="card-text"> {% endcomment %}
                         <ul class="list-group-flush pb-0 pt-2 pl-2 pr-2">
-                        {% for headline in top_headlines.articles|slice:":8" %}
+                        {% for headline in top_headlines.articles|slice:":6" %}
                         {% comment %} {{ headline.publishedAt|naturalday }} {% endcomment %}
                             <li class="list-group-item p-0"><a href="{{ headline.url }}">{{ headline.title }}</a></lI>
                         {% endfor %}

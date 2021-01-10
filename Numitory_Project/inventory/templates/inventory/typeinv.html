@@ -11,9 +11,11 @@
                 <th>Description</th>
                 <th>Classification</th>
                 <th>Category</th>
-                <th>Metal</th>
+                <th>Mints</th>
+                <th>Dates</th>
                 <th>Purity</th>
                 <th>Weight</th>
+                <th>Varieties</th>
                 <th></th>
             </tr>
         </thead>
@@ -28,9 +30,11 @@
                 <td>{{ type.type_desc }}</td>
                 <td>{{ type.classification }}</td>
                 <td>{{ type.category }}</td>
-                <td>{{ type.metal }}</td>
+                <td>{{ type.mints }}</td>
+                <td>{{ type.type_dates }}</td>
                 <td>{{ type.purity }}</td>
                 <td>{{ type.metal_weight }}</td>
+                <td>Variety Count Link</td>
                 <td>
                     <a href="{% url 'inventory:typedetail' type.id %}">
                         <i class="bi bi-pencil-square"></i>
