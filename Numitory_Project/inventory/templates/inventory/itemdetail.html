@@ -7,7 +7,7 @@
 
 <div class="row">
 
-    <div class="col">
+    <div class="col-lg">
 
         {% if error %}
             <div class="alert alert-dismissible alert-warning">
@@ -35,14 +35,19 @@
                         <div class="col">
                             {{ form.type|as_crispy_field }}
                         </div>
+                        <div class="col">
+                            <text style="color:rgba(236,27,20,0.96)">***Conditional Variety dropdown from Type***</text>
+                            {{ form.type_detl|as_crispy_field }}
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-9">
                             {{ form.item_desc|as_crispy_field }}
                         </div>
                         <div class="col">
-                            {{ form.status|as_crispy_field }}
+                            {{ form.year|as_crispy_field }}
                             {{ form.mint|as_crispy_field }} 
+                            {{ form.status|as_crispy_field }}
                         </div>
                     </div>
                     <div class="row">
@@ -90,8 +95,56 @@
                 {{ item.type }} Type Detail
             </div>
             <div class="card-body">
-                <!-- ***INSERT TYPE DETAILS (not form fields) -->
-                <text style="color:rgba(236,27,20,0.96)">***INSERT TYPE DETAILS (not form fields)***</text>
+                <text style="color:rgba(236,27,20,0.96)">***Elaborate/Refine***</text><br>
+                {% comment %} Name: {{ detail.type_name }}<br> {% endcomment %}
+                <div class="row">
+                    <div class="col">
+                        <table>
+                            <tr>
+                                <td>Description:</td>
+                                <td>{{ detail.type_desc }}</td>
+                            </tr>
+                            <tr>
+                                <td>Classification:</td>
+                                <td>{{ detail.classification }}</td>
+                            </tr>
+                            <tr>
+                                <td>Country:</td>
+                                <td>{{ detail.country }}</td>
+                            </tr>
+                            <tr>
+                                <td>Dates:</td>
+                                <td>{{ detail.type_dates }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col">
+                        <table>
+                            <tr>
+                                <td>Mints:</td>
+                                <td>{{ detail.mints }}</td>
+                            </tr>
+                            <tr>
+                                <td>Face Value:</td>
+                                <td>{{ detail.face_value }}</td>
+                            </tr>
+                            <tr>
+                                <td>Links:</td>
+                                <td>
+                                    {% if detail.url_pcgs %}
+                                        <a href="{{ detail.url_pcgs }}"><i class="fa fa-shield fa-1x fa-pull-left fa-border" aria-hidden="true"></i></a>
+                                    {% endif %}
+                                    {% if detail.url_ngc %}
+                                        <a href="{{ detail.url_ngc }}"><i class="fa fa-balance-scale fa-1x fa-pull-left fa-border" aria-hidden="true"></i></a>
+                                    {% endif %}
+                                    {% if detail.url_other %}
+                                        <a href="{{ detail.url_other }}"><i class="fa fa-link fa-1x fa-pull-left fa-border" aria-hidden="true"></i></a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -195,8 +248,6 @@
                         </div>
                     </div>
                 </form>
-                {% comment %} <h5 class="card-title">Light card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> {% endcomment %}
             </div>
         </div>
 

@@ -14,7 +14,7 @@ def upload_location(instance, filename):
     filebase, extension = filename.split(".")
     return "%s/%s.%s" %(instance.item_name, instance.item_name, extension)
     ItemModel = instance.__class__
-    new_id = ItemModel.objects.order_by("instance.item_name").last().id + 1
+    new_id = ItemModel.objects.order_by("instance.item_name").last().id
 
     return "%s" %(filename)
 
@@ -45,7 +45,7 @@ class UserExtended(models.Model):
 class Item(models.Model):
     id = models.CharField(max_length=36, default=uuid.uuid4, primary_key=True, null=False)
     type = models.ForeignKey("inventory.Type", on_delete=models.RESTRICT)
-    # ***needs TYPE_DETL model connection
+    type_detl = models.ForeignKey("inventory.Type_Detl", on_delete=models.RESTRICT)
     collection = models.ForeignKey("inventory.Collection", on_delete=models.RESTRICT)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -74,6 +74,7 @@ class Item(models.Model):
     CAC = models.BooleanField(default=False)
     item_image = models.ImageField("", upload_to=upload_location, null=True, blank=True)
     mint = models.CharField("***MINT***", max_length=20, blank=True)
+    year = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return self.item_name + ' ->  ' + self.item_desc
@@ -150,14 +151,14 @@ class Type(models.Model):
         ('USA', 'USA'),
     ]
 
-    country = models.CharField("Country", max_length=50, choices=COUNTRY_CHOICES)
     classification = models.CharField("Classification", max_length=50, choices=CLASS_CHOICES)
+    country = models.CharField("Country", max_length=50, choices=COUNTRY_CHOICES, blank=True, null=True)
     category = models.CharField("Category", max_length=20, choices=NUMI_CAT_CHOICES)
     type_name = models.CharField("Name", max_length=100, unique=True)
-    type_desc = models.CharField("Description", max_length=250)
-    type_dates = models.CharField("Dates", max_length=250)
+    type_desc = models.CharField("Description", max_length=250, blank=True, null=True)
+    type_dates = models.CharField("Dates", max_length=250, blank=True, null=True)
     mints = MultiSelectField(choices=MINT_CHOICES, blank=True, null=True)
-    face_value = MoneyField("Face Value", max_digits=5, decimal_places=3, default_currency='USD',)
+    face_value = MoneyField("Face Value", max_digits=5, decimal_places=3, default_currency='USD', blank=True, null=True)
     url_pcgs = models.CharField("PCGS url", max_length=250, blank=True, null=True)
     url_ngc = models.CharField("NGC url", max_length=250, blank=True, null=True)
     url_other = models.CharField("Other url", max_length=250, blank=True, null=True)
@@ -170,6 +171,7 @@ class Type(models.Model):
         return self.type_name
 
 class Type_Detl(models.Model):
+    # id = models.CharField(max_length=36, default=uuid.uuid4, primary_key=True, null=False)
     type = models.ForeignKey("inventory.Type", on_delete=models.RESTRICT)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -178,6 +180,7 @@ class Type_Detl(models.Model):
         ('Gold', 'Gold'),
         ('Platinum', 'Platinum'),
         ('Palladium', 'Palladium'),
+        ('None', 'None'),
     ]
 
     MINT_CHOICES = [
@@ -194,16 +197,16 @@ class Type_Detl(models.Model):
     ]
 
     var_name = models.CharField(max_length=50)
-    var_desc = models.CharField(max_length=50)
-    year = models.IntegerField("Year")
+    var_desc = models.CharField(max_length=50, blank=True, null=True)
+    years = models.CharField("Years", max_length=50, blank=True, null=True)
     mint = MultiSelectField(choices=MINT_CHOICES, blank=True, null=True)
     comp = models.CharField("Composition", max_length=50)
     weight = models.DecimalField("Weight (ozT)", max_digits=10, decimal_places=4)
     precious_type = models.CharField(max_length=10, choices=METAL_CHOICES)
-    precious_purity = models.DecimalField("Precious Purity", max_digits=4, decimal_places=4)
-    precious_weight = models.DecimalField("Precious Weight (ozT)", max_digits=10, decimal_places=4)
-    edge = models.CharField(max_length=50)
-    mintage = models.IntegerField("Mintage")
+    precious_purity = models.DecimalField("Precious Purity", max_digits=4, decimal_places=4, blank=True, null=True)
+    precious_weight = models.DecimalField("Precious Weight (ozT)", max_digits=10, decimal_places=4, blank=True, null=True)
+    edge = models.CharField(max_length=50, blank=True, null=True)
+    mintage = models.IntegerField("Mintage", blank=True, null=True)
     url_ngc = models.CharField("NGC url", max_length=250, blank=True, null=True)
     url_other = models.CharField("Other url", max_length=250, blank=True, null=True)
     url_pcgs = models.CharField("PCGS url", max_length=250, blank=True, null=True)

@@ -3,7 +3,7 @@
 
 {% block content %}
 
-    <div class="container h-100">
+    <!-- <div class="container h-100"> -->
 
     {% if error %}
         <div class="alert alert-dismissible alert-warning">
@@ -33,10 +33,10 @@
                     
                         <div class="row">
                             <div class="col">
-                                {{ form.country|as_crispy_field }}
+                                {{ form.classification|as_crispy_field }}
                             </div>
                             <div class="col">
-                                {{ form.classification|as_crispy_field }}
+                                {{ form.country|as_crispy_field }}
                             </div>
                             <div class="col">
                                 {{ form.category|as_crispy_field }}
@@ -117,7 +117,7 @@
                                 {{ form_detl.var_desc|as_crispy_field }}
                             </div>
                             <div class="col">
-                                {{ form_detl.year|as_crispy_field }}
+                                {{ form_detl.years|as_crispy_field }}
                             </div>
                             <div class="col">
                                 {{ form_detl.mint|as_crispy_field }}
@@ -147,6 +147,9 @@
                             <div class="col">
                                 {{ form_detl.mintage|as_crispy_field }}
                             </div>
+                            <div class="col">
+                                {{ form_detl.designer|as_crispy_field }}
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col">
@@ -173,6 +176,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    <!-- </div> -->
 
 {% endblock content %}

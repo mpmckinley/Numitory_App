@@ -17,6 +17,8 @@ from decouple import config
 import datetime
 import requests
 import json
+from newsapi import NewsApiClient
+import datetime
 
 def home(request):
 
@@ -24,17 +26,30 @@ def home(request):
         itemtotal = Item.objects.filter(user=request.user, status='Active').aggregate(Count('id'))
         typetotal = Type.objects.filter(user=request.user).aggregate(Count('id'))
         colltotal = Collection.objects.filter(user=request.user).aggregate(Count('id'))
-        items = Item.objects.filter(user=request.user, status='Active')
+        items = Item.objects.filter(user=request.user, status='Active').order_by('-created')[:10]
         transactions = Transaction.objects.filter(user=request.user).order_by('-created')[:5]
+
+        news_key = config("API_KEY")
+        newsapi = NewsApiClient(api_key=news_key)
+        
+        top_headlines = newsapi.get_everything(q='silver OR gold OR platinum OR palladium OR numismatic OR coin OR coins OR PCGS OR NGC OR ANACS OR bullion AND precious NOT witcher NOT movies',
+            language='en',
+            sort_by='publishedAt',
+            page=1,
+            # sources='bbc-news,the-verge',
+            # category='business',
+            # country='us',
+            # pageSize=5,
+        )
 
         return render(request, 'inventory/home.html', {
             'itemtotal': itemtotal,
             'typetotal': typetotal,
             'colltotal': colltotal,
+            'items': items,
             'transactions': transactions,
-            'page_title': 'Numitory - Home'
-
-            # 'tran_chain': tran_chain,
+            'page_title': 'Numitory - Home',
+            'top_headlines': top_headlines
         })
     else:
         return render(request, 'inventory/home.html')
@@ -69,15 +84,6 @@ def refresh_latest_pricing(request):
     prices.save()
     return render(request, 'inventory/navbar.html', {'api': rates})
     
-# ***ATTEMPT AT API CALL
-# def navbar(request):
-#     import requests
-#     import json
-    
-#     api_request = requests.get('https://www.quandl.com/api/v3/datasets/BTER/BTMETH?start_date=2017-11-08&end_date=2017-11-08&api_key=driYA7Q4oEw7sxoomJVG')
-#     api = json.loads(api_request.content)
-#     print(api)
-#     return render(request, 'inventory/navbar.html', {'api': api})
 
 def about(request):
     return render(request, 'inventory/about.html', {
@@ -172,6 +178,9 @@ def itemdetail(request, item_pk):
 
         total = Transaction.objects.filter(user=request.user, tran_item_id=item_pk).aggregate(Count('id'))
 
+        # detail = Type.objects.filter(user=request.user, id=item.type_id)
+        detail = get_object_or_404(Type, user=request.user, id=item.type_id)
+
         paginator = Paginator(trans, 10)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
@@ -182,6 +191,7 @@ def itemdetail(request, item_pk):
             'trans': trans,
             'tranform': tranform,
             'total': total,
+            'detail': detail,
             'page_obj': page_obj,
             'page_title': 'Numitory - Item Detail'
 
@@ -255,8 +265,9 @@ def typecreate(request):
             newtype = form.save(commit=False)
             newtypedetl = form_detl.save(commit=False)
             newtype.user = request.user
-            newtypedetl.user = request.user
             newtype.save()
+            newtypedetl.user = request.user
+            newtypedetl.type_id = newtype.id
             newtypedetl.save()
             return redirect('inventory:typeinv')
         except ValueError:
