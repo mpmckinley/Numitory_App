@@ -37,6 +37,8 @@ urlpatterns = [
 
     #Latest Prices
     path('get/latest/prices/', views.get_latest_prices, name='get_latest_prices'),
+    path('refresh/latest/prices',views.refresh_latest_pricing,name='refresh_latest_pricing'),
+    
     # AUTH
     path('signup/', views.signupuser, name="signupuser"),
     path('login/', views.loginuser, name="loginuser"),

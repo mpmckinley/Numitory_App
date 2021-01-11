@@ -13,7 +13,10 @@ from .forms import ItemCreateForm, TransactionCreateForm, TypeCreateForm, TypeDe
 from .models import Transaction, Type, Collection, Item, UserExtended, MetalPrices
 from django.contrib.auth.decorators import login_required
 from itertools import chain
+from decouple import config
 import datetime
+import requests
+import json
 
 def home(request):
 
@@ -43,13 +46,28 @@ def get_latest_prices(request):
         prices=[]
     else:
         prices.get()
-        # print(prices)
+        prices[0]['gold_price']="{:.2f}".format(prices[0]['gold_price'])
+        prices[0]['silver_price']="{:.2f}".format(prices[0]['silver_price'])
+        prices[0]['platinum_price']="{:.2f}".format(prices[0]['platinum_price'])
+        prices[0]['palladium_price']="{:.2f}".format(prices[0]['palladium_price'])
         prices[0]['updated_at']=prices[0]['updated_at'].strftime('%m/%d/%y %H:%M:%S')
     return JsonResponse({'prices':list(prices)})
     
     
-# def refresh_latest_pricing(request):
-    
+def refresh_latest_pricing(request):
+    api_key=config('METAL_PRICES_API_KEY')
+    api_request = requests.get('https://metals-api.com/api/latest?access_key='+api_key+'&base=USD&symbols=XAU%2CXAG%2CXPD%2CXPT%2CXRH')
+    api = json.loads(api_request.content)
+    base_curr=api['base']
+    rates=api['rates']
+    base_price=rates[base_curr]
+    gold_price=base_price/rates['XAU']
+    silver_price=base_price/rates['XAG']
+    platinum_price=base_price/rates['XPT']
+    palladium_price=base_price/rates['XPD']
+    prices=MetalPrices(gold_price=gold_price,silver_price=silver_price,platinum_price=platinum_price,palladium_price=palladium_price)
+    prices.save()
+    return render(request, 'inventory/navbar.html', {'api': rates})
     
 # ***ATTEMPT AT API CALL
 # def navbar(request):
