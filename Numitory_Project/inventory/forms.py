@@ -1,12 +1,11 @@
 from django.contrib.auth.models import User,Group
 from django.db.models import fields
 from django.forms import ModelForm
-from django import forms
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.hashers import make_password, check_password
 from django import forms
 from django.forms.widgets import HiddenInput, NumberInput
-from .models import Item, Collection, Transaction, Type,UserExtended
+from .models import Item, Collection, Transaction, Type, UserExtended
 
 class UserChangeForm(forms.ModelForm):
     password_confirmation = forms.CharField(
@@ -59,8 +58,6 @@ class UserChangeForm(forms.ModelForm):
             'password': forms.PasswordInput()
         }
 
-
-
 class ExtendedUserForm(forms.ModelForm):
     user_type = forms.ModelChoiceField(queryset=Group.objects.all(),required=True)
     
@@ -82,7 +79,6 @@ class ExtendedUserForm(forms.ModelForm):
         type = cleaned_data.get("user_type")
         if (type==None or type=='' or type==0):
             raise forms.ValidationError("User Type is Required")
-        
 
 class ItemCreateForm(ModelForm):
     class Meta:
@@ -101,11 +97,14 @@ class ItemCreateForm(ModelForm):
             'mint',
             'type',
             'collection',
+            'count',
+            # 'type_detl',
         ]
 
     def __init__(self, user, **kwargs):
         super(ItemCreateForm, self).__init__(**kwargs)
         self.fields['type'].queryset = Type.objects.filter(user=user)
+        # self.fields['type_detl'].queryset = Type_Detl.objects.filter(type_id=id)
         self.fields['collection'].queryset = Collection.objects.filter(user=user)
         self.fields['item_desc'].widget.attrs = {'rows': 5}
         # ***Mint conditional choices based on Type selection
@@ -115,20 +114,40 @@ class TypeCreateForm(ModelForm):
     class Meta:
         model = Type
         fields = [
-            'type_name',
-            'type_desc',
             'classification',
+            'country',
             'category',
-            'metal',
-            'metal_weight',
-            'purity',
+            # 'type_name',
+            'type_desc',
+            # 'type_dates',
             'mint',
             'face_value',
             'url_pcgs',
             'url_ngc',
             'url_other',
-            'recycled',
         ]
+
+# class TypeDetlForm(ModelForm):
+#     class Meta:
+#         model = Type_Detl
+#         fields = [
+#             'var_name',
+#             'var_desc',
+#             'years',
+#             'mint',
+#             'comp',
+#             'weight',
+#             'precious_type',
+#             'precious_purity',
+#             'precious_weight',
+#             'edge',
+#             'mintage',
+#             'url_pcgs',
+#             'url_ngc',
+#             'url_other',
+#             'designer',
+#             'recycled',
+#         ]
 
 class CollectionCreateForm(ModelForm):
     class Meta:
@@ -153,37 +172,3 @@ class TransactionCreateForm(ModelForm):
     # def __init__(self, *args, **kwargs):
     #     super(TransactionCreateForm, self).__init__(**kwargs)
     #     self.fields['tran_value_currency'].widget = HiddenInput()
-
-        
-
-class ExportForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        #self.user is given to us with ExportForm(user=user.id) in our view
-        self.user = kwargs.pop('name',None)
-        super(ExportForm, self).__init__(*args, **kwargs)
-        #We create a field called 'Collection' with ModelMultipleChoiceField
-        #The choices will be Selected from Collection() ModelChoiceField
-        #Using the user_id field and a user object. 
-        
-        self.fields['Collection'] = forms.ModelMultipleChoiceField(Collection.objects.filter(user_id__in=User.objects.filter(username=self.user)))
-        
-    class Meta:
-        model = Collection
-        field = ('Collection')
-        exclude = ['id','user','coll_name','coll_desc','recycled']
-        widgets = {
-            'Collection': forms.Select(attrs={'size': 4,'style': 'width:40px'})   
-        }
-
-class ExportFilterForm(forms.Form):
-
-    
-    def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('name',None)
-        super(ExportFilterForm, self).__init__(*args, **kwargs)
-        #We repeat the same here but for Type() Model.
-        #We allow the field to not be required. 
-        self.fields['Type'] = forms.ModelMultipleChoiceField(Type.objects.filter(user_id__in=User.objects.filter(username=self.user)),required=False)
-        
-    active = forms.BooleanField(required=False)
-    inactive = forms.BooleanField(required=False)
