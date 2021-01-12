@@ -1,7 +1,7 @@
 from django.contrib import auth
 from django.db.models.aggregates import Count
 from django.db.models.expressions import OrderBy
-from django.http import response, HttpResponseRedirect,JsonResponse
+from django.http import response, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.core.paginator import Paginator
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -9,16 +9,21 @@ from django.contrib.auth.models import User,Group
 from django.db import IntegrityError
 from django.db.models import Sum
 from django.contrib.auth import login, logout, authenticate,update_session_auth_hash
-from .forms import ItemCreateForm, TransactionCreateForm, TypeCreateForm, CollectionCreateForm, UserChangeForm, ExtendedUserForm
-from .models import Transaction, Type, Collection, Item, UserExtended, MetalPrices
+from .forms import (ItemCreateForm, 
+                    TransactionCreateForm, 
+                    TypeCreateForm, 
+                    CollectionCreateForm, 
+                    UserChangeForm,
+                    ExtendedUserForm,
+                    ExportForm,
+                    ExportFilterForm,
+                    )
+                    
+from .models import Transaction, Type, Collection, Item,UserExtended
 from django.contrib.auth.decorators import login_required
 from itertools import chain
-from decouple import config
-import datetime
-import requests
-import json
-from newsapi import NewsApiClient
-import datetime
+import csv
+from django.http import HttpResponse
 
 def home(request):
 
@@ -26,64 +31,30 @@ def home(request):
         itemtotal = Item.objects.filter(user=request.user, status='Active').aggregate(Count('id'))
         typetotal = Type.objects.filter(user=request.user).aggregate(Count('id'))
         colltotal = Collection.objects.filter(user=request.user).aggregate(Count('id'))
-        items = Item.objects.filter(user=request.user, status='Active').order_by('-created')[:10]
+        items = Item.objects.filter(user=request.user, status='Active')
         transactions = Transaction.objects.filter(user=request.user).order_by('-created')[:5]
-
-        news_key = config("API_KEY")
-        newsapi = NewsApiClient(api_key=news_key)
-        
-        top_headlines = newsapi.get_everything(q='silver OR gold OR platinum OR palladium OR numismatic OR coin OR coins OR PCGS OR NGC OR ANACS OR bullion AND precious NOT witcher NOT movies',
-            language='en',
-            sort_by='publishedAt',
-            page=1,
-            # sources='bbc-news,the-verge',
-            # category='business',
-            # country='us',
-            # pageSize=5,
-        )
 
         return render(request, 'inventory/home.html', {
             'itemtotal': itemtotal,
             'typetotal': typetotal,
             'colltotal': colltotal,
-            'items': items,
             'transactions': transactions,
-            'page_title': 'Numitory - Home',
-            'top_headlines': top_headlines
+            'page_title': 'Numitory - Home'
+
+            # 'tran_chain': tran_chain,
         })
     else:
         return render(request, 'inventory/home.html')
 
-
-def get_latest_prices(request):
-    prices=MetalPrices.objects.order_by('-updated_at')[:1].values()
-    if(not prices):
-        prices=[]
-    else:
-        prices.get()
-        prices[0]['gold_price']="{:.2f}".format(prices[0]['gold_price'])
-        prices[0]['silver_price']="{:.2f}".format(prices[0]['silver_price'])
-        prices[0]['platinum_price']="{:.2f}".format(prices[0]['platinum_price'])
-        prices[0]['palladium_price']="{:.2f}".format(prices[0]['palladium_price'])
-        prices[0]['updated_at']=prices[0]['updated_at'].strftime('%m/%d/%y %H:%M:%S')
-    return JsonResponse({'prices':list(prices)})
+# ***ATTEMPT AT API CALL
+# def navbar(request):
+#     import requests
+#     import json
     
-    
-def refresh_latest_pricing(request):
-    api_key=config('METAL_PRICES_API_KEY')
-    api_request = requests.get('https://metals-api.com/api/latest?access_key='+api_key+'&base=USD&symbols=XAU%2CXAG%2CXPD%2CXPT%2CXRH')
-    api = json.loads(api_request.content)
-    base_curr=api['base']
-    rates=api['rates']
-    base_price=rates[base_curr]
-    gold_price=base_price/rates['XAU']
-    silver_price=base_price/rates['XAG']
-    platinum_price=base_price/rates['XPT']
-    palladium_price=base_price/rates['XPD']
-    prices=MetalPrices(gold_price=gold_price,silver_price=silver_price,platinum_price=platinum_price,palladium_price=palladium_price)
-    prices.save()
-    return render(request, 'inventory/navbar.html', {'api': rates})
-    
+#     api_request = requests.get('https://www.quandl.com/api/v3/datasets/BTER/BTMETH?start_date=2017-11-08&end_date=2017-11-08&api_key=driYA7Q4oEw7sxoomJVG')
+#     api = json.loads(api_request.content)
+#     print(api)
+#     return render(request, 'inventory/navbar.html', {'api': api})
 
 def about(request):
     return render(request, 'inventory/about.html', {
@@ -178,9 +149,6 @@ def itemdetail(request, item_pk):
 
         total = Transaction.objects.filter(user=request.user, tran_item_id=item_pk).aggregate(Count('id'))
 
-        # detail = Type.objects.filter(user=request.user, id=item.type_id)
-        detail = get_object_or_404(Type, user=request.user, id=item.type_id)
-
         paginator = Paginator(trans, 10)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
@@ -191,7 +159,6 @@ def itemdetail(request, item_pk):
             'trans': trans,
             'tranform': tranform,
             'total': total,
-            'detail': detail,
             'page_obj': page_obj,
             'page_title': 'Numitory - Item Detail'
 
@@ -251,7 +218,6 @@ def typecreate(request):
     if request.method == 'GET':
         return render(request, 'inventory/typecreate.html', {
             'form': TypeCreateForm(),
-            # 'form_detl': TypeDetlForm(),
             'heading': heading,
             'button': button,
             'page_title': 'Numitory - Type Create'
@@ -261,19 +227,13 @@ def typecreate(request):
     else:
         try:
             form = TypeCreateForm(request.POST)
-            # form_detl = TypeDetlForm(request.POST)
             newtype = form.save(commit=False)
-            # newtypedetl = form_detl.save(commit=False)
             newtype.user = request.user
             newtype.save()
-            # newtypedetl.user = request.user
-            # newtypedetl.type_id = newtype.id
-            # newtypedetl.save()
             return redirect('inventory:typeinv')
         except ValueError:
             return render(request, 'inventory/typecreate.html', {
                 'form': TypeCreateForm(),
-                # 'form_detl': TypeDetlForm(),
                 'error': "Data validation error",
             })
 
@@ -304,7 +264,7 @@ def typedetail(request, type_pk):
 
 @login_required
 def typeitems(request, type_pk):
-    # heading = Type.objects.values_list('type_longname', flat=True).get(id=type_pk)
+    heading = Type.objects.values_list('type_name', flat=True).get(id=type_pk)
     items = Item.objects.filter(user=request.user, status='Active', type=type_pk)
 
     paginator = Paginator(items, 20)
@@ -522,6 +482,109 @@ def edituser(request, user_pk):
                 'form': UserChangeForm(user=user),
                 'error':str(e)
             })
+
+@login_required
+def export(request):
+    user = request.user
+    user_obj = User.objects.get(id=request.user.id) #used for our form.
+    
+    #Request for exporting is via POST. 
+    
+    if request.method == 'POST':
+        #Due to the query which happens in ExportForm()
+        #We need to input the current user. 
+        form = ExportForm(request.POST,name=user_obj)
+        form_filter = ExportFilterForm(request.POST,name=user_obj)
+        #If form fails, return user to the form and show errors. 
+        if not form.is_valid() or not form_filter.is_valid(): 
+            print("Not valid form")
+            content = {  
+                    'form' : form,
+                    'form_f' : form_filter,
+                  }
+            return render(request, 'inventory/export.html', content)
+        collections = form.cleaned_data['Collection']
+        #Filter the collection
+        
+        active = form_filter.cleaned_data['active']
+        inactive = form_filter.cleaned_data['inactive']
+        type_filter = form_filter.cleaned_data['Type']
+        print(type_filter)
+        
+        
+            
+        #print(form)
+        
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="export.csv"'
+        writer = csv.writer(response)
+        
+        #collections = Collection.objects.filter(user=user)
+        
+        
+        writer.writerow(['collection',
+                            'id',
+                            'item_name',
+                            'item_desc',
+                            'status',
+                            'graded',
+                            'grader',
+                            'grade',
+                            'CAC',
+                            'condition',
+                            'mint',
+                            'type_name',
+                            'classification'
+                            'category',
+                            'metal',
+                            'metal_weight',
+                            'purity',
+                            'recycled',])
+        for i in collections:
+            #print(i)
+            
+            items = Item.objects.filter(collection=i,user=user,type__in=type_filter)
+            for item in items:
+                print(item,item.type_id) 
+                type = Type.objects.get(id=item.type_id)
+                #print(type.__dict__)
+                writer.writerow([i,
+                                item.id,
+                                item.item_name,
+                                item.item_desc,
+                                item.status,
+                                item.graded,
+                                item.grader,
+                                item.grade,
+                                item.CAC,
+                                item.condition,
+                                item.mint,
+                                type.type_name,
+                                type.classification,
+                                type.category,
+                                type.metal,
+                                type.metal_weight,
+                                type.purity,
+                                type.recycled,])
+    
+                
+                
+        #return response
+        content = {  
+                    'form' : form,
+                    'form_f' : form_filter,
+                  }
+        return render(request, 'inventory/export.html', content)
+    else:
+        form = ExportForm(name=user_obj)
+        form_filter = ExportFilterForm(name=user_obj)
+        #collections = Collection.objects.filter(user=user)
+        content = {  
+                    'form' : form,
+                    'form_f' : form_filter,
+                  }
+        return render(request, 'inventory/export.html', content)
+
 
 @login_required
 def logoutuser(request):
