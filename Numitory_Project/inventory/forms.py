@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.hashers import make_password, check_password
 from django import forms
 from django.forms.widgets import HiddenInput, NumberInput
-from .models import Item, Collection, Transaction, Type, Type_Detl, UserExtended
+from .models import Item, Collection, Transaction, Type, UserExtended
 
 class UserChangeForm(forms.ModelForm):
     password_confirmation = forms.CharField(
@@ -97,8 +97,8 @@ class ItemCreateForm(ModelForm):
             'mint',
             'type',
             'collection',
-            'year',
-            'type_detl',
+            'count',
+            # 'type_detl',
         ]
 
     def __init__(self, user, **kwargs):
@@ -117,37 +117,37 @@ class TypeCreateForm(ModelForm):
             'classification',
             'country',
             'category',
-            'type_name',
+            # 'type_name',
             'type_desc',
-            'type_dates',
-            'mints',
+            # 'type_dates',
+            'mint',
             'face_value',
             'url_pcgs',
             'url_ngc',
             'url_other',
         ]
 
-class TypeDetlForm(ModelForm):
-    class Meta:
-        model = Type_Detl
-        fields = [
-            'var_name',
-            'var_desc',
-            'years',
-            'mint',
-            'comp',
-            'weight',
-            'precious_type',
-            'precious_purity',
-            'precious_weight',
-            'edge',
-            'mintage',
-            'url_pcgs',
-            'url_ngc',
-            'url_other',
-            'designer',
-            'recycled',
-        ]
+# class TypeDetlForm(ModelForm):
+#     class Meta:
+#         model = Type_Detl
+#         fields = [
+#             'var_name',
+#             'var_desc',
+#             'years',
+#             'mint',
+#             'comp',
+#             'weight',
+#             'precious_type',
+#             'precious_purity',
+#             'precious_weight',
+#             'edge',
+#             'mintage',
+#             'url_pcgs',
+#             'url_ngc',
+#             'url_other',
+#             'designer',
+#             'recycled',
+#         ]
 
 class CollectionCreateForm(ModelForm):
     class Meta:
