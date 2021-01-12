@@ -190,7 +190,7 @@ class Type(models.Model):
 
 
     def __str__(self):
-        return self.type_name
+        return self.longname
 
 # class Type_Detl(models.Model):
 #     # id = models.CharField(max_length=36, default=uuid.uuid4, primary_key=True, null=False)

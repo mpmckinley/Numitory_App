@@ -304,7 +304,7 @@ def typedetail(request, type_pk):
 
 @login_required
 def typeitems(request, type_pk):
-    heading = Type.objects.values_list('type_name', flat=True).get(id=type_pk)
+    # heading = Type.objects.values_list('type_longname', flat=True).get(id=type_pk)
     items = Item.objects.filter(user=request.user, status='Active', type=type_pk)
 
     paginator = Paginator(items, 20)
