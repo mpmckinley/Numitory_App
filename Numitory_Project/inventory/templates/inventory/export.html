@@ -1,0 +1,42 @@
+{% extends 'inventory/base.html' %}
+{% load crispy_forms_tags %}
+ 
+{% block content %}
+ <div class="row justify-content-center">
+        <div class="col-lg-4">
+        <form method="POST">
+        {% if form.errors %}
+        {% for field in form %}
+            {% for error in field.errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% if form_f.errors %}
+        {% for field in form_f %}
+            {% for error in field.errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        {% for error in form_f.non_field_errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endif %}
+        {% csrf_token %}
+        {{ form|crispy }}
+        {{ form_f|crispy}}
+        <button type="submit" class="btn btn-primary">Export Collection to CSV</button>
+        </form>
+ 
+{% endblock content %}

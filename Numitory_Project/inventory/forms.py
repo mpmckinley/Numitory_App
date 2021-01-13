@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.hashers import make_password, check_password
 from django import forms
 from django.forms.widgets import HiddenInput, NumberInput
-from .models import Item, Collection, Transaction, Type, Type_Detl, UserExtended
+from .models import Item, Collection, Transaction, Type, UserExtended
 
 class UserChangeForm(forms.ModelForm):
     password_confirmation = forms.CharField(
@@ -98,8 +98,8 @@ class ItemCreateForm(ModelForm):
             'mint',
             'type',
             'collection',
-            'year',
-            'type_detl',
+            'count',
+            # 'type_detl',
         ]
 
     def __init__(self, user, **kwargs):
@@ -118,37 +118,37 @@ class TypeCreateForm(ModelForm):
             'classification',
             'country',
             'category',
-            'type_name',
+            # 'type_name',
             'type_desc',
-            'type_dates',
-            'mints',
+            # 'type_dates',
+            'mint',
             'face_value',
             'url_pcgs',
             'url_ngc',
             'url_other',
         ]
 
-class TypeDetlForm(ModelForm):
-    class Meta:
-        model = Type_Detl
-        fields = [
-            'var_name',
-            'var_desc',
-            'years',
-            'mint',
-            'comp',
-            'weight',
-            'precious_type',
-            'precious_purity',
-            'precious_weight',
-            'edge',
-            'mintage',
-            'url_pcgs',
-            'url_ngc',
-            'url_other',
-            'designer',
-            'recycled',
-        ]
+# class TypeDetlForm(ModelForm):
+#     class Meta:
+#         model = Type_Detl
+#         fields = [
+#             'var_name',
+#             'var_desc',
+#             'years',
+#             'mint',
+#             'comp',
+#             'weight',
+#             'precious_type',
+#             'precious_purity',
+#             'precious_weight',
+#             'edge',
+#             'mintage',
+#             'url_pcgs',
+#             'url_ngc',
+#             'url_other',
+#             'designer',
+#             'recycled',
+#         ]
 
 class CollectionCreateForm(ModelForm):
     class Meta:
@@ -173,3 +173,35 @@ class TransactionCreateForm(ModelForm):
     # def __init__(self, *args, **kwargs):
     #     super(TransactionCreateForm, self).__init__(**kwargs)
     #     self.fields['tran_value_currency'].widget = HiddenInput()
+
+class ExportForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        #self.user is given to us with ExportForm(user=user.id) in our view
+        self.user = kwargs.pop('name',None)
+        super(ExportForm, self).__init__(*args, **kwargs)
+        #We create a field called 'Collection' with ModelMultipleChoiceField
+        #The choices will be Selected from Collection() ModelChoiceField
+        #Using the user_id field and a user object. 
+ 
+        self.fields['Collection'] = forms.ModelMultipleChoiceField(Collection.objects.filter(user_id__in=User.objects.filter(username=self.user)))
+ 
+    class Meta:
+        model = Collection
+        field = ('Collection')
+        exclude = ['id','user','coll_name','coll_desc','recycled']
+        widgets = {
+            'Collection': forms.Select(attrs={'size': 4,'style': 'width:40px'})   
+        }
+ 
+class ExportFilterForm(forms.Form):
+ 
+ 
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('name',None)
+        super(ExportFilterForm, self).__init__(*args, **kwargs)
+        #We repeat the same here but for Type() Model.
+        #We allow the field to not be required. 
+        self.fields['Type'] = forms.ModelMultipleChoiceField(Type.objects.filter(user_id__in=User.objects.filter(username=self.user)),required=False)
+ 
+    active = forms.BooleanField(required=False)
+    inactive = forms.BooleanField(required=False)

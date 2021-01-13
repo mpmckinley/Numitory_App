@@ -1,7 +1,7 @@
 from django.contrib import auth
 from django.db.models.aggregates import Count
 from django.db.models.expressions import OrderBy
-from django.http import response, HttpResponseRedirect,JsonResponse
+from django.http import response, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.core.paginator import Paginator
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -9,7 +9,15 @@ from django.contrib.auth.models import User,Group
 from django.db import IntegrityError
 from django.db.models import Sum
 from django.contrib.auth import login, logout, authenticate,update_session_auth_hash
-from .forms import ItemCreateForm, TransactionCreateForm, TypeCreateForm, TypeDetlForm, CollectionCreateForm, UserChangeForm, ExtendedUserForm
+from .forms import (ItemCreateForm,
+                    TransactionCreateForm,
+                    TypeCreateForm,
+                    CollectionCreateForm,
+                    UserChangeForm,
+                    ExtendedUserForm,
+                    ExportForm,
+                    ExportFilterForm,
+)
 from .models import Transaction, Type, Collection, Item, UserExtended, MetalPrices
 from django.contrib.auth.decorators import login_required
 from itertools import chain
@@ -19,6 +27,7 @@ import requests
 import json
 from newsapi import NewsApiClient
 import datetime
+import csv
 
 def home(request):
 
@@ -247,7 +256,7 @@ def typecreate(request):
     if request.method == 'GET':
         return render(request, 'inventory/typecreate.html', {
             'form': TypeCreateForm(),
-            'form_detl': TypeDetlForm(),
+            # 'form_detl': TypeDetlForm(),
             'heading': heading,
             'button': button,
             'page_title': 'Numitory - Type Create'
@@ -257,33 +266,34 @@ def typecreate(request):
     else:
         try:
             form = TypeCreateForm(request.POST)
-            form_detl = TypeDetlForm(request.POST)
+            # form_detl = TypeDetlForm(request.POST)
             newtype = form.save(commit=False)
-            newtypedetl = form_detl.save(commit=False)
+            # newtypedetl = form_detl.save(commit=False)
             newtype.user = request.user
             newtype.save()
-            newtypedetl.user = request.user
-            newtypedetl.type_id = newtype.id
-            newtypedetl.save()
+            # newtypedetl.user = request.user
+            # newtypedetl.type_id = newtype.id
+            # newtypedetl.save()
             return redirect('inventory:typeinv')
         except ValueError:
             return render(request, 'inventory/typecreate.html', {
                 'form': TypeCreateForm(),
-                'form_detl': TypeDetlForm(),
+                # 'form_detl': TypeDetlForm(),
                 'error': "Data validation error",
             })
 
 @login_required
 def typedetail(request, type_pk):
     type = get_object_or_404(Type, pk=type_pk, user=request.user)
+    heading = Type.objects.values_list('longname', flat=True).get(id=type_pk)
 
     if request.method == 'GET':
         form = TypeCreateForm(instance=type)
         return render(request, 'inventory/typedetail.html', {
             'type': type,
             'form': form,
-            'page_title': 'Numitory - Type Detail'
-
+            'page_title': 'Numitory - Type Detail',
+            'heading': heading,
         })
 
     else:
@@ -300,7 +310,7 @@ def typedetail(request, type_pk):
 
 @login_required
 def typeitems(request, type_pk):
-    heading = Type.objects.values_list('type_name', flat=True).get(id=type_pk)
+    heading = Type.objects.values_list('longname', flat=True).get(id=type_pk)
     items = Item.objects.filter(user=request.user, status='Active', type=type_pk)
 
     paginator = Paginator(items, 20)
@@ -524,3 +534,105 @@ def logoutuser(request):
     if request.method == 'POST':
         logout(request)
         return redirect('home')
+
+@login_required
+def export(request):
+    user = request.user
+    user_obj = User.objects.get(id=request.user.id) #used for our form.
+    
+    #Request for exporting is via POST. 
+    
+    if request.method == 'POST':
+        #Due to the query which happens in ExportForm()
+        #We need to input the current user. 
+        form = ExportForm(request.POST,name=user_obj)
+        form_filter = ExportFilterForm(request.POST,name=user_obj)
+        #If form fails, return user to the form and show errors. 
+        if not form.is_valid() or not form_filter.is_valid(): 
+            
+            content = {  
+                    'form' : form,
+                    'form_f' : form_filter,
+                  }
+            return render(request, 'inventory/export.html', content)
+        
+        #Filter the collections
+        collections = form.cleaned_data['Collection']
+        active = form_filter.cleaned_data['active']
+        inactive = form_filter.cleaned_data['inactive']
+        type_filter = form_filter.cleaned_data['Type']
+        
+        
+        
+            
+        
+        
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="export.csv"'
+        writer = csv.writer(response)
+        
+        
+        
+        
+        writer.writerow(['collection',
+                            'id',
+                            'item_name',
+                            'item_desc',
+                            'status',
+                            'graded',
+                            'grader',
+                            'grade',
+                            'CAC',
+                            'condition',
+                            'mint',
+                            'type_name',
+                            'classification'
+                            'category',
+                            'metal',
+                            'metal_weight',
+                            'purity',
+                            'recycled',])
+        for i in collections:
+            
+            #needs some logic in here to filter inactive/active etc
+            items = Item.objects.filter(collection=i,user=user,type__in=type_filter)
+            for item in items:
+                
+                type = Type.objects.get(id=item.type_id)
+                
+                writer.writerow([i,
+                                item.id,
+                                item.item_name,
+                                item.item_desc,
+                                item.status,
+                                item.graded,
+                                item.grader,
+                                item.grade,
+                                item.CAC,
+                                item.condition,
+                                item.mint,
+                                # type.type_name,
+                                type.classification,
+                                type.category,
+                                # type.metal,
+                                # type.metal_weight,
+                                # type.purity,
+                                type.recycled,])
+    
+                
+                
+        return response #uncomment this to make the CSV available on download. otherwise form stays the same. 
+        content = {  
+                    'form' : form,
+                    'form_f' : form_filter,
+                  }
+        return render(request, 'inventory/export.html', content)
+    else:
+        form = ExportForm(name=user_obj)
+        form_filter = ExportFilterForm(name=user_obj)
+        
+        content = {  
+                    'form' : form,
+                    'form_f' : form_filter,
+                  }
+        return render(request, 'inventory/export.html', content)

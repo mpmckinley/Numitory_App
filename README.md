@@ -10,8 +10,9 @@ Numitory brings all of your collection management needs under one roof. Designed
 ![image](https://user-images.githubusercontent.com/6133032/103433165-94076180-4ba9-11eb-9dc8-a794bef6296e.png)
 
 **Draft Schema:**
-![image](https://user-images.githubusercontent.com/6133032/104080864-dfdc8b00-51e7-11eb-82f2-201f17b9696d.png)
+![image](https://user-images.githubusercontent.com/6133032/104313424-39b5ad00-5495-11eb-833b-0b5fa3a5c325.png)
 
+(Type_Detl no longer in scope - attributes held on Type or Item)
 ![image](https://user-images.githubusercontent.com/6133032/104104879-e90d3c80-5267-11eb-8681-5b4d7da9692a.png)
 
 
