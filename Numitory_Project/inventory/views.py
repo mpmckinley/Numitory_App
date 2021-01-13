@@ -289,14 +289,15 @@ def typecreate(request):
 @login_required
 def typedetail(request, type_pk):
     type = get_object_or_404(Type, pk=type_pk, user=request.user)
+    heading = Type.objects.values_list('longname', flat=True).get(id=type_pk)
 
     if request.method == 'GET':
         form = TypeCreateForm(instance=type)
         return render(request, 'inventory/typedetail.html', {
             'type': type,
             'form': form,
-            'page_title': 'Numitory - Type Detail'
-
+            'page_title': 'Numitory - Type Detail',
+            'heading': heading,
         })
 
     else:
@@ -313,7 +314,7 @@ def typedetail(request, type_pk):
 
 @login_required
 def typeitems(request, type_pk):
-    # heading = Type.objects.values_list('type_longname', flat=True).get(id=type_pk)
+    heading = Type.objects.values_list('longname', flat=True).get(id=type_pk)
     items = Item.objects.filter(user=request.user, status='Active', type=type_pk)
 
     paginator = Paginator(items, 20)
@@ -624,7 +625,7 @@ def export(request):
     
                 
                 
-        #return response #uncomment this to make the CSV available on download. otherwise form stays the same. 
+        return response #uncomment this to make the CSV available on download. otherwise form stays the same. 
         content = {  
                     'form' : form,
                     'form_f' : form_filter,

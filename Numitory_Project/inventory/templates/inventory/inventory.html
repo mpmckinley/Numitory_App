@@ -89,7 +89,7 @@
                             {{ item.type.type_name }}
                         {% else %}
                             <a href="{% url 'inventory:typeitems' item.type.id %}">
-                                {{ item.type.type_name }}
+                                {{ item.type.longname }}
                             </a>
                         {% endif %}
                     </td>

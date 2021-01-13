@@ -2,13 +2,28 @@
 
 {% block content %}
 
-    <h2>Type Inventory</h2>
+    <div class="row">
+        <div class="col">
+            <h2>Type Inventory</h2>
+        </div>
+
+        <div class="col">
+            Classification:
+        <form>
+            <select name="dropdown">
+                <option value = "Computer Architecture">Needs to Populate</option>
+                <option value = "Java">Datatables?</option>
+                <option value = "Discrete Mathematics">Multiple Dropdowns...</option>
+            </select>
+        </form>
+        </div>
+
+    </div>
 
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">Name</th>
-                <th>Description</th>
+                <th scope="col">Category</th>
                 <th>Classification</th>
                 <th>Category</th>
                 <th>Mints</th>
@@ -17,6 +32,7 @@
                 <th>Weight</th>
                 <th>Varieties</th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -24,14 +40,14 @@
             <tr>
                 <td>
                     <a href="{% url 'inventory:typeitems' type.id %}">
-                        {{ type.type_name }}
+                        {{ type.longname }}
                     </a>
                 </td>
-                <td>{{ type.type_desc }}</td>
-                <td>{{ type.classification }}</td>
                 <td>{{ type.category }}</td>
-                <td>{{ type.mints }}</td>
-                <td>{{ type.type_dates }}</td>
+                <td>{{ type.classification }}</td>
+                <td>{{ type.country }}</td>
+                <td>{{ type.level1 }}</td>
+                <td>{{ type.level2 }}</td>
                 <td>{{ type.purity }}</td>
                 <td>{{ type.metal_weight }}</td>
                 <td>Variety Count Link</td>
