@@ -27,9 +27,9 @@
                     User Profile
                 </div>
                 <div class="card-body">
-                    <form method="POST" class="u-form" autocomplete="off">
-                      <input name="fake_email" style="display:none" type="text">
-                      <input name="fake_password" style="display:none" type="password">
+                    <form method="POST" class="u-form" autocomplete="new-password">
+                    <input id="username" style="display:none" type="text" name="fakeusernameremembered">
+                    <input id="password" style="display:none" type="password" name="fakepasswordremembered">
                     {% csrf_token %}
                         {{ data }}
                         {{ form|crispy }}
@@ -43,7 +43,11 @@
      <script>
         jQuery(document).ready(function(){
             $('.u-form').find('input').each(function(key,value){
-                $(this).attr('autocomplete','false');
+                $(this).attr('autocomplete','new-password');
+                if($(this).attr('type')=='password')
+                {
+                    $(this).attr('value','');
+                }
             });
         });
     </script>

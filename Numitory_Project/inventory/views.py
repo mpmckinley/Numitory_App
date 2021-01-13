@@ -36,10 +36,6 @@ def home(request):
             language='en',
             sort_by='publishedAt',
             page=1,
-            # sources='bbc-news,the-verge',
-            # category='business',
-            # country='us',
-            # pageSize=5,
         )
 
         return render(request, 'inventory/home.html', {

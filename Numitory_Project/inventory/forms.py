@@ -18,6 +18,7 @@ class UserChangeForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['password'].required=False
+        self.fields['password'].widget.attrs.update({'autocomplete': 'new-password'})
         
     def clean_password(self):
         data = self.cleaned_data['password']
