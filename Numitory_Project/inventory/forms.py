@@ -65,7 +65,10 @@ class ExtendedUserForm(forms.ModelForm):
     def __init__(self,user,**kwargs):
         super(ExtendedUserForm, self).__init__(**kwargs)
         if(user):
-            self.initial['user_type']=Group.objects.filter(user=user)[0]
+            if(len(Group.objects.filter(user=user))>0):
+                self.initial['user_type']=Group.objects.filter(user=user)[0]
+            else:
+                self.initial['user_type']=''
     
     class Meta:
         model = User
