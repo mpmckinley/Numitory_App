@@ -172,3 +172,35 @@ class TransactionCreateForm(ModelForm):
     # def __init__(self, *args, **kwargs):
     #     super(TransactionCreateForm, self).__init__(**kwargs)
     #     self.fields['tran_value_currency'].widget = HiddenInput()
+
+class ExportForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        #self.user is given to us with ExportForm(user=user.id) in our view
+        self.user = kwargs.pop('name',None)
+        super(ExportForm, self).__init__(*args, **kwargs)
+        #We create a field called 'Collection' with ModelMultipleChoiceField
+        #The choices will be Selected from Collection() ModelChoiceField
+        #Using the user_id field and a user object. 
+ 
+        self.fields['Collection'] = forms.ModelMultipleChoiceField(Collection.objects.filter(user_id__in=User.objects.filter(username=self.user)))
+ 
+    class Meta:
+        model = Collection
+        field = ('Collection')
+        exclude = ['id','user','coll_name','coll_desc','recycled']
+        widgets = {
+            'Collection': forms.Select(attrs={'size': 4,'style': 'width:40px'})   
+        }
+ 
+class ExportFilterForm(forms.Form):
+ 
+ 
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('name',None)
+        super(ExportFilterForm, self).__init__(*args, **kwargs)
+        #We repeat the same here but for Type() Model.
+        #We allow the field to not be required. 
+        self.fields['Type'] = forms.ModelMultipleChoiceField(Type.objects.filter(user_id__in=User.objects.filter(username=self.user)),required=False)
+ 
+    active = forms.BooleanField(required=False)
+    inactive = forms.BooleanField(required=False)
