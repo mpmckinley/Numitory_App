@@ -8,10 +8,10 @@
 
 <div class="row align-content-center">
 
-    <div class="col-lg-3">
+    <div class="card-columns pl-3 pr-3">
         
-        <div class="card bg-light mt-2">
-            <div class="card-body">
+        <div class="card bg-light">
+            <div class="card-body pb-1">
                 <h5 class="card-title">Welcome, <strong>{{ user }}</strong></h5>
                 <h6 class="card-subtitle mb-2 text-muted">Overall Stats</h6>
                 <p class="card-text">
@@ -20,14 +20,18 @@
                 <p class="card-text">
                     <div class="row">
                         <div class="col">
-                            
+                        {% for image in images %}
+                            <a href="{% url 'inventory:itemdetail' image.id %}">
+                                <img src="{{ image.item_image.url }}" height="50px" style="margin-bottom: 2px;"></img>
+                            </a>
+                        {% endfor %}
                         </div>
                     </div>
                 </p>
             </div>
         </div>
         
-        <div class="card border-primary mt-2">
+        <div class="card border-primary">
             <div class="card-header">
                 <i class="fas fa-chart-line"></i>
                 Markets
@@ -37,50 +41,27 @@
                 <p class="card-text">
                     <div class="row text-center mb-3">
                         <div class="col">
-                            <i class="fa fa-line-chart fa-5x" aria-hidden="true"></i><br>Silver: $27.65
+                        {% for price in prices %}
+                            <i class="fa fa-line-chart fa-5x" aria-hidden="true"></i><br>Silver: {{ price.silver_price|intcomma }}
                         </div>
                         <div class="col">
-                            <i class="fa fa-area-chart fa-5x" aria-hidden="true"></i><br>Gold: $1980.34
+                            <i class="fa fa-area-chart fa-5x" aria-hidden="true"></i><br>Gold: {{ price.gold_price|intcomma }}
                         </div>
                     </div>
                     <div class="row text-center">
                         <div class="col">
-                            <i class="fa fa-area-chart fa-5x" aria-hidden="true"></i><br>Platinum: $1082.00
+                            <i class="fa fa-area-chart fa-5x" aria-hidden="true"></i><br>Platinum: {{ price.platinum_price|intcomma }}
                         </div>
                         <div class="col">
-                            <i class="fa fa-line-chart fa-5x" aria-hidden="true"></i><br>Palladium: $2363.43
+                            <i class="fa fa-line-chart fa-5x" aria-hidden="true"></i><br>Palladium: {{ price.palladium_price|intcomma }}
                         </div>
+                        {% endfor %}
                     </div>
                 </p>
             </div>
         </div>
         
-        {% if top_headlines %}
-            <div class="card border-primary mt-2">
-                <div class="card-header">
-                    <i class="fas fa-newspaper"></i>
-                    News & Headlines
-                </div>
-                {% comment %} <div class="card-body"> {% endcomment %}
-                    {% comment %} <h4 class="card-title">Primary card title</h4> {% endcomment %}
-                    {% comment %} <p class="card-text"> {% endcomment %}
-                        <ul class="list-group-flush pb-0 pt-2 pl-2 pr-2">
-                        {% for headline in top_headlines.articles|slice:":6" %}
-                        {% comment %} {{ headline.publishedAt|naturalday }} {% endcomment %}
-                            <li class="list-group-item p-0"><a href="{{ headline.url }}">{{ headline.title }}</a></lI>
-                        {% endfor %}
-                        </ul>
-                        {% comment %} {{ top_headlines }} {% endcomment %}
-                    {% comment %} </p> {% endcomment %}
-                {% comment %} </div> {% endcomment %}
-            </div>
-        {% endif %}
-
-    </div>
-    
-    <div class="col-lg-6">
-
-        <div class="card border-primary mt-2">
+        <div class="card border-primary">
             <div class="card-header">
                 <i class="fas fa-exchange-alt"></i>
                 Transactions
@@ -122,46 +103,22 @@
             </div>
         </div>
 
-        <div class="card border-primary mt-2 mb-0">
-            <div class="card-header">
-                <i class="fa fa-bars" aria-hidden="true"></i>
-                Inventory Recap
+        {% if top_headlines %}
+            <div class="card border-primary">
+                <div class="card-header">
+                    <i class="fas fa-newspaper"></i>
+                    News & Headlines
+                </div>
+                    <ul class="list-group-flush pb-0 pt-2 pl-2 pr-2">
+                    {% for headline in top_headlines.articles|slice:":6" %}
+                        <li class="list-group-item p-0"><a href="{{ headline.url }}">{{ headline.title }}</a></lI>
+                    {% endfor %}
+                    </ul>
             </div>
-            <div class="card-body">
-                <!-- <h4 class="card-title">Maybe an inventory recap...</h4> -->
-                <p class="card-text">
-                    <table class="table-hover table_card">
-                        <thead>
-                            <th>Item</th>
-                            <th>Created</th>
-                            <th>Total Quantity</th>
-                            <th>Total Value<th>
-                        </thead>
-                        {% for item in items %}
-                            <tr>
-                                <td>
-                                    <a href="{% url 'inventory:itemdetail' item.id %}">
-                                        {% if item.item_name %}
-                                            {{ item.item_name }}
-                                        {% else %}
-                                            {{ item.type }}
-                                        {% endif %}
-                                    </a>
-                                </td>
-                                <td>{{ item.created|naturalday }}</td>
-                                <td>{{ item.quantity.tran_quantity__sum|intcomma }}</td>
-                                <td>{{ item.value.tran_value__sum|intcomma }}</td>
-                            </tr>
-                        {% endfor %}
-                    </table>
-                </p>
-            </div>
-        </div>
+        {% endif %}
 
-    </div>
 
-    <div class="col">
-        <div class="card border-primary mt-2 mb-0">
+        <div class="card border-primary">
             <div class="card-header">
                 <i class="fa fa-money" aria-hidden="true"></i>
                 Inventory Value
@@ -230,14 +187,50 @@
                     </div>
                 </div>
             </div>
-
         </div>
-        <div class="card border-primary mt-2 mb-0">
+
+        <div class="card border-primary">
+            <div class="card-header">
+                <i class="fa fa-bars" aria-hidden="true"></i>
+                Inventory Recap
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    <table class="table-hover table_card">
+                        <thead>
+                            <th>Item</th>
+                            <th>Created</th>
+                            <th>Total Quantity</th>
+                            <th>Total Value<th>
+                        </thead>
+                        {% for item in items %}
+                            <tr>
+                                <td>
+                                    <a href="{% url 'inventory:itemdetail' item.id %}">
+                                        {% if item.item_name %}
+                                            {{ item.item_name }}
+                                        {% else %}
+                                            {{ item.type }}
+                                        {% endif %}
+                                    </a>
+                                </td>
+                                <td>{{ item.created|naturalday }}</td>
+                                <td>{{ item.quantity.tran_quantity__sum|intcomma }}</td>
+                                <td>{{ item.value.tran_value__sum|intcomma }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </p>
+            </div>
+        </div>
+
+        <div class="card border-primary">
             <div class="card-header">
                 <i class="fa fa-plus" aria-hidden="true"></i>
                 Quick Add
             </div>
             <div class="card-body">
+
             </div>
         </div>
         

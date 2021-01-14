@@ -18,33 +18,71 @@
             <p class="mb-0">{{ success_message }} <a class="alert-link"></a>.</p>
         </div>
     {% endif %}
-    
-    <div class="row h-100 justify-content-center align-items-center">
-        <div class="col-6">
-            <div class="card bg-light mb-4">
-                <div class="card-header">
-                    User Profile
-                </div>
-                <div class="card-body">
-                    <form method="POST" class="u-form" autocomplete="off">
-                      <input name="fake_email" style="display:none" type="text">
-                      <input name="fake_password" style="display:none" type="password">
-                    {% csrf_token %}
-                        {{ data }}
-                        {{ form|crispy }}
-                        {{ e_form|crispy }}
-                        <button type="submit" class="btn btn-primary">Update</button>
-                    </form>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#profile">Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#reset">Password Reset</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#export">Export</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#sub">Subscription</a>
+        </li>
+    </ul>
+
+    <div id="myTabContent" class="tab-content">
+
+        <div class="tab-pane fade writing active show" id="profile">
+            <div class="row h-100 justify-content-center align-items-center">
+                <div class="col-6">
+                    <div class="card bg-light mb-4">
+                        <div class="card-header">
+                            User Profile
+                        </div>
+                        <div class="card-body">
+                            <form method="POST" class="u-form" autocomplete="off">
+                            <input name="fake_email" style="display:none" type="text">
+                            <input name="fake_password" style="display:none" type="password">
+                            {% csrf_token %}
+                                {{ data }}
+                                {{ form|crispy }}
+                                {{ e_form|crispy }}
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <div class="tab-pane fade writing" id="reset">
+            move password reset, or not?
+        </div>
+
+        <div class="tab-pane fade writing" id="export">
+            Replace with export page.
+        </div>
+
+        <div class="tab-pane fade writing" id="sub">
+            Subscription and payment details/edit.
+        </div>
     </div>
+
      <script>
         jQuery(document).ready(function(){
             $('.u-form').find('input').each(function(key,value){
-                $(this).attr('autocomplete','false');
+                $(this).attr('autocomplete','new-password');
+                if($(this).attr('type')=='password')
+                {
+                    $(this).attr('value','');
+                }
             });
         });
     </script>
     </div>
+
 {% endblock content %}

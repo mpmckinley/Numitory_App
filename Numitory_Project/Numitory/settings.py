@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'multiselectfield',
     'django_static_fontawesome',
     'newsapi',
+    'django_seed',
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' 

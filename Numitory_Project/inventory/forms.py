@@ -18,6 +18,7 @@ class UserChangeForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['password'].required=False
+        self.fields['password'].widget.attrs.update({'autocomplete': 'new-password'})
         
     def clean_password(self):
         data = self.cleaned_data['password']
@@ -82,7 +83,10 @@ class ExtendedUserForm(forms.ModelForm):
     def __init__(self,user,**kwargs):
         super(ExtendedUserForm, self).__init__(**kwargs)
         if(user):
-            self.initial['user_type']=Group.objects.filter(user=user)[0]
+            if(len(Group.objects.filter(user=user))>0):
+                self.initial['user_type']=Group.objects.filter(user=user)[0]
+            else:
+                self.initial['user_type']=''
     
     class Meta:
         model = User
@@ -116,7 +120,7 @@ class ItemCreateForm(ModelForm):
             'type',
             'collection',
             'count',
-            # 'type_detl',
+            'type',
         ]
 
     def __init__(self, user, **kwargs):
@@ -124,7 +128,7 @@ class ItemCreateForm(ModelForm):
         self.fields['type'].queryset = Type.objects.filter(user=user)
         # self.fields['type_detl'].queryset = Type_Detl.objects.filter(type_id=id)
         self.fields['collection'].queryset = Collection.objects.filter(user=user)
-        self.fields['item_desc'].widget.attrs = {'rows': 5}
+        self.fields['item_desc'].widget.attrs = {'rows': 4}
         # ***Mint conditional choices based on Type selection
         # self.fields['mint'].queryset = Type.objects.filter(id=Type.id)
 
@@ -190,3 +194,35 @@ class TransactionCreateForm(ModelForm):
     # def __init__(self, *args, **kwargs):
     #     super(TransactionCreateForm, self).__init__(**kwargs)
     #     self.fields['tran_value_currency'].widget = HiddenInput()
+
+class ExportForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        #self.user is given to us with ExportForm(user=user.id) in our view
+        self.user = kwargs.pop('name',None)
+        super(ExportForm, self).__init__(*args, **kwargs)
+        #We create a field called 'Collection' with ModelMultipleChoiceField
+        #The choices will be Selected from Collection() ModelChoiceField
+        #Using the user_id field and a user object. 
+ 
+        self.fields['Collection'] = forms.ModelMultipleChoiceField(Collection.objects.filter(user_id__in=User.objects.filter(username=self.user)))
+ 
+    class Meta:
+        model = Collection
+        field = ('Collection')
+        exclude = ['id','user','coll_name','coll_desc','recycled']
+        widgets = {
+            'Collection': forms.Select(attrs={'size': 4,'style': 'width:40px'})   
+        }
+ 
+class ExportFilterForm(forms.Form):
+ 
+ 
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('name',None)
+        super(ExportFilterForm, self).__init__(*args, **kwargs)
+        #We repeat the same here but for Type() Model.
+        #We allow the field to not be required. 
+        self.fields['Type'] = forms.ModelMultipleChoiceField(Type.objects.filter(user_id__in=User.objects.filter(username=self.user)),required=False)
+ 
+    active = forms.BooleanField(required=False)
+    inactive = forms.BooleanField(required=False)
