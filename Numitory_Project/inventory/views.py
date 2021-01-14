@@ -38,6 +38,17 @@ def home(request):
         items = Item.objects.filter(user=request.user, status='Active').order_by('-created')[:10]
         transactions = Transaction.objects.filter(user=request.user).order_by('-created')[:5]
 
+        metalprices=MetalPrices.objects.order_by('-updated_at')[:1].values()
+        if(not metalprices):
+            metalprices=[]
+        else:
+            metalprices.get()
+            metalprices[0]['gold_price']="{:.2f}".format(metalprices[0]['gold_price'])
+            metalprices[0]['silver_price']="{:.2f}".format(metalprices[0]['silver_price'])
+            metalprices[0]['platinum_price']="{:.2f}".format(metalprices[0]['platinum_price'])
+            metalprices[0]['palladium_price']="{:.2f}".format(metalprices[0]['palladium_price'])
+            metalprices[0]['updated_at']=metalprices[0]['updated_at'].strftime('%m/%d/%y %H:%M:%S')
+        
         news_key = config("API_KEY")
         newsapi = NewsApiClient(api_key=news_key)
         
@@ -51,6 +62,7 @@ def home(request):
             'itemtotal': itemtotal,
             'typetotal': typetotal,
             'colltotal': colltotal,
+            'metalprices':metalprices[0],
             'items': items,
             'transactions': transactions,
             'page_title': 'Numitory - Home',
@@ -501,18 +513,6 @@ def edituser(request, user_pk):
                         'e_form':ExtendedUserForm(user=user),
                         'error':"User Type is Required"
                     })
-                # if(e_form.is_valid()):
-                    # print(request.POST)
-                    # not_empty_data_e = [ k for k,v in e_form.cleaned_data.items() if v ]
-                    # e_form.save(update_fields=not_empty_data_e)
-                # else:
-                    # er_str=""
-                    # return render(request, 'inventory/edituser.html', {
-                        # 'user': user,
-                        # 'form': UserChangeForm(instance=user),
-                        # 'e_form':ExtendedUserForm(instance=user.profile),
-                        # 'error':e_form.errors.get("__all__")
-                    # }) 
             else:
                 er_str=""
                 return render(request, 'inventory/edituser.html', {
