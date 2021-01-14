@@ -41,18 +41,18 @@
                 <p class="card-text">
                     <div class="row text-center mb-3">
                         <div class="col">
-                            <i class="fa fa-line-chart fa-5x" aria-hidden="true"></i><br>Silver: $ {% if metalprices.silver_price %}  {{metalprices.silver_price}} {% else %} NA {% endif%}
+                            <i class="fa fa-line-chart fa-5x" aria-hidden="true"></i><br>Silver: ${% if metalprices.silver_price %}{{metalprices.silver_price|intcomma}} {% else %} NA {% endif%}
                         </div>
                         <div class="col">
-                            <i class="fa fa-area-chart fa-5x" aria-hidden="true"></i><br>Gold: $ {% if metalprices.gold_price %}  {{metalprices.gold_price}} {% else %} NA {% endif%}
+                            <i class="fa fa-area-chart fa-5x" aria-hidden="true"></i><br>Gold: ${% if metalprices.gold_price %}{{metalprices.gold_price|intcomma}} {% else %} NA {% endif%}
                         </div>
                     </div>
                     <div class="row text-center">
                         <div class="col">
-                            <i class="fa fa-area-chart fa-5x" aria-hidden="true"></i><br>Platinum: $ {% if metalprices.platinum_price %}  {{metalprices.platinum_price}} {% else %} NA {% endif%}
+                            <i class="fa fa-area-chart fa-5x" aria-hidden="true"></i><br>Platinum: ${% if metalprices.platinum_price %}{{metalprices.platinum_price|intcomma}} {% else %} NA {% endif%}
                         </div>
                         <div class="col">
-                            <i class="fa fa-line-chart fa-5x" aria-hidden="true"></i><br>Palladium: $ {% if metalprices.palladium_price %}  {{metalprices.palladium_price}} {% else %} NA {% endif%}
+                            <i class="fa fa-line-chart fa-5x" aria-hidden="true"></i><br>Palladium: ${% if metalprices.palladium_price %}{{metalprices.palladium_price|intcomma}} {% else %} NA {% endif%}
                         </div>
                     </div>
                 </p>
