@@ -462,8 +462,12 @@ def loginuser(request):
             login(request, user)
             return redirect('/inventory/')
 
-def edituser(request, user_pk):
-    user = get_object_or_404(User, pk=user_pk)
+def edituser(request):
+    if('_auth_user_id' in request.session):
+        user = get_object_or_404(User, pk=request.session['_auth_user_id'])
+    else:
+        return redirect('/login/')
+        
     if request.method == 'GET':
         form = UserChangeForm(instance=user)
         e_form = ExtendedUserForm(user=user)
@@ -472,7 +476,6 @@ def edituser(request, user_pk):
             'form':form,
             'e_form':e_form,
             'page_title': 'Numitory - My Profile'
-
         })
     else:
         try:
@@ -486,7 +489,7 @@ def edituser(request, user_pk):
                     query_set = Group.objects.filter(user = user)
                     user.groups.clear()
                     g.user_set.add(user)
-                    update_session_auth_hash(request,user_pk)
+                    update_session_auth_hash(request,request.session['_auth_user_id'])
                     return redirect('inventory:inventory')
                 else:
                     return render(request, 'inventory/edituser.html', {

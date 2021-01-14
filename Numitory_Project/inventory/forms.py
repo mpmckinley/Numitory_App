@@ -24,22 +24,40 @@ class UserChangeForm(forms.ModelForm):
         if(data!=""):
             data = make_password(data)
         return data
-		
+        
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if(username!=""):
+            return username
+        
     def clean(self):
         cleaned_data = super(UserChangeForm, self).clean()
         password = cleaned_data.get("password")
         confirm_password = cleaned_data.get("password_confirmation")
+        username = cleaned_data.get('username')
+        counter = 0
+        errors = []
+        if User.objects.exclude(pk=self.instance.pk).filter(username=username).exists():
+            #raise forms.ValidationError('Username "%s" is already in use.' % username)
+            errors.append('Username "%s" is already in use' % username)
+            counter+=1
         if(password!="" and confirm_password!=""):
             if(check_password(confirm_password,password)==False):
-                raise forms.ValidationError(
-                    "New password and confirm password do not match")
+                #raise forms.ValidationError("New password and confirm password do not match")
+                errors.append("New password and confirm password do not match")
+                counter+=1
         elif(password!='' and confirm_password==''):
-            raise forms.ValidationError(
-                    "Please Confirm Your new password")
+            #raise forms.ValidationError("Please Confirm Your new password")
+            errors.append("Please Confirm Your new password")
+            counter+=1
         elif(password=='' and confirm_password!=''):
-            raise forms.ValidationError(
-                    "Please Enter your Password if you want to Change the Password")
-                    
+            #raise forms.ValidationError("Please Enter your Password if you want to Change the Password")
+            errors.append("Please Enter your Password if you want to Change the Password")
+            counter+=1
+            
+        if(counter > 0):
+            raise forms.ValidationError(errors)
+        
     def save(self, **kwargs):
         not_empty_data = [ k for k,v in self.cleaned_data.items() if (v and v!="" and k!='password_confirmation')]
         self.instance.save(update_fields=not_empty_data)
