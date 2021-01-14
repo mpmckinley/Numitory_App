@@ -20,7 +20,7 @@
         <div class="card border-dark mb-3">
             <div class="card-header text-white bg-secondary">
                 <i class="fas fa-info-circle"></i>
-                Detail
+                Item Detail
             </div>
             <div class="card-body">
                 <form method="POST" enctype="multipart/form-data">
@@ -32,12 +32,29 @@
                         <div class="col">
                             {{ form.collection|as_crispy_field }}
                         </div>
-                        <div class="col">
-                            {{ form.type|as_crispy_field }}
+                    </div>
+                    <div class="row">
+                        {% comment %} <div class="col">
+                            {{ form.type.category|as_crispy_field }}
                         </div>
                         <div class="col">
-                            <text style="color:rgba(236,27,20,0.96)">***Conditional Variety dropdown from Type***</text>
-                            {% comment %} {{ form.type_detl|as_crispy_field }} {% endcomment %}
+                            {{ form.type.classification|as_crispy_field }}
+                        </div> {% endcomment %}
+                        <div class="card border-light mb-3">
+                            <div class="card-body">
+                                {% comment %} <p class="card-text"> {% endcomment %}
+                                    <div class="col">
+                                        {{ form.type|as_crispy_field }}
+                                    </div>
+                                    <div class="col">
+                                        <text style="color:rgba(236,27,20,0.96)">***Conditional Variety dropdown from Type***</text>
+                                        {% comment %} {{ form.type_detl|as_crispy_field }} {% endcomment %}
+                                    </div>
+                                    <div class="col">
+                                        {{ form.mint|as_crispy_field }} 
+                                    </div>
+                                {% comment %} </p> {% endcomment %}
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -46,7 +63,6 @@
                         </div>
                         <div class="col">
                             {{ form.count|as_crispy_field }}
-                            {{ form.mint|as_crispy_field }} 
                             {{ form.status|as_crispy_field }}
                         </div>
                     </div>
@@ -113,16 +129,20 @@
                                 <td>{{ detail.country }}</td>
                             </tr>
                             <tr>
-                                <td>Dates:</td>
-                                <td>{{ detail.type_dates }}</td>
+                                <td>Category:</td>
+                                <td>{{ detail.category }}</td>
                             </tr>
                         </table>
                     </div>
                     <div class="col">
                         <table>
                             <tr>
-                                <td>Mints:</td>
-                                <td>{{ detail.mints }}</td>
+                                <td>Designer:</td>
+                                <td>{{ detail.designer }}</td>
+                            </tr>
+                            <tr>
+                                <td>Mintage:</td>
+                                <td>{{ detail.mintage|intcomma }}</td>
                             </tr>
                             <tr>
                                 <td>Face Value:</td>

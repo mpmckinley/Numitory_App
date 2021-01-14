@@ -85,8 +85,8 @@
                     </td>
                     <td><text style="color:rgba(236,27,20,0.96)">***To Do***</text></td>
                     <td>
-                        {% if heading == item.type.type_name %}
-                            {{ item.type.type_name }}
+                        {% if heading == item.type.longname %}
+                            {{ item.type.longname }}
                         {% else %}
                             <a href="{% url 'inventory:typeitems' item.type.id %}">
                                 {{ item.type.longname }}

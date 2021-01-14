@@ -37,6 +37,8 @@ def home(request):
         colltotal = Collection.objects.filter(user=request.user).aggregate(Count('id'))
         items = Item.objects.filter(user=request.user, status='Active').order_by('-created')[:10]
         transactions = Transaction.objects.filter(user=request.user).order_by('-created')[:5]
+        images = Item.objects.filter(user=request.user, status='Active').exclude(item_image='')[:5]
+        prices=MetalPrices.objects.order_by('-updated_at')[:1].values()
 
         news_key = config("API_KEY")
         newsapi = NewsApiClient(api_key=news_key)
@@ -54,7 +56,9 @@ def home(request):
             'items': items,
             'transactions': transactions,
             'page_title': 'Numitory - Home',
-            'top_headlines': top_headlines
+            'top_headlines': top_headlines,
+            'images': images,
+            'prices': prices,
         })
     else:
         return render(request, 'inventory/home.html')
@@ -415,8 +419,7 @@ def signupuser(request):
             'e_form': ExtendedUserForm(user=''),
             'heading':heading,
             'page_title': 'Numitory - Sign Up'
-
-        })
+            })
     else:
         if request.POST['password1'] == request.POST['password2']:
                 try:
@@ -451,11 +454,13 @@ def signupuser(request):
 
 def loginuser(request):
     if request.method == 'GET':
-        return render(request, 'inventory/loginuser.html', {
-            'form': AuthenticationForm(),
-            'page_title': 'Numitory - Login'
-
-        })
+        if request.user.is_authenticated:
+            return redirect('/inventory/')
+        else:
+            return render(request, 'inventory/loginuser.html', {
+                'form': AuthenticationForm(),
+                'page_title': 'Numitory - Login'
+            })
 
     else:
         user = authenticate(request, username=request.POST['username'], password=request.POST['password'])

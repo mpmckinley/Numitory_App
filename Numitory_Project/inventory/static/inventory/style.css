@@ -185,3 +185,27 @@ td:first-child {
     color: black;
     opacity: 0.5;
 }
+
+@media (min-width: 576px) {
+    .card-columns {
+        column-count: 2;
+    }
+}
+
+@media (min-width: 768px) {
+    .card-columns {
+        column-count: 2;
+    }
+}
+
+@media (min-width: 992px) {
+    .card-columns {
+        column-count: 3;
+    }
+}
+
+/* @media (min-width: 1200px) {
+    .card-columns {
+        column-count: 5;
+    }
+} */

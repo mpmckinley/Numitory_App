@@ -102,7 +102,7 @@ class ItemCreateForm(ModelForm):
             'type',
             'collection',
             'count',
-            # 'type_detl',
+            'type',
         ]
 
     def __init__(self, user, **kwargs):
@@ -110,7 +110,7 @@ class ItemCreateForm(ModelForm):
         self.fields['type'].queryset = Type.objects.filter(user=user)
         # self.fields['type_detl'].queryset = Type_Detl.objects.filter(type_id=id)
         self.fields['collection'].queryset = Collection.objects.filter(user=user)
-        self.fields['item_desc'].widget.attrs = {'rows': 5}
+        self.fields['item_desc'].widget.attrs = {'rows': 4}
         # ***Mint conditional choices based on Type selection
         # self.fields['mint'].queryset = Type.objects.filter(id=Type.id)
 
