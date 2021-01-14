@@ -44,12 +44,6 @@ class UserExtended(models.Model):
         blank=False, null=False)
 
 class Item(models.Model):
-    id = models.CharField(max_length=36, default=uuid.uuid4, primary_key=True, null=False)
-    type = models.ForeignKey("inventory.Type", on_delete=models.RESTRICT)
-    # type_detl = models.ForeignKey("inventory.Type_Detl", on_delete=models.RESTRICT)
-    collection = models.ForeignKey("inventory.Collection", on_delete=models.RESTRICT)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-
     STATUS_CHOICES = [
         ('Active', 'Active'),
         ('Inactive', 'Inactive'),
@@ -62,21 +56,27 @@ class Item(models.Model):
         ('ANACS', 'ANACS'),
         ('Other', 'Other'),
     ]
-    
+
+    id = models.CharField(max_length=36, default=uuid.uuid4, primary_key=True, null=False)
+    type = models.ForeignKey('inventory.Type', on_delete=models.RESTRICT)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
     item_name = models.CharField("Name", max_length=50, null=True, blank=True)
     item_desc = models.TextField("Description / Notes", max_length=250)
-    created = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Active')
-    condition = models.CharField(max_length=25, blank=True)
-    graded = models.BooleanField(default=False)
-    grade = models.CharField(max_length=6, blank=True)
-    grader = models.CharField(max_length=5, blank=True, choices=GRADER_CHOICES)
-    grader_id = models.CharField("ID#", max_length=50, blank=True)
-    CAC = models.BooleanField(default=False)
     item_image = models.ImageField("", upload_to=upload_location, null=True, blank=True)
-    mint = models.CharField("***MINT***", max_length=20, blank=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Active')
+    graded = models.BooleanField(default=False)
+    grade = models.CharField(max_length=6, null=True, blank=True)
+    grader = models.CharField(max_length=5, null=True, blank=True, choices=GRADER_CHOICES)
+    grader_id = models.CharField("ID#", max_length=50, null=True, blank=True)
+    CAC = models.BooleanField(default=False)
+    mint = models.CharField("***MINT***", max_length=20, null=True, blank=True)
+    type = models.ForeignKey("inventory.Type", on_delete=models.RESTRICT)
+    created = models.DateTimeField(auto_now_add=True)
+    condition = models.CharField(max_length=25, null=True, blank=True)
     # year = models.IntegerField(null=True, blank=True)
-    count = models.IntegerField(default=1)
+    collection = models.ForeignKey("inventory.Collection", on_delete=models.RESTRICT)
+    count = models.IntegerField(default='1')
 
 
     def __str__(self):
