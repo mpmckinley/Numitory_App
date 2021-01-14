@@ -19,7 +19,7 @@ Numitory brings all of your collection management needs under one roof. Designed
 **Development:**
 * MySQL
 * Dependencies via requirements.txt
-* Migrate
+* MakeMigrations & Migrate (migrations in .gitignore)
 * See [issues](https://github.com/mpmckinley/Numitory_Django/issues) prior to development, validate assignment first
 
 **Future Features**:
