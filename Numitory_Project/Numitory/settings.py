@@ -152,6 +152,6 @@ LOGIN_URL = '/login'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-CURRENCIES = ('USD', 'EUR', 'NOK')
+# CURRENCIES = ('USD', 'EUR', 'AUD')
 
 AUTH_PROFILE_MODULE = 'app.UserExtended'

@@ -31,12 +31,12 @@
                 <th>Purity</th>
                 <th>Weight</th>
                 <th>Varieties</th>
-                <th></th>
+                <th>Numitory</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            {% for type in types %}
+            {% for type in page_obj %}
             <tr>
                 <td>
                     <a href="{% url 'inventory:typeitems' type.id %}">
@@ -50,7 +50,7 @@
                 <td>{{ type.level2 }}</td>
                 <td>{{ type.purity }}</td>
                 <td>{{ type.metal_weight }}</td>
-                <td>Variety Count Link</td>
+                <td></td>
                 <td>
                     <a href="{% url 'inventory:typedetail' type.id %}">
                         <i class="bi bi-pencil-square"></i>
@@ -60,5 +60,23 @@
             {% endfor %}
         </tbody>
     </table>
+    <div class="pagination justify-content-center">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
 
 {% endblock content %}

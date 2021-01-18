@@ -43,20 +43,20 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col">
+                            {% comment %} <div class="col">
                                 {{ form.type_name|as_crispy_field }}
-                            </div>
+                            </div> {% endcomment %}
                             <div class="col-4">
                                 {{ form.type_desc|as_crispy_field }}
                             </div>
-                            <div class="col">
+                            {% comment %} <div class="col">
                                 {{ form.type_dates|as_crispy_field }}
-                            </div>
+                            </div> {% endcomment %}
                         </div>
 
                         <div class="row">
                             <div class="col">
-                                {{ form.mints|as_crispy_field }}
+                                {{ form.mint|as_crispy_field }}
                             </div>
                             <div class="col">
                                 {{ form.face_value|as_crispy_field }}
@@ -79,17 +79,17 @@
             </div>
         </div>
     
-                <div class="col-6">
+                {% comment %} <div class="col-6">
                     <div class="card bg-light">
                         <div class="card-header">
                             {{ heading }} Variety Create
                         </div>
                         <div class="card-body">
                     
-                        {% comment %} <div class="col">
+                         <div class="col">
                             {{ form.metal|as_crispy_field }}
-                        </div> {% endcomment %}
-                        {% comment %} <div class="row">
+                        </div>
+                         <div class="row">
                             <div class="col">
                                 {{ form.metal_weight|as_crispy_field }}
                             </div>
@@ -102,9 +102,9 @@
                             <div class="col">
                                 {{ form.face_value|as_crispy_field }}
                             </div>
-                        </div> {% endcomment %}
+                        </div>
                         
-                        {% comment %} <div class="row">
+                         <div class="row">
                             <div class="col">
                                 Variety Detail:
                             </div>
@@ -161,16 +161,16 @@
                             <div class="col">
                                 {{ form_detl.url_other|as_crispy_field }}</br>
                             </div>
-                        </div>
+                        </div>{% endcomment %}
                         
                         <div class="row">
                             <div class="col">
                                 <button type="submit" class="btn btn-primary">{{ button }}</button>
                             </div>
-                            <div class="col">
+                            {% comment %} <div class="col">
                                 {{ form_detl.recycled|as_crispy_field }}</br>
-                            </div>
-                        </div> {% endcomment %}
+                            </div> {% endcomment %}
+                        </div>  
 
                     </form>
                 </div>

@@ -50,6 +50,19 @@ class Item(models.Model):
         ('WTB', 'WTB'),
         ('WTS', 'WTS'),
     ]
+    GRADE_CHOICES = [
+        ('Poor', 'P'),
+        ('Fair', 'F'),
+        ('About/Almost Good', 'AG'),
+        ('Good', 'G'),
+        ('Very Good', 'VG'),
+        ('Fine', 'F'),
+        ('Very Fine', 'VF'),
+        ('Extremely Fine', 'EF'),
+        ('About/Almost Uncirculated', 'AU'),
+        ('Uncirculated/BU', 'BU'),
+        ('Mint State', 'MS'),
+    ]
     GRADER_CHOICES = [
         ('PCGS', 'PCGS'),
         ('NGC', 'NGC'),
@@ -66,9 +79,11 @@ class Item(models.Model):
     item_image = models.ImageField("", upload_to=upload_location, null=True, blank=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Active')
     graded = models.BooleanField(default=False)
-    grade = models.CharField(max_length=6, null=True, blank=True)
+    grade = models.CharField(max_length=25, choices=GRADE_CHOICES, null=True, blank=True)
+    grade_num = models.CharField(max_length=6, null=True, blank=True)
     grader = models.CharField(max_length=5, null=True, blank=True, choices=GRADER_CHOICES)
     grader_id = models.CharField("ID#", max_length=50, null=True, blank=True)
+    details = models.BooleanField(default=False)
     CAC = models.BooleanField(default=False)
     mint = models.CharField("***MINT***", max_length=20, null=True, blank=True)
     type = models.ForeignKey("inventory.Type", on_delete=models.RESTRICT)
@@ -87,6 +102,11 @@ class Item(models.Model):
         return Transaction.objects.filter(user=self.user, tran_item_id=self.id).aggregate(Sum('tran_quantity'))
     def value(self):
         return Transaction.objects.filter(user=self.user, tran_item_id=self.id).aggregate(Sum('tran_value'))
+    # ***Direct links to grader verification pages:
+    # def pcgs(self):
+    #     return https://www.pcgs.com/cert/{{ grader_id }}
+    # def ngc(self):
+    #     return https://www.ngccoin.com/certlookup/{{ grader_id}}/{{ grade_num }}
 
 class Transaction(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -157,10 +177,10 @@ class Type(models.Model):
     country = models.CharField("Country", max_length=50, choices=COUNTRY_CHOICES, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     designer = models.CharField("Designer", max_length=250, blank=True, null=True)
-    diameter = DecimalField("Diameter (mm)", max_digits=6, decimal_places=2)
+    diameter = DecimalField("Diameter (mm)", max_digits=6, decimal_places=2, blank=True, null=True)
     edge = models.CharField("Edge", max_length=100, unique=True)
     face_value = MoneyField("Face Value", max_digits=5, decimal_places=3, default_currency='USD', blank=True, null=True)
-    # face value currency from MoneyField
+    # ***face value currency from MoneyField
     id = models.CharField(max_length=36, default=uuid.uuid4, primary_key=True, null=False)
     level1 = models.CharField("Level 1", max_length=100, unique=True, blank=True, null=True)
     level2 = models.CharField("Level 2", max_length=100, unique=True, blank=True, null=True)
@@ -169,11 +189,12 @@ class Type(models.Model):
     longname = models.CharField("Long Name", max_length=100, unique=True)
     mint = MultiSelectField(choices=MINT_CHOICES, blank=True, null=True)
     mintage = IntegerField("Mintage", blank=True, null=True)
-    precious_purity = IntegerField("Previous Purity", blank=True, null=True)
+    precious_purity = IntegerField("Precious Purity", blank=True, null=True)
     precious_type = IntegerField("Precious Type", blank=True, null=True)
     precious_weight = IntegerField("Precious Weight", blank=True, null=True)
     recycled = models.BooleanField(default=False)
     strike = models.CharField("Strike", max_length=20, blank=True, null=True)
+    thickness = DecimalField("Thickness (mm)", max_digits=6, decimal_places=2, blank=True, null=True)
     type_desc = models.CharField("Description", max_length=250, blank=True, null=True)
     # type_name = models.CharField("Name", max_length=100, unique=True)
     type_img_obv = models.ImageField("", upload_to=upload_location, null=True, blank=True)
@@ -185,54 +206,18 @@ class Type(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     var_ngc = models.CharField("NGC #", max_length=100, unique=True, blank=True, null=True)
     var_pcgs = models.CharField("PCGS #", max_length=100, unique=True, blank=True, null=True)
-    weight = models.DecimalField("Weight (g)", max_digits=10, decimal_places=4)
-    year_mint = models.CharField("Year Mint", max_length=50, blank=True, null=True)
+    weight = models.CharField("Weight", max_length=10, blank=True, null=True)
+    year_mint = models.CharField("Year | Mint", max_length=50, blank=True, null=True)
 
 
     def __str__(self):
         return self.longname
 
-# class Type_Detl(models.Model):
+# class Type_Priv(models.Model):
 #     # id = models.CharField(max_length=36, default=uuid.uuid4, primary_key=True, null=False)
-#     type = models.ForeignKey("inventory.Type", on_delete=models.RESTRICT)
 #     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-#     METAL_CHOICES = [
-#         ('Silver', 'Silver'),
-#         ('Gold', 'Gold'),
-#         ('Platinum', 'Platinum'),
-#         ('Palladium', 'Palladium'),
-#         ('None', 'None'),
-#     ]
-
-#     MINT_CHOICES = [
-#         ('N/A', 'N/A'),
-#         ('Philadelphia', 'Philadelphia'),
-#         ('Charlotte', 'Charlotte'),
-#         ('Dahlonega', 'Dahlonega'),
-#         ('New Orleans', 'New Orleans'),
-#         ('Carson City', 'Carson City'),
-#         ('San Francisco', 'San Francisco'),
-#         ('Denver', 'Denver'),
-#         ('West Point', 'West Point'),
-#         ('Manila', 'Manila'),
-#     ]
-
-#     var_name = models.CharField(max_length=50)
-#     var_desc = models.CharField(max_length=50, blank=True, null=True)
-#     mint = MultiSelectField(choices=MINT_CHOICES, blank=True, null=True)
-#     comp = models.CharField("Composition", max_length=50)
-#     precious_type = models.CharField(max_length=10, choices=METAL_CHOICES)
-#     precious_purity = models.DecimalField("Precious Purity", max_digits=4, decimal_places=4, blank=True, null=True)
-#     precious_weight = models.DecimalField("Precious Weight (ozT)", max_digits=10, decimal_places=4, blank=True, null=True)
-#     edge = models.CharField(max_length=50, blank=True, null=True)
-#     mintage = models.IntegerField("Mintage", blank=True, null=True)
-#     url_ngc = models.CharField("NGC url", max_length=250, blank=True, null=True)
-#     url_other = models.CharField("Other url", max_length=250, blank=True, null=True)
-#     url_pcgs = models.CharField("PCGS url", max_length=250, blank=True, null=True)
-#     designer = models.CharField(max_length=30, blank=True, null=True)
-#     recycled = models.BooleanField(default=False)
-#     created = models.DateTimeField(auto_now_add=True)
+# ***Second TYPE model that will hold non-GOVERNMENT issued types, bullion, etc.
 
 #     # type_img_obv = models.ImageField("", upload_to=upload_location, null=True, blank=True)
 #     # type_img_rev = models.ImageField("", upload_to=upload_location, null=True, blank=True)

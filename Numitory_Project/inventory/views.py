@@ -54,7 +54,7 @@ def home(request):
         news_key = config("API_KEY")
         newsapi = NewsApiClient(api_key=news_key)
         
-        top_headlines = newsapi.get_everything(q='silver OR gold OR platinum OR palladium OR numismatic OR coin OR coins OR PCGS OR NGC OR ANACS OR bullion AND precious NOT witcher NOT movies',
+        top_headlines = newsapi.get_everything(q='silver OR gold OR platinum OR palladium OR numismatic OR coin OR coins OR PCGS OR NGC OR ANACS OR bullion AND precious NOT witcher NOT movies NOT Rs',
             language='en',
             sort_by='publishedAt',
             page=1,
@@ -258,10 +258,15 @@ def itemdetail(request, item_pk):
 @login_required
 def typeinv(request):
     types = Type.objects.filter(user=request.user)
+
+    paginator = Paginator(types, 50)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     return render(request, 'inventory/typeinv.html', {
         'types': types,
-        'page_title': 'Numitory - My Types'
-
+        'page_obj': page_obj,
+        'page_title': 'Numitory - My Types',
     })
 
 @login_required

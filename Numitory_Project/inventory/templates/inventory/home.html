@@ -15,7 +15,7 @@
                 <h5 class="card-title">Welcome, <strong>{{ user }}</strong></h5>
                 <h6 class="card-subtitle mb-2 text-muted">Overall Stats</h6>
                 <p class="card-text">
-                    You currently have {{ itemtotal.id__count|apnumber }} <a href="{% url 'inventory:inventory' %}">Item{{ itemtotal.id__count|pluralize }}</a> across {{ typetotal.id__count|apnumber }} <a href="{% url 'inventory:typeinv' %}">Type{{ typetotal.id__count|pluralize }}</a> in {{ colltotal.id__count|apnumber }} <a href="{% url 'inventory:collinv' %}">Collection{{ colltotal.id__count|pluralize}}</a>.
+                    You currently have {{ itemtotal.id__count|intcomma }} <a href="{% url 'inventory:inventory' %}">Item{{ itemtotal.id__count|pluralize }}</a> across {{ typetotal.id__count|intcomma }} <a href="{% url 'inventory:typeinv' %}">Type{{ typetotal.id__count|pluralize }}</a> in {{ colltotal.id__count|apnumber }} <a href="{% url 'inventory:collinv' %}">Collection{{ colltotal.id__count|pluralize}}</a>.
                 </p>
                 <p class="card-text">
                     <div class="row">
@@ -37,7 +37,6 @@
                 Markets
             </div>
             <div class="card-body">
-                <!-- <h4 class="card-title">Primary card title</h4> -->
                 <p class="card-text">
                     <div class="row text-center mb-3">
                         <div class="col">
@@ -108,7 +107,7 @@
                     News & Headlines
                 </div>
                     <ul class="list-group-flush pb-0 pt-2 pl-2 pr-2">
-                    {% for headline in top_headlines.articles|slice:":6" %}
+                    {% for headline in top_headlines.articles|slice:"10" %}
                         <li class="list-group-item p-0"><a href="{{ headline.url }}">{{ headline.title }}</a></lI>
                     {% endfor %}
                     </ul>
