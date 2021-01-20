@@ -133,18 +133,12 @@ def inventory(request):
     #     'collections': collections,
     # })
 
-    paginator = Paginator(items, 15)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
     return render(request, 'inventory/inventory.html', {
         'heading': heading,
         'items': items,
         'types': types,
         'collections': collections,
-        'page_obj': page_obj,
-        'page_title': 'Numitory - My Inventory'
-
+        'page_title': 'Numitory - My Inventory',
     })
 
 @login_required
@@ -259,13 +253,8 @@ def itemdetail(request, item_pk):
 def typeinv(request):
     types = Type.objects.filter(user=request.user)
 
-    paginator = Paginator(types, 50)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
     return render(request, 'inventory/typeinv.html', {
         'types': types,
-        'page_obj': page_obj,
         'page_title': 'Numitory - My Types',
     })
 

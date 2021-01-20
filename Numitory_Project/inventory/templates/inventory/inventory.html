@@ -19,7 +19,7 @@
 
         <h2>{{ heading }} Inventory</h2>
 
-        <table class="table table-hover main_table" style="width:100%">
+        <table class="table table-hover main_table" style="width:100%" id="example">
             <thead>
                 <tr>
                     <th width=19px></th>
@@ -36,7 +36,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for item in page_obj %}
+                {% for item in items %}
                 <tr>
                     <td>
                         {% if item.item_image  %}
@@ -106,29 +106,15 @@
                 {% endfor %}
             </tbody>
         </table>
-        <div class="pagination justify-content-center">
-            <span class="step-links">
-                {% if page_obj.has_previous %}
-                    <a href="?page=1">&laquo; first</a>
-                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-                {% endif %}
-
-                <span class="current">
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                </span>
-
-                {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}">next</a>
-                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-                {% endif %}
-            </span>
-        </div>
 
     {% endif %}
 
 {% endblock content %}
 
 {% block scripts %}
-
-
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable();
+    } );
+</script>
 {% endblock scripts %}

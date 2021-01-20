@@ -21,6 +21,7 @@
     <!-- Icon/Font -->
     <link rel="stylesheet" type="text/css" href="{% static 'inventory/icons/font/bootstrap-icons.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'fontawesome/css/all.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css"/>
     <script src="https://use.fontawesome.com/e7f216b497.js"></script>
     <!-- Numitory Style -->
     <link rel="stylesheet" type="text/css" href="{% static 'inventory/style.css' %}"/>
@@ -31,6 +32,8 @@
     <script>
         var Price_url='{% url "get_latest_prices" %}';
     </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
 </head>
 
 <body>

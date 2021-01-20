@@ -179,8 +179,8 @@ class Type(models.Model):
     designer = models.CharField("Designer", max_length=250, blank=True, null=True)
     diameter = DecimalField("Diameter (mm)", max_digits=6, decimal_places=2, blank=True, null=True)
     edge = models.CharField("Edge", max_length=100, unique=True)
-    face_value = MoneyField("Face Value", max_digits=5, decimal_places=3, default_currency='USD', blank=True, null=True)
-    # ***face value currency from MoneyField
+    face_value = DecimalField("Face Value", max_digits=5, decimal_places=3, blank=True, null=True)
+    face_value_currency = models.CharField("Currency", max_length=100, blank=True, null=True)
     id = models.CharField(max_length=36, default=uuid.uuid4, primary_key=True, null=False)
     level1 = models.CharField("Level 1", max_length=100, unique=True, blank=True, null=True)
     level2 = models.CharField("Level 2", max_length=100, unique=True, blank=True, null=True)
