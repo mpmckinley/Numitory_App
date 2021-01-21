@@ -139,8 +139,10 @@ class QuickAddForm(ModelForm):
         model = Item
         fields = [
             'item_name',
+            'type',
             'item_desc',
             # 'status',
+            'mint',
             'count',
             'graded',
             'grader',
@@ -150,10 +152,7 @@ class QuickAddForm(ModelForm):
             'condition',
             'CAC',
             'details',
-            'mint',
             'collection',
-            'type',
-            'type',
             'item_image',
         ]
 

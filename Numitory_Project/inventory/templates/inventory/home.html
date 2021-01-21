@@ -32,40 +32,37 @@
             </div>
         </div>
         
-        <div class="card border-primary">
+        <div class="card">
             <div class="card-header">
                 <i class="fas fa-chart-line"></i>
                 Markets
             </div>
             <div class="card-body">
-                <p class="card-text">
-                    <div class="row text-center mb-3">
-                        <div class="col">
-                            <i class="fa fa-line-chart fa-5x" aria-hidden="true"></i><br>Silver: ${% if metalprices.silver_price %}{{metalprices.silver_price|intcomma}} {% else %} NA {% endif%}
-                        </div>
-                        <div class="col">
-                            <i class="fa fa-area-chart fa-5x" aria-hidden="true"></i><br>Gold: ${% if metalprices.gold_price %}{{metalprices.gold_price|intcomma}} {% else %} NA {% endif%}
-                        </div>
+                <div class="row text-center mb-3">
+                    <div class="col">
+                        <i class="fa fa-line-chart fa-5x" aria-hidden="true"></i><br>Silver: ${% if metalprices.silver_price %}{{metalprices.silver_price|intcomma}} {% else %} NA {% endif%}
                     </div>
-                    <div class="row text-center">
-                        <div class="col">
-                            <i class="fa fa-area-chart fa-5x" aria-hidden="true"></i><br>Platinum: ${% if metalprices.platinum_price %}{{metalprices.platinum_price|intcomma}} {% else %} NA {% endif%}
-                        </div>
-                        <div class="col">
-                            <i class="fa fa-line-chart fa-5x" aria-hidden="true"></i><br>Palladium: ${% if metalprices.palladium_price %}{{metalprices.palladium_price|intcomma}} {% else %} NA {% endif%}
-                        </div>
+                    <div class="col">
+                        <i class="fa fa-area-chart fa-5x" aria-hidden="true"></i><br>Gold: ${% if metalprices.gold_price %}{{metalprices.gold_price|intcomma}} {% else %} NA {% endif%}
                     </div>
-                </p>
+                </div>
+                <div class="row text-center">
+                    <div class="col">
+                        <i class="fa fa-area-chart fa-5x" aria-hidden="true"></i><br>Platinum: ${% if metalprices.platinum_price %}{{metalprices.platinum_price|intcomma}} {% else %} NA {% endif%}
+                    </div>
+                    <div class="col">
+                        <i class="fa fa-line-chart fa-5x" aria-hidden="true"></i><br>Palladium: ${% if metalprices.palladium_price %}{{metalprices.palladium_price|intcomma}} {% else %} NA {% endif%}
+                    </div>
+                </div>
             </div>
         </div>
         
-        <div class="card border-primary">
+        <div class="card border-dark">
             <div class="card-header">
                 <i class="fas fa-exchange-alt"></i>
-                Transactions
+                Recent Transactions
             </div>
             <div class="card-body">
-            <p class="text-muted">Five most recently entered transactions</p>
                 <table class="table-hover table_card">
                     <thead>
                         <th>Item</th>
@@ -92,7 +89,7 @@
                         </tr>
                     {% endfor %}
                 </table>
-                <p class="mt-3 mb-1">
+                <p class="mt-3 mb-0">
                     Some quick example text to build on the card title and make up the bulk of the card's content.
                     <br>
                     <a href="#" class="card-link">Card link</a>
@@ -109,7 +106,7 @@
                 </div>
                     <ul class="list-group-flush pb-0 pt-2 pl-2 pr-2">
                     {% for headline in top_headlines.articles|slice:"10" %}
-                        <li class="list-group-item p-0"><a href="{{ headline.url }}">{{ headline.title }}</a></lI>
+                        <li class="list-group-item p-0"><a href="{{ headline.url }}" target="_blank" rel="noopener noreferrer">{{ headline.title }}</a></lI>
                     {% endfor %}
                     </ul>
             </div>
@@ -193,32 +190,30 @@
                 Inventory Recap
             </div>
             <div class="card-body">
-                <p class="card-text">
-                    <table class="table-hover table_card">
-                        <thead>
-                            <th>Item</th>
-                            <th>Created</th>
-                            <th>Total Quantity</th>
-                            <th>Total Value<th>
-                        </thead>
-                        {% for item in items %}
-                            <tr>
-                                <td>
-                                    <a href="{% url 'inventory:itemdetail' item.id %}">
-                                        {% if item.item_name %}
-                                            {{ item.item_name }}
-                                        {% else %}
-                                            {{ item.type }}
-                                        {% endif %}
-                                    </a>
-                                </td>
-                                <td>{{ item.created|naturalday }}</td>
-                                <td>{{ item.quantity.tran_quantity__sum|intcomma }}</td>
-                                <td>{{ item.value.tran_value__sum|intcomma }}</td>
-                            </tr>
-                        {% endfor %}
-                    </table>
-                </p>
+                <table class="table-hover table_card">
+                    <thead>
+                        <th>Item</th>
+                        <th>Created</th>
+                        <th>Total Quantity</th>
+                        <th>Total Value<th>
+                    </thead>
+                    {% for item in items %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'inventory:itemdetail' item.id %}">
+                                    {% if item.item_name %}
+                                        {{ item.item_name }}
+                                    {% else %}
+                                        {{ item.type }}
+                                    {% endif %}
+                                </a>
+                            </td>
+                            <td>{{ item.created|naturalday }}</td>
+                            <td>{{ item.quantity.tran_quantity__sum|intcomma }}</td>
+                            <td>{{ item.value.tran_value__sum|intcomma }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
             </div>
         </div>
 
@@ -231,7 +226,51 @@
                 <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                     <div class="row">
-                        {{ form|crispy }}
+                        <div class="col">
+                            {{ form.item_name|as_crispy_field }}
+                        </div>
+                        <div class="col">
+                            {{ form.type|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            {{ form.collection|as_crispy_field }}
+                        </div>
+                        <div class="col">
+                            {{ form.item_desc|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            {{ form.mint|as_crispy_field }}
+                        </div>
+                        <div class="col">
+                            {{ form.count|as_crispy_field }}
+                        </div>
+                        <div class="col">
+                            {{ form.graded|as_crispy_field }}
+                            {{ form.CAC|as_crispy_field }}
+                        </div>
+                        <div class="col">
+                            {{ form.details|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            {{ form.grader|as_crispy_field }}
+                        </div>
+                        <div class="col">
+                            {{ form.grader_id|as_crispy_field }}
+                        </div>
+                        <div class="col">
+                            {{ form.grade|as_crispy_field }}
+                        </div>
+                        <div class="col">
+                            {{ form.grade_num|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col">
                             <button type="submit" class="btn btn-primary">{{ button }}</button>
                         </div>
