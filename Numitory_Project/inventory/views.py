@@ -10,6 +10,7 @@ from django.db import IntegrityError
 from django.db.models import Sum
 from django.contrib.auth import login, logout, authenticate,update_session_auth_hash
 from .forms import (ItemCreateForm,
+                    QuickAddForm,
                     TransactionCreateForm,
                     TypeCreateForm,
                     CollectionCreateForm,
@@ -71,6 +72,8 @@ def home(request):
             'top_headlines': top_headlines,
             'images': images,
             'prices': prices,
+            'form': QuickAddForm(),
+            'button': 'Create',
         })
     else:
         return render(request, 'inventory/home.html')

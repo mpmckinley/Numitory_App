@@ -6,31 +6,19 @@
         <div class="col">
             <h2>Type Inventory</h2>
         </div>
-
-        <div class="col">
-            Classification:
-        <form>
-            <select name="dropdown">
-                <option value = "Computer Architecture">Needs to Populate</option>
-                <option value = "Java">Datatables?</option>
-                <option value = "Discrete Mathematics">Multiple Dropdowns...</option>
-            </select>
-        </form>
-        </div>
-
     </div>
 
-    <table class="table" id="types">
+    <table class="table table-hover main_table" id="types">
         <thead>
             <tr>
-                <th scope="col">Category</th>
+                <th scope="col" style="width:2%">Long Name</th>
                 <th>Classification</th>
                 <th>Category</th>
-                <th>Mints</th>
-                <th>Dates</th>
-                <th>Purity</th>
-                <th>Weight</th>
-                <th>Varieties</th>
+                <th>Country</th>
+                <th>Level 1</th>
+                <th>Level 2</th>
+                <th>Precious Type</th>
+                <th>Precious Weight</th>
                 <th>Numitory</th>
                 <th></th>
             </tr>
@@ -48,8 +36,8 @@
                 <td>{{ type.country }}</td>
                 <td>{{ type.level1 }}</td>
                 <td>{{ type.level2 }}</td>
-                <td>{{ type.purity }}</td>
-                <td>{{ type.metal_weight }}</td>
+                <td>{{ type.precious_type }}</td>
+                <td>{{ type.precious_weight }}</td>
                 <td></td>
                 <td>
                     <a href="{% url 'inventory:typedetail' type.id %}">
@@ -60,23 +48,6 @@
             {% endfor %}
         </tbody>
     </table>
-{% comment %} <div class="pagination justify-content-center">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-        </span>
-
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-    </span>
-</div> {% endcomment %}
 
 {% endblock content %}
 
@@ -85,8 +56,33 @@
     
     $(document).ready(function() {
         $('#types').DataTable( {
-            "order": [[ 3, "desc" ]]
-        });
+            "ordering": false,
+            "dom": '<"top"fi>rt<"bottom"lp>',
+            initComplete: function () {
+                this.api().columns([1, 2, 3, 4, 5, 6, 7]).every( function () {
+                    var column = this;
+                    var select = $('<select><option value=""></option></select>')
+                        .appendTo( $(column.header()) )
+                        .on( 'change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+    
+                            column
+                                .search( val ? '^'+val+'$' : '', true, false )
+                                .draw();
+                        } );
+    
+                    column.cells('', column[0]).render('display').sort().unique().each( function ( d, j ) {
+                        if(column.search() === '^'+d+'$'){
+                            select.append( '<option value="'+d+'" selected="selected">'+d+'</option>' )
+                        } else {
+                            select.append( '<option value="'+d+'">'+d+'</option>' )
+                        }
+                    } );
+                } );
+            }
+        } );
     } );
 
 </script>

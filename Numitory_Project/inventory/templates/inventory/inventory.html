@@ -19,7 +19,7 @@
 
         <h2>{{ heading }} Inventory</h2>
 
-        <table class="table table-hover main_table" style="width:100%" id="example">
+        <table class="table table-hover main_table" id="items">
             <thead>
                 <tr>
                     <th width=19px></th>
@@ -112,9 +112,36 @@
 {% endblock content %}
 
 {% block scripts %}
-<script>
+    <script>
     $(document).ready(function() {
-        $('#example').DataTable();
+        $('#items').DataTable( {
+            "ordering": false,
+            "dom": '<"top"fi>rt<"bottom"lp>',
+            initComplete: function () {
+                this.api().columns([1, 2, 3, 4, 5, 6, 7]).every( function () {
+                    var column = this;
+                    var select = $('<select><option value=""></option></select>')
+                        .appendTo( $(column.header()) )
+                        .on( 'change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+    
+                            column
+                                .search( val ? '^'+val+'$' : '', true, false )
+                                .draw();
+                        } );
+    
+                    column.cells('', column[0]).render('display').sort().unique().each( function ( d, j ) {
+                        if(column.search() === '^'+d+'$'){
+                            select.append( '<option value="'+d+'" selected="selected">'+d+'</option>' )
+                        } else {
+                            select.append( '<option value="'+d+'">'+d+'</option>' )
+                        }
+                    } );
+                } );
+            }
+        } );
     } );
-</script>
+    </script>
 {% endblock scripts %}

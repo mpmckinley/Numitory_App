@@ -21,19 +21,22 @@
     <!-- Icon/Font -->
     <link rel="stylesheet" type="text/css" href="{% static 'inventory/icons/font/bootstrap-icons.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'fontawesome/css/all.min.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css"/>
+    {% comment %} <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css"/> {% endcomment %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.23/af-2.3.5/b-1.6.5/cr-1.5.3/fc-3.3.2/fh-3.1.7/kt-2.5.3/r-2.2.7/rg-1.1.2/rr-1.2.7/sc-2.0.3/sb-1.0.1/sp-1.2.2/sl-1.3.1/datatables.min.css"/>
     <script src="https://use.fontawesome.com/e7f216b497.js"></script>
     <!-- Numitory Style -->
     <link rel="stylesheet" type="text/css" href="{% static 'inventory/style.css' %}"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.min.js"></script>
+ 
     <script src="{% static 'inventory/latest-prices.js' %}"/></script>
     <script>
         var Price_url='{% url "get_latest_prices" %}';
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.23/af-2.3.5/b-1.6.5/cr-1.5.3/fc-3.3.2/fh-3.1.7/kt-2.5.3/r-2.2.7/rg-1.1.2/rr-1.2.7/sc-2.0.3/sb-1.0.1/sp-1.2.2/sl-1.3.1/datatables.min.js"></script>
+    {% comment %} <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script> {% endcomment %}
 </head>
 
 <body>

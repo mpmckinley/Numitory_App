@@ -183,7 +183,7 @@ td:first-child {
 
 .pricing .text-muted {
     color: black;
-    opacity: 0.5;
+    opacity: 0.5;;
 }
 
 @media (min-width: 576px) {
@@ -209,3 +209,7 @@ td:first-child {
         column-count: 5;
     }
 } */
+
+.text .text-muted {
+    font-weight: bold;
+}

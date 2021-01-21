@@ -1,5 +1,6 @@
 {% extends 'inventory/base.html' %}
 
+{% load crispy_forms_tags %}
 {% load humanize %}
 
 {% block content %}
@@ -227,6 +228,15 @@
                 Quick Add
             </div>
             <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                    <div class="row">
+                        {{ form|crispy }}
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary">{{ button }}</button>
+                        </div>
+                    </div>
+                </form>
 
             </div>
         </div>

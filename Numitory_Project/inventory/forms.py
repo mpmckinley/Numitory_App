@@ -134,6 +134,33 @@ class ItemCreateForm(ModelForm):
         # ***Mint conditional choices based on Type selection
         # self.fields['mint'].queryset = Type.objects.filter(id=Type.id)
 
+class QuickAddForm(ModelForm):
+    class Meta:
+        model = Item
+        fields = [
+            'item_name',
+            'item_desc',
+            # 'status',
+            'count',
+            'graded',
+            'grader',
+            'grader_id',
+            'grade',
+            'grade_num',
+            'condition',
+            'CAC',
+            'details',
+            'mint',
+            'collection',
+            'type',
+            'type',
+            'item_image',
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super(QuickAddForm, self).__init__(**kwargs)
+        self.fields['item_desc'].widget.attrs = {'rows': 1}
+
 class TypeCreateForm(ModelForm):
     class Meta:
         model = Type
