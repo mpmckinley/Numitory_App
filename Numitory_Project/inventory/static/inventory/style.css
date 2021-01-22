@@ -124,7 +124,7 @@ td:first-child {
 }
 
 .main_table {
-    table-layout: fixed;
+    /* table-layout: fixed; */
     width: 100%;
 }
 
@@ -140,7 +140,10 @@ td:first-child {
     padding-left: 10px;
 }
 .table_card {
-    /* table-layout: fixed; */
+    table-layout: fixed;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     width: 100%;
 }
 
@@ -197,9 +200,9 @@ td:first-child {
     }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 668px) {
     .card-columns {
-        column-count: 3;
+        column-count: 2;
     }
 }
 

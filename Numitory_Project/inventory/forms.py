@@ -156,7 +156,7 @@ class QuickAddForm(ModelForm):
             'item_image',
         ]
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, user, **kwargs):
         super(QuickAddForm, self).__init__(**kwargs)
         self.fields['item_desc'].widget.attrs = {'rows': 1}
 

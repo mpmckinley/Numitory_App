@@ -61,6 +61,19 @@ def home(request):
             page=1,
         )
 
+        if request.method == 'POST':
+            try:
+                form = QuickAddForm(data=request.POST, files=request.FILES, user=request.user)
+                newitem = form.save(commit=False)
+                newitem.user = request.user
+                newitem.save()
+                return redirect('home')
+            except ValueError:
+                return render(request, 'home', {
+                    'form': QuickAddForm(user=request.user),
+                    'error': "Field validation error",
+                })
+
         return render(request, 'inventory/home.html', {
             'itemtotal': itemtotal,
             'typetotal': typetotal,
@@ -72,7 +85,7 @@ def home(request):
             'top_headlines': top_headlines,
             'images': images,
             'prices': prices,
-            'form': QuickAddForm(),
+            'form': QuickAddForm(user=request.user),
             'button': 'Create',
         })
     else:

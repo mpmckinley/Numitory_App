@@ -19,19 +19,21 @@
 
         <h2>{{ heading }} Inventory</h2>
 
-        <table class="table table-hover main_table" style="width:100%" id="items">
+    <div class="row">
+    <div class="col">
+        <table class="table table-hover main_table" id="items">
             <thead>
                 <tr>
-                    <th width=15px></th>
+                    <th width="12px"></th>
                     <th scope="col">Item</th>
-                    <th>Type</th>
-                    <th>Desc.</th>
-                    <th></th>
+                    <th>Level 1</th>
+                    <th>Level 2</th>
+                    <th width=20px>Long Name</th>
                     <th>Condition</th>
                     <th>Quantity</th>
                     <th>Tran. Value</th>
                     <th>Est. Mkt  Value</th>
-                    <th>Type</th>
+                    {% comment %} <th>Type</th> {% endcomment %}
                     <th>Collection</th>
                 </tr>
             </thead>
@@ -55,6 +57,8 @@
                             {% endif %}
                         </a>
                     </td>
+                    <td>{{ item.type.level1 }}</td>
+                    <td>{{ item.type.level2 }}</td>
                     <td>
                         {% if heading == item.type.longname %}
                             {{ item.type.longname }}
@@ -64,9 +68,6 @@
                             </a>
                         {% endif %}
                     </td>
-                    <td>{{ item.item_desc }}</td>
-                    <td><text style="color:rgba(236,27,20,0.96)">YEAR</text></td>
-                    <td><text style="color:rgba(236,27,20,0.96)">MINT</text></td>
                     <td>
                         {% if item.graded is False %}
                             {% if item.condition %}
@@ -75,16 +76,16 @@
                                 -
                             {% endif %}
                         {% else %}
-                            {{ item.grade }}
+                            {{ item.grade }}-{{ item.grade_num }}
                         {% endif %}
                     </td>
-                    {% comment %} ***INSERT QUANTITY AND VALUE SUMS FROM DETAILS PAGE {% endcomment %}
                     <td>
                         {% if item.quantity.tran_quantity__sum is None %}
                             -
                         {% else %}
-                            {{ item.quantity.tran_quantity__sum|intcomma }}</td>
+                            {{ item.quantity.tran_quantity__sum|intcomma }}
                         {% endif %}
+                    </td>
                     <td>
                         {% if item.value.tran_value__sum is None %}
                             -
@@ -92,7 +93,8 @@
                             ${{ item.value.tran_value__sum|intcomma }}</td>
                         {% endif %}
                     </td>
-                    <td><text style="color:rgba(236,27,20,0.96)">***To Do***</text></td>
+                    <td><text style="color:rgba(236,27,20,0.96)">MINT</text></td>
+                    {% comment %} <td><text style="color:rgba(236,27,20,0.96)">***To Do***</text></td> {% endcomment %}
                     <td>
                         {% if heading == item.collection.coll_name %}
                             {{ item.collection.coll_name }}
@@ -104,9 +106,24 @@
                     </td>
                 </tr>
                 {% endfor %}
+                <tfoot>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </tfoot>
             </tbody>
         </table>
-
+    </div>
+    </div>
     {% endif %}
 
 {% endblock content %}
@@ -115,13 +132,23 @@
     <script>
     $(document).ready(function() {
         $('#items').DataTable( {
-            "ordering": false,
-            "dom": '<"top"fi>rt<"bottom"lp>',
+            order: [[2, 'asc']],
+            rowGroup: {
+                dataSrc: 2
+            },
+            searchPanes: {
+                columns: [1,2,3,4],
+                show: true,
+            },
+            columnDefs: [
+                { orderable: false, targets: [0] },
+            ],
+            "dom": '<"top"Pfi>rt<"bottom"lp>',
             initComplete: function () {
-                this.api().columns([2, 3, 4, 5, 6, 7]).every( function () {
+                this.api().columns([2, 3, 4, 5]).every( function () {
                     var column = this;
                     var select = $('<select><option value=""></option></select>')
-                        .appendTo( $(column.header()) )
+                        .appendTo( $(column.footer()).empty() )
                         .on( 'change', function () {
                             var val = $.fn.dataTable.util.escapeRegex(
                                 $(this).val()

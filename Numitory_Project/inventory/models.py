@@ -53,17 +53,17 @@ class Item(models.Model):
         ('WTS', 'WTS'),
     ]
     GRADE_CHOICES = [
-        ('Poor', 'P'),
-        ('Fair', 'F'),
-        ('About/Almost Good', 'AG'),
-        ('Good', 'G'),
-        ('Very Good', 'VG'),
-        ('Fine', 'F'),
-        ('Very Fine', 'VF'),
-        ('Extremely Fine', 'EF'),
-        ('About/Almost Uncirculated', 'AU'),
-        ('Uncirculated/BU', 'BU'),
-        ('Mint State', 'MS'),
+        ('P', 'P'),
+        ('F', 'F'),
+        ('AG', 'AG'),
+        ('G', 'G'),
+        ('VG', 'VG'),
+        ('F', 'F'),
+        ('VF', 'VF'),
+        ('EF', 'EF'),
+        ('AU', 'AU'),
+        ('BU', 'BU'),
+        ('MS', 'MS'),
     ]
     GRADER_CHOICES = [
         ('PCGS', 'PCGS'),

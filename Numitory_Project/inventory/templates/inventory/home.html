@@ -207,7 +207,11 @@
                                     {% endif %}
                                 </a>
                             </td>
-                            <td>{{ item.created|naturalday }}</td>
+                            <td>
+                                <a href="{% url 'inventory:typeitems' item.type.id %}">
+                                    {{ item.type.level1 }}
+                                </a>
+                            </td>
                             <td>{{ item.quantity.tran_quantity__sum|intcomma }}</td>
                             <td>{{ item.value.tran_value__sum|intcomma }}</td>
                         </tr>
@@ -222,6 +226,21 @@
                 Quick Add
             </div>
             <div class="card-body">
+                {% if error %}
+                <div class="alert alert-dismissible alert-warning">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <h4 class="alert-heading">Warning!</h4>
+                    <p class="mb-0"><a class="alert-link">{{ error }}</a> - please try again.</p>
+                </div>
+                {% endif %}
+                {% comment %} ***NEED SUCCESS MESSAGE IN VIEW {% endcomment %}
+                {% if success_message %}
+                    <div class="alert alert-dismissible alert-success">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <h4 class="alert-heading">Success!</h4>
+                        <p class="mb-0">{{ success_message }} <a class="alert-link"></a>.</p>
+                    </div>
+                {% endif %}
                 <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                     <div class="row">
