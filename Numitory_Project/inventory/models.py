@@ -20,12 +20,14 @@ def upload_location(instance, filename):
     return "%s" %(filename)
 
 def getGroupNames():
-    groups = Group.objects.all().values_list('name', flat=True)
-    id = Group.objects.all().values_list('id', flat=True)
-    # print(zip(id, groups))
-    return zip(id, groups)    
-
-
+    try:
+        groups = Group.objects.all().values_list('name', flat=True)
+        id = Group.objects.all().values_list('id', flat=True)
+        # print(zip(id, groups))
+        return zip(id, groups)    
+    except:
+        pass
+        
 
 class MetalPrices(models.Model):
     gold_price=models.FloatField()
