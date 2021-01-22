@@ -30,9 +30,6 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('about/', views.about, name='about'),
     
-    # ***NEED TO GET SOMETHING ONLINE ASAP
-    path('landing/', views.landing, name='landing'),
-
     # INVENTORY.URLS
     path('inventory/', include('inventory.urls')),
 

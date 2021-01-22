@@ -38,7 +38,7 @@ def home(request):
         colltotal = Collection.objects.filter(user=request.user).aggregate(Count('id'))
         items = Item.objects.filter(user=request.user, status='Active').order_by('-created')[:10]
         transactions = Transaction.objects.filter(user=request.user).order_by('-created')[:5]
-        images = Item.objects.filter(user=request.user, status='Active').exclude(item_image='')[:5]
+        images = Item.objects.filter(user=request.user, status='Active').exclude(item_image='')[:6]
         prices=MetalPrices.objects.order_by('-updated_at')[:1].values()
 
         metalprices=MetalPrices.objects.order_by('-updated_at')[:1].values()
@@ -480,7 +480,7 @@ def loginuser(request):
             })
         else:
             login(request, user)
-            return redirect('/inventory/')
+            return redirect('home')
 
 def edituser(request):
     if('_auth_user_id' in request.session):

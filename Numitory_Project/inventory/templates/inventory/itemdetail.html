@@ -1,14 +1,13 @@
 {% extends 'inventory/base.html' %}
+
 {% load crispy_forms_tags %}
 {% load static %}
 {% load humanize %}
 
 {% block content %}
 
-<div class="row">
-
-    <div class="col-lg">
-
+<div class="row align-content-center">
+        
         {% if error %}
             <div class="alert alert-dismissible alert-warning">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -17,7 +16,9 @@
             </div>
         {% endif %}
 
-        <div class="card border-dark mb-3">
+    <div class="card-columns pl-3 pr-3">
+
+        <div class="card border-dark">
             <div class="card-header text-white bg-secondary">
                 <i class="fas fa-info-circle"></i>
                 Item Detail
@@ -34,31 +35,19 @@
                         </div>
                     </div>
                     <div class="row">
-                        {% comment %} <div class="col">
-                            {{ form.type.category|as_crispy_field }}
+                        <div class="col">
+                            {{ form.type|as_crispy_field }}
                         </div>
                         <div class="col">
-                            {{ form.type.classification|as_crispy_field }}
-                        </div> {% endcomment %}
-                        <div class="card border-light mb-3">
-                            <div class="card-body">
-                                {% comment %} <p class="card-text"> {% endcomment %}
-                                    <div class="col">
-                                        {{ form.type|as_crispy_field }}
-                                    </div>
-                                    <div class="col">
-                                        <text style="color:rgba(236,27,20,0.96)">***Conditional Variety dropdown from Type***</text>
-                                        {% comment %} {{ form.type_detl|as_crispy_field }} {% endcomment %}
-                                    </div>
-                                    <div class="col">
-                                        {{ form.mint|as_crispy_field }} 
-                                    </div>
-                                {% comment %} </p> {% endcomment %}
-                            </div>
+                            <text style="color:rgba(236,27,20,0.96)">***Conditional Variety dropdown from Type***</text>
+                            {% comment %} {{ form.type_detl|as_crispy_field }} {% endcomment %}
+                        </div>
+                        <div class="col">
+                            {{ form.mint|as_crispy_field }} 
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-9">
+                        <div class="col">
                             {{ form.item_desc|as_crispy_field }}
                         </div>
                         <div class="col">
@@ -109,7 +98,7 @@
             </div>
         </div>
 
-        <div class="card border-dark mb-3">
+        <div class="card border-dark">
             <div class="card-header text-white bg-secondary">
                 <i class="fas fa-info-circle"></i>
                 {{ item.type }} Type Detail
@@ -156,13 +145,13 @@
                                 <td>Links:</td>
                                 <td>
                                     {% if detail.url_pcgs %}
-                                        <a href="{{ detail.url_pcgs }}"><i class="fa fa-shield fa-1x fa-pull-left fa-border" aria-hidden="true"></i></a>
+                                        <a href="{{ detail.url_pcgs }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-shield fa-1x fa-pull-left fa-border" aria-hidden="true"></i></a>
                                     {% endif %}
                                     {% if detail.url_ngc %}
-                                        <a href="{{ detail.url_ngc }}"><i class="fa fa-balance-scale fa-1x fa-pull-left fa-border" aria-hidden="true"></i></a>
+                                        <a href="{{ detail.url_ngc }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-balance-scale fa-1x fa-pull-left fa-border" aria-hidden="true"></i></a>
                                     {% endif %}
                                     {% if detail.url_other %}
-                                        <a href="{{ detail.url_other }}"><i class="fa fa-link fa-1x fa-pull-left fa-border" aria-hidden="true"></i></a>
+                                        <a href="{{ detail.url_other }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-link fa-1x fa-pull-left fa-border" aria-hidden="true"></i></a>
                                     {% endif %}
                                 </td>
                             </tr>
@@ -172,11 +161,7 @@
             </div>
         </div>
 
-    </div>
-
-    <div class="col">
-
-        <div class="card border-dark mb-3">
+        <div class="card border-dark">
             <div class="card-header text-white bg-secondary">
                 <i class="far fa-chart-bar"></i>
                 Stats
@@ -275,73 +260,76 @@
             </div>
         </div>
 
-        <table class="table table-sm table-hover mt-3" style="width:100%" id="tran_table">
-            <thead>
-                <tr>
-                    <th scope="col">Direction</th>
-                    <th>Date</th>
-                    <th>Quantity</th>
-                    <th>Value</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                {% if not trans %}
-                    <tr>
-                        <td colspan="5">No Transactions</td>
-                    </tr>
-                {% else %}
-                    {% for trans in page_obj %}
+        <div class="card border-dark">
+            <div class="card-body">
+                <table class="table table-sm table-hover mt-3" style="width:100%" id="tran_table">
+                    <thead>
                         <tr>
-                            <td>{{ trans.direction }}</td>
-                            <td>{{ trans.date }}</td>
-                            <td>{{ trans.tran_quantity }}</td>
-                            <td>{{ trans.tran_value }}</td>
-                            <td align="right">
-                                <form action="{% url 'inventory:itemdetail' item.id %}" method="POST">
-                                {% csrf_token %}
-                                    <input type="hidden" value="{{ trans.id }}" name="pk">
-                                    <button type="submit" class="hidebtn" id="{{ trans.id }}" name="edit">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </button>
-                                </form>
-                            </td>
-                            <td align="center">
-                                <form action="{% url 'inventory:itemdetail' item.id %}" method="POST">
-                                {% csrf_token %}
-                                    <input type="hidden" value="{{ trans.id }}" name="pk">
-                                    <button type="submit" class="hidebtn" id="{{ trans.id }}" name="delete">
-                                        <i class="bi bi-x-circle-fill" style="color: red;"></i>
-                                    </button>
-                                </form>
-                            </td>
+                            <th scope="col">Direction</th>
+                            <th>Date</th>
+                            <th>Quantity</th>
+                            <th>Value</th>
+                            <th></th>
+                            <th></th>
                         </tr>
-                    {% endfor %}
-                {% endif %}
-            </tbody>
-        </table>
+                    </thead>
+                    <tbody>
+                        {% if not trans %}
+                            <tr>
+                                <td colspan="5">No Transactions</td>
+                            </tr>
+                        {% else %}
+                            {% for trans in page_obj %}
+                                <tr>
+                                    <td>{{ trans.direction }}</td>
+                                    <td>{{ trans.date }}</td>
+                                    <td>{{ trans.tran_quantity }}</td>
+                                    <td>{{ trans.tran_value }}</td>
+                                    <td align="right">
+                                        <form action="{% url 'inventory:itemdetail' item.id %}" method="POST">
+                                        {% csrf_token %}
+                                            <input type="hidden" value="{{ trans.id }}" name="pk">
+                                            <button type="submit" class="hidebtn" id="{{ trans.id }}" name="edit">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td align="center">
+                                        <form action="{% url 'inventory:itemdetail' item.id %}" method="POST">
+                                        {% csrf_token %}
+                                            <input type="hidden" value="{{ trans.id }}" name="pk">
+                                            <button type="submit" class="hidebtn" id="{{ trans.id }}" name="delete">
+                                                <i class="bi bi-x-circle-fill" style="color: red;"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
 
-        <div class="pagination justify-content-center">
-            <span class="step-links">
-                {% if page_obj.has_previous %}
-                    <a href="?page=1">&laquo; first</a>
-                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-                {% endif %}
+                <div class="pagination justify-content-center">
+                    <span class="step-links">
+                        {% if page_obj.has_previous %}
+                            <a href="?page=1">&laquo; first</a>
+                            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                        {% endif %}
 
-                <span class="current">
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                </span>
+                        <span class="current">
+                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                        </span>
 
-                {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}">next</a>
-                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-                {% endif %}
-            </span>
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}">next</a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
         </div>
 
     </div>
-
 </div>
 
 {% endblock content %}

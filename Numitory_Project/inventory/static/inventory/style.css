@@ -64,7 +64,7 @@ footer {
 }
 
 .nav_btn_pad {
-    padding-top: .65em;
+    padding-top: .4em;
 }
 
 .bi_nav {
@@ -134,8 +134,13 @@ td:first-child {
     white-space: nowrap;
 }
 
+.card-header {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 10px;
+}
 .table_card {
-    table-layout: fixed;
+    /* table-layout: fixed; */
     width: 100%;
 }
 
@@ -194,7 +199,7 @@ td:first-child {
 
 @media (min-width: 768px) {
     .card-columns {
-        column-count: 2;
+        column-count: 3;
     }
 }
 

@@ -19,14 +19,14 @@
 
         <h2>{{ heading }} Inventory</h2>
 
-        <table class="table table-hover main_table" id="items">
+        <table class="table table-hover main_table" style="width:100%" id="items">
             <thead>
                 <tr>
-                    <th width=19px></th>
+                    <th width=15px></th>
                     <th scope="col">Item</th>
-                    <th>Description</th>
-                    <th>Year</th>
-                    <th>Mint</th>
+                    <th>Type</th>
+                    <th>Desc.</th>
+                    <th></th>
                     <th>Condition</th>
                     <th>Quantity</th>
                     <th>Tran. Value</th>
@@ -55,9 +55,18 @@
                             {% endif %}
                         </a>
                     </td>
+                    <td>
+                        {% if heading == item.type.longname %}
+                            {{ item.type.longname }}
+                        {% else %}
+                            <a href="{% url 'inventory:typeitems' item.type.id %}">
+                                {{ item.type.longname }}
+                            </a>
+                        {% endif %}
+                    </td>
                     <td>{{ item.item_desc }}</td>
-                    <td><text style="color:rgba(236,27,20,0.96)">***YEAR***</text></td>
-                    <td><text style="color:rgba(236,27,20,0.96)">***MINT***</text></td>
+                    <td><text style="color:rgba(236,27,20,0.96)">YEAR</text></td>
+                    <td><text style="color:rgba(236,27,20,0.96)">MINT</text></td>
                     <td>
                         {% if item.graded is False %}
                             {% if item.condition %}
@@ -85,15 +94,6 @@
                     </td>
                     <td><text style="color:rgba(236,27,20,0.96)">***To Do***</text></td>
                     <td>
-                        {% if heading == item.type.longname %}
-                            {{ item.type.longname }}
-                        {% else %}
-                            <a href="{% url 'inventory:typeitems' item.type.id %}">
-                                {{ item.type.longname }}
-                            </a>
-                        {% endif %}
-                    </td>
-                    <td>
                         {% if heading == item.collection.coll_name %}
                             {{ item.collection.coll_name }}
                         {% else %}
@@ -118,7 +118,7 @@
             "ordering": false,
             "dom": '<"top"fi>rt<"bottom"lp>',
             initComplete: function () {
-                this.api().columns([1, 2, 3, 4, 5, 6, 7]).every( function () {
+                this.api().columns([2, 3, 4, 5, 6, 7]).every( function () {
                     var column = this;
                     var select = $('<select><option value=""></option></select>')
                         .appendTo( $(column.header()) )
