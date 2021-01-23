@@ -34,7 +34,7 @@ class MetalPrices(models.Model):
     silver_price=models.FloatField()
     platinum_price=models.FloatField()
     palladium_price=models.FloatField()
-    updated_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateField(auto_now_add=True)
     
 
 

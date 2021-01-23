@@ -102,17 +102,31 @@ def get_latest_prices(request):
         prices[0]['silver_price']="{:.2f}".format(prices[0]['silver_price'])
         prices[0]['platinum_price']="{:.2f}".format(prices[0]['platinum_price'])
         prices[0]['palladium_price']="{:.2f}".format(prices[0]['palladium_price'])
-        prices[0]['updated_at']=prices[0]['updated_at'].strftime('%m/%d/%y %H:%M:%S')
+        prices[0]['updated_at']=prices[0]['updated_at'].strftime('%m/%d/%y')
     return JsonResponse({'prices':list(prices)})
 
-def silverchart(request):
+def silverChart(request):
     labels = []
     data = []
 
-    queryset = MetalPrices.objects.values('silver_price').order_by('-updated_at')
+    queryset = MetalPrices.objects.values('updated_at', 'silver_price').order_by('updated_at')
     for entry in queryset:
         labels.append(entry['updated_at'])
         data.append(entry['silver_price'])
+    
+    return JsonResponse(data={
+        'labels': labels,
+        'data': data,
+    })
+
+def goldChart(request):
+    labels = []
+    data = []
+
+    queryset = MetalPrices.objects.values('updated_at', 'gold_price').order_by('updated_at')
+    for entry in queryset:
+        labels.append(entry['updated_at'])
+        data.append(entry['gold_price'])
     
     return JsonResponse(data={
         'labels': labels,
