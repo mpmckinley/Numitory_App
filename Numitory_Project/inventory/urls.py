@@ -26,5 +26,5 @@ urlpatterns = [
 
     # RECYcLE
     path('recycle/', views.recycle, name='recycle'),
-   
+
 ]

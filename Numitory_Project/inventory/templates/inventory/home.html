@@ -19,7 +19,7 @@
                     You currently have {{ itemtotal.id__count|intcomma }} <a href="{% url 'inventory:inventory' %}">Item{{ itemtotal.id__count|pluralize }}</a> across {{ typetotal.id__count|intcomma }} <a href="{% url 'inventory:typeinv' %}">Type{{ typetotal.id__count|pluralize }}</a> in {{ colltotal.id__count|apnumber }} <a href="{% url 'inventory:collinv' %}">Collection{{ colltotal.id__count|pluralize}}</a>.
                 </p>
                 <p class="card-text">
-                    <div class="row pl-1">
+                    <div class="row">
                         <div class="col">
                         {% for image in images %}
                             <a href="{% url 'inventory:itemdetail' image.id %}">
@@ -34,16 +34,37 @@
         
         <div class="card border-dark">
             <div class="card-header">
-                <i class="fas fa-chart-line"></i>
-                Markets
+                <div class="row">
+                    <div class="col">
+                        <i class="fas fa-chart-line"></i>
+                        Markets
+                        </div>
+                    <div class="col text-right mr-0 pr-1">
+                        <text class="text_basic">
+                            <a href="">1w</a>
+                             | 
+                            <a href="">1m</a>
+                             |
+                            <a href="">6m</a>
+                             |
+                            <a href="">1y
+                             |
+                            <a href="">2y</a>
+                        </text>
+                    </div>
+                </div>
             </div>
             <div class="card-body">
                 <div class="row text-center mb-3">
                     <div class="col">
-                        <i class="fa fa-line-chart fa-5x" aria-hidden="true"></i><br>Silver: ${% if metalprices.silver_price %}{{metalprices.silver_price|intcomma}} {% else %} NA {% endif%}
+                        <canvas id="silverChart" width="30"></canvas>
+                        <br>
+                        Silver: ${% if metalprices.silver_price %}{{metalprices.silver_price|intcomma}} {% else %} NA {% endif%}
                     </div>
                     <div class="col">
-                        <i class="fa fa-area-chart fa-5x" aria-hidden="true"></i><br>Gold: ${% if metalprices.gold_price %}{{metalprices.gold_price|intcomma}} {% else %} NA {% endif%}
+                        <canvas id="goldChart" width="30"></canvas>
+                        <br>
+                        Gold: ${% if metalprices.gold_price %}{{metalprices.gold_price|intcomma}} {% else %} NA {% endif%}
                     </div>
                 </div>
                 <div class="row text-center">
@@ -89,8 +110,8 @@
                         </tr>
                     {% endfor %}
                 </table>
-                <p class="mt-3 mb-0">
-                    Some quick example text to build on the card title and make up the bulk of the card's content.
+                <p class="mt-2 mb-0">
+                    Some quick example text to build on the card title...
                     <br>
                     <a href="#" class="card-link">Card link</a>
                     <a href="#" class="card-link">Another link</a>
@@ -114,11 +135,28 @@
 
         <div class="card border-dark">
             <div class="card-header">
-                <i class="fa fa-money" aria-hidden="true"></i>
-                Inventory Value
+                <div class="row">
+                    <div class="col">
+                        <i class="fa fa-money" aria-hidden="true"></i>
+                        Inventory Value
+                        </div>
+                    <div class="col text-right mr-0 pr-1">
+                        <text class="text_basic">
+                            <a href="">1w</a>
+                             | 
+                            <a href="">1m</a>
+                             |
+                            <a href="">6m</a>
+                             |
+                            <a href="">1y
+                             |
+                            <a href="">2y</a>
+                        </text>
+                    </div>
+                </div>
             </div>
             <div class="card-body text-center">
-                <i class="fa fa-line-chart fa-5x" aria-hidden="true"></i>
+                <canvas id="myChart" height="200"></canvas>
             </div>
             <div class="card-body pt-0">
                 <div class="row">
@@ -213,7 +251,7 @@
                                 </a>
                             </td>
                             <td align="center">{{ item.quantity.tran_quantity__sum|intcomma }}</td>
-                            <td align="center">{{ item.value.tran_value__sum|intcomma }}</td>
+                            <td align="center">{% if item.value.tran_value__sum %}${% endif %}{{ item.value.tran_value__sum|intcomma }}</td>
                         </tr>
                     {% endfor %}
                 </table>
@@ -418,7 +456,7 @@
                 <div class="card-header">Latest Release Notes</div>
                 <div class="card-body">
                     <h4 class="card-title">v1_022721</h4>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <p class="card-text">Some quick example text to build on the card title ...</p>
                 </div>
             </div>
         </div>
@@ -428,3 +466,133 @@
 {% endif %}
 
 {% endblock content %}
+
+{% block scripts %}
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
+            datasets: [{
+                label: 'Total Value',
+                data: [12, 19, 3, 5, 2, 3, 1, 2, 3, 4, 5, 6],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
+            legend: {
+                display: false
+            }
+        }
+    });
+
+{% comment %} ***Started with SILVERVIEW url and view {% endcomment %}
+    var ctx = document.getElementById('silverChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Silver Price',
+                data: [12, 19, 3, 5, 2, 3, 1, 2, 3, 4, 5, 6],
+                backgroundColor: [
+                    'rgba(5,5,201,0.67)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
+            legend: {
+                display: false
+            }
+
+        }
+    });
+
+    var ctx = document.getElementById('goldChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Gold Price',
+                data: [2234, 1903, 5, 2, 3, 1, 2, 3, 4, 5, 6],
+                backgroundColor: [
+                    'rgba(5,5,201,0.67)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: false
+                    }
+                }]
+            },
+            legend: {
+                display: false
+            }
+
+        }
+    });
+    </script>
+{% endblock scripts %}

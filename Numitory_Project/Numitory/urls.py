@@ -49,6 +49,10 @@ urlpatterns = [
     
     # Export
     path('export/', views.export, name='export'),
+
+    #charts
+    path('silverchart/', views.silverchart, name='silverchart'),
+
 ]
 
 if settings.DEBUG:

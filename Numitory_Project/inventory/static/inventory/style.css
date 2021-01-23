@@ -22,6 +22,14 @@ html {
     margin: 2em;
 }
 
+.text_basic {
+    font-style: normal;
+    font-stretch: condensed;
+    font-size: x-small;
+    margin-right: 0px;
+    margin-top:  0px;
+}
+
 .centered {
     display: flex;
     justify-content: center;
