@@ -9,7 +9,7 @@
 
 <div class="row align-content-center">
 
-    <div class="card-columns pl-3 pr-3">
+    <div class="card-columns pl-2 pr-2">
         
         <div class="card bg-light">
             <div class="card-body pb-1">
@@ -59,12 +59,12 @@
         
         <div class="card border-dark">
             <div class="card-header">
-                <i class="fas fa-exchange-alt"></i>
+                <i class="fas fa-exchange-alt"  aria-hidden="true"></i>
                 Recent Transactions
             </div>
             <div class="card-body">
                 <table class="table-hover table_card">
-                    <thead>
+                    <thead align="center">
                         <th>Item</th>
                         <th>Date</th>
                         <th>Action</th>
@@ -83,9 +83,9 @@
                                 </a>
                             </td>
                             <td>{{ transaction.date|naturalday }}</td>
-                            <td>{{ transaction.direction }}</td>
-                            <td>{{ transaction.tran_quantity|intcomma }}</td>
-                            <td>{{ transaction.tran_value }}</td>
+                            <td align="center">{{ transaction.direction }}</td>
+                            <td align="center">{{ transaction.tran_quantity|intcomma }}</td>
+                            <td align="center">{{ transaction.tran_value }}</td>
                         </tr>
                     {% endfor %}
                 </table>
@@ -190,11 +190,11 @@
             </div>
             <div class="card-body">
                 <table class="table-hover table_card">
-                    <thead>
-                        <th>Item</th>
-                        <th>Created</th>
-                        <th>Total Quantity</th>
-                        <th>Total Value<th>
+                    <thead align="center">
+                        <th width=30%>Item</th>
+                        <th width=25%>Created</th>
+                        <th width=25%>Total Quantity</th>
+                        <th width=25%>Total Value<th>
                     </thead>
                     {% for item in items %}
                         <tr>
@@ -212,8 +212,8 @@
                                     {{ item.type.level1 }}
                                 </a>
                             </td>
-                            <td>{{ item.quantity.tran_quantity__sum|intcomma }}</td>
-                            <td>{{ item.value.tran_value__sum|intcomma }}</td>
+                            <td align="center">{{ item.quantity.tran_quantity__sum|intcomma }}</td>
+                            <td align="center">{{ item.value.tran_value__sum|intcomma }}</td>
                         </tr>
                     {% endfor %}
                 </table>
