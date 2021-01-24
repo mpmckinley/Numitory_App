@@ -129,8 +129,8 @@ class Transaction(models.Model):
 
 class Type(models.Model):    
     CLASS_CHOICES = [
-        ('Bullion', 'Bullion'),
-        ('Numismatic', 'Numismatic'),
+        ('Government', 'Government'),
+        ('Private', 'Private'),
         ('Other', 'Other'),
     ]
 
@@ -154,7 +154,6 @@ class Type(models.Model):
         ('Patterns', 'Patterns'),
         ('Other', 'Other'),
     ]
-
 
     MINT_CHOICES = [
         ('N/A', 'N/A'),
@@ -180,25 +179,29 @@ class Type(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     designer = models.CharField("Designer", max_length=250, blank=True, null=True)
     diameter = DecimalField("Diameter (mm)", max_digits=6, decimal_places=2, blank=True, null=True)
-    edge = models.CharField("Edge", max_length=100, unique=True)
+    edge = models.CharField("Edge", max_length=100, blank=True, null=True)
     face_value = DecimalField("Face Value", max_digits=5, decimal_places=3, blank=True, null=True)
     face_value_currency = models.CharField("Currency", max_length=100, blank=True, null=True)
     id = models.CharField(max_length=36, default=uuid.uuid4, primary_key=True, null=False)
-    level1 = models.CharField("Level 1", max_length=100, unique=True, blank=True, null=True)
-    level2 = models.CharField("Level 2", max_length=100, unique=True, blank=True, null=True)
-    level3 = models.CharField("Level 3", max_length=100, unique=True, blank=True, null=True)
-    level4 = models.CharField("Level 4", max_length=100, unique=True, blank=True, null=True)
+    level1 = models.CharField("Level 1", max_length=100, blank=True, null=True)
+    level2 = models.CharField("Level 2", max_length=100, blank=True, null=True)
+    level3 = models.CharField("Level 3", max_length=100, blank=True, null=True)
+    level4 = models.CharField("Level 4", max_length=100, blank=True, null=True)
+    level5 = models.CharField("Level 5", max_length=100, blank=True, null=True)
     longname = models.CharField("Long Name", max_length=100, unique=True)
     mint = MultiSelectField(choices=MINT_CHOICES, blank=True, null=True)
     mintage = IntegerField("Mintage", blank=True, null=True)
+    obv_desc = models.CharField("Obverse Desc.", max_length=100, blank=True, null=True)
     precious_purity = IntegerField("Precious Purity", blank=True, null=True)
     precious_type = IntegerField("Precious Type", blank=True, null=True)
     precious_weight = IntegerField("Precious Weight", blank=True, null=True)
     recycled = models.BooleanField(default=False)
+    refiner = models.CharField("Refiner", max_length=50, blank=True, null=True)
+    rev_desc = models.CharField("Reverse Desc.", max_length=100, blank=True, null=True)
+    serials = models.CharField("Serials", max_length=100, blank=True, null=True)
     strike = models.CharField("Strike", max_length=20, blank=True, null=True)
     thickness = DecimalField("Thickness (mm)", max_digits=6, decimal_places=2, blank=True, null=True)
     type_desc = models.CharField("Description", max_length=250, blank=True, null=True)
-    # type_name = models.CharField("Name", max_length=100, unique=True)
     type_img_obv = models.ImageField("", upload_to=upload_location, null=True, blank=True)
     type_img_rev = models.ImageField("", upload_to=upload_location, null=True, blank=True)
     url_ngc = models.URLField("NGC url", max_length=250, blank=True, null=True)
@@ -206,27 +209,13 @@ class Type(models.Model):
     url_pcgs = models.URLField("PCGS url", max_length=250, blank=True, null=True)
     url_wiki = models.URLField("Wiki url", max_length=250, blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    var_ngc = models.CharField("NGC #", max_length=100, unique=True, blank=True, null=True)
-    var_pcgs = models.CharField("PCGS #", max_length=100, unique=True, blank=True, null=True)
+    var_ngc = models.CharField("NGC #", max_length=100, blank=True, null=True)
+    var_pcgs = models.CharField("PCGS #", max_length=100, blank=True, null=True)
     weight = models.CharField("Weight", max_length=10, blank=True, null=True)
     year_mint = models.CharField("Year | Mint", max_length=50, blank=True, null=True)
 
-
     def __str__(self):
         return self.longname
-
-# class Type_Priv(models.Model):
-#     # id = models.CharField(max_length=36, default=uuid.uuid4, primary_key=True, null=False)
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-
-# ***Second TYPE model that will hold non-GOVERNMENT issued types, bullion, etc.
-
-#     # type_img_obv = models.ImageField("", upload_to=upload_location, null=True, blank=True)
-#     # type_img_rev = models.ImageField("", upload_to=upload_location, null=True, blank=True)
-
-#     def __str__(self):
-#         return self.var_name
-
 
 class Collection(models.Model):
     id = models.CharField(max_length=36, default=uuid.uuid4, primary_key=True, null=False)
