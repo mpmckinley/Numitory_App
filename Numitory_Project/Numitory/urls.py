@@ -38,6 +38,8 @@ urlpatterns = [
     path('refresh/latest/prices',views.refresh_latest_pricing,name='refresh_latest_pricing'),
     path('silverChart/', views.silverChart, name='silverChart'),
     path('goldChart/', views.goldChart, name='goldChart'),
+    path('platinumChart/', views.platinumChart, name='platinumChart'),
+    path('palladiumChart/', views.palladiumChart, name='palladiumChart'),
     
     # AUTH
     path('signup/', views.signupuser, name="signupuser"),

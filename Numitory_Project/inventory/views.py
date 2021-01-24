@@ -38,7 +38,7 @@ def home(request):
         colltotal = Collection.objects.filter(user=request.user).aggregate(Count('id'))
         items = Item.objects.filter(user=request.user, status='Active').order_by('-created')[:10]
         transactions = Transaction.objects.filter(user=request.user).order_by('-created')[:6]
-        images = Item.objects.filter(user=request.user, status='Active').exclude(item_image='')[:6]
+        images = Item.objects.filter(user=request.user, status='Active').exclude(item_image='')[:7]
         prices=MetalPrices.objects.order_by('-updated_at')[:1].values()
 
         metalprices=MetalPrices.objects.order_by('-updated_at')[:1].values()
@@ -129,6 +129,34 @@ def goldChart(request):
     for entry in queryset:
         labels.append(entry['updated_at'])
         data.append(entry['gold_price'])
+    
+    return JsonResponse(data={
+        'labels': labels,
+        'data': data,
+    })
+
+def platinumChart(request):
+    labels = []
+    data = []
+
+    queryset = MetalPrices.objects.values('updated_at', 'platinum_price').order_by('updated_at')
+    for entry in queryset:
+        labels.append(entry['updated_at'])
+        data.append(entry['platinum_price'])
+    
+    return JsonResponse(data={
+        'labels': labels,
+        'data': data,
+    })
+
+def palladiumChart(request):
+    labels = []
+    data = []
+
+    queryset = MetalPrices.objects.values('updated_at', 'palladium_price').order_by('updated_at')
+    for entry in queryset:
+        labels.append(entry['updated_at'])
+        data.append(entry['palladium_price'])
     
     return JsonResponse(data={
         'labels': labels,

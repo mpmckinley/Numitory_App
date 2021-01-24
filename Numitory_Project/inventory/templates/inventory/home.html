@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <div class="row text-center mb-3">
+                <div class="row text-center">
                     <div class="col">
                         <canvas id="silverChart" data-url="{% url 'silverChart' %}" width="60"></canvas>
                         Silver: ${% if metalprices.silver_price %}{{metalprices.silver_price|intcomma}} {% else %} NA {% endif%}
@@ -65,12 +65,14 @@
                         Gold: ${% if metalprices.gold_price %}{{metalprices.gold_price|intcomma}} {% else %} NA {% endif%}
                     </div>
                 </div>
-                <div class="row text-center">
-                    <div class="col">
-                        <i class="fa fa-area-chart fa-5x" aria-hidden="true"></i><br>Platinum: ${% if metalprices.platinum_price %}{{metalprices.platinum_price|intcomma}} {% else %} NA {% endif%}
+                <div class="row text-center pt-1">
+                    <div class="col pt-1">
+                        <canvas id="platinumChart" data-url="{% url 'platinumChart' %}"width="60"></canvas>
+                        Platinum: ${% if metalprices.platinum_price %}{{metalprices.platinum_price|intcomma}} {% else %} NA {% endif%}
                     </div>
-                    <div class="col">
-                        <i class="fa fa-line-chart fa-5x" aria-hidden="true"></i><br>Palladium: ${% if metalprices.palladium_price %}{{metalprices.palladium_price|intcomma}} {% else %} NA {% endif%}
+                    <div class="col pt-1">
+                        <canvas id="palladiumChart" data-url="{% url 'palladiumChart' %}"width="60"></canvas>
+                        Palladium: ${% if metalprices.palladium_price %}{{metalprices.palladium_price|intcomma}} {% else %} NA {% endif%}
                     </div>
                 </div>
             </div>
@@ -228,9 +230,9 @@
                 <table class="table-hover table_card">
                     <thead align="center">
                         <th width=30%>Item</th>
-                        <th width=25%>Created</th>
-                        <th width=25%>Total Quantity</th>
-                        <th width=25%>Total Value<th>
+                        <th width=25%>Type</th>
+                        <th width=25%>Quantity</th>
+                        <th width=25%>Value<th>
                     </thead>
                     {% for item in items %}
                         <tr>
@@ -545,7 +547,15 @@
                 yAxes: [{
                     display: false,
                 }]
-              }
+              },
+              layout: {
+                padding: {
+                    left: 0,
+                    right: 0,
+                    top: 5,
+                    bottom: 0
+                }
+              },
             }
             });
          }
@@ -590,54 +600,122 @@
                     display: false,
                 }]
               },
+              layout: {
+                padding: {
+                    left: 0,
+                    right: 0,
+                    top: 5,
+                    bottom: 0
+                }
+              },
             }
             });
          }
       });
 
-    {% comment %} var ctx = document.getElementById('goldChart').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: [],
-            datasets: [{
-                label: 'Gold Price',
-                data: [2234, 1903, 5, 2, 3, 1, 2, 3, 4, 5, 6],
-                backgroundColor: [
-                    'rgba(19,19,35,0.7)',
-                ],
-                borderColor: [
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
+    var $platinumChart = $("#platinumChart");
+      $.ajax({
+        url: $platinumChart.data("url"),
+        success: function (data) {
+
+          var ctx = $platinumChart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: data.labels,
+              datasets: [{
+                //label: 'Population',
+                backgroundColor: 'rgba(19,19,35,0.7)',
+                data: data.data
+              }]          
+            },
+            options: {
+              responsive: true,
+              legend: {
+                display: false,
+                position: 'top',
+              },
+              title: {
+                display: false,
+                text: 'Platinum Chart'
+              },
+              scales: {
+                xAxes: [{
                     display: false,
                     ticks: {
-                        beginAtZero: false
+                        display: false //this will remove only the label
                     }
+                }],
+                yAxes: [{
+                    beginAtZero: true,
+                    display: false,
                 }]
-            },
-            legend: {
-                display: false
-            },
-            layout: {
+              },
+              layout: {
                 padding: {
                     left: 0,
                     right: 0,
-                    top: 0,
+                    top: 5,
                     bottom: 0
                 }
+              },
             }
-        }
-    }); {% endcomment %}
+            });
+         }
+      });
+
+    var $palladiumChart = $("#palladiumChart");
+      $.ajax({
+        url: $palladiumChart.data("url"),
+        success: function (data) {
+
+          var ctx = $palladiumChart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: data.labels,
+              datasets: [{
+                //label: 'Population',
+                backgroundColor: 'rgba(19,19,35,0.7)',
+                data: data.data
+              }]          
+            },
+            options: {
+              responsive: true,
+              legend: {
+                display: false,
+                position: 'top',
+              },
+              title: {
+                display: false,
+                text: 'Palladium Chart'
+              },
+              scales: {
+                xAxes: [{
+                    display: false,
+                    ticks: {
+                        display: false //this will remove only the label
+                    }
+                }],
+                yAxes: [{
+                    beginAtZero: true,
+                    display: false,
+                }]
+              },
+              layout: {
+                padding: {
+                    left: 0,
+                    right: 0,
+                    top: 5,
+                    bottom: 0
+                }
+              },
+            }
+            });
+         }
+      });
+
     </script>
 {% endblock scripts %}
