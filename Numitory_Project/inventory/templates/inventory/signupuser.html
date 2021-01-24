@@ -23,6 +23,7 @@
                     {% csrf_token %}
                         {{ form|crispy }}
                         {{ e_form|crispy }}
+                        By signing-up you ackoweldge you have read and understand the Numitory <a href="{% url 'about' %}#terms">terms of use</a><br>
                         <button type="submit" class="btn btn-primary">{{ heading }}</button>
                     </form>
                     <p class="card-text mt-4">

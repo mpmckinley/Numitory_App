@@ -1,10 +1,14 @@
 {% extends 'inventory/base.html' %}
 
+{% load static %}
 {% block content %}
 
     <ul class="nav nav-tabs">
         <li class="nav-item">
             <a class="nav-link active" data-toggle="tab" href="#overview">Overview</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#membership">Membership</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#faq">FAQ</a>
@@ -16,7 +20,7 @@
             <a class="nav-link" data-toggle="tab" href="#about">About Us</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
+            <a class="nav-link" data-toggle="tab" href="#terms">Terms of Use</a>
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
@@ -32,135 +36,195 @@
 
     <div id="myTabContent" class="tab-content">
     <div class="tab-pane fade writing active show" id="overview">
-        <p>Numitory terms:</p>
-        <dl class="row ml-4">
-            <dt class="col-sm-2 text-truncate">Collection</dt>
-            <dd class="col-sm-10">Collections are just that, groupings of Items of any number of Types. They can be used dynamically to represent a single or inclusive "stack" or can be further divided to represent sets such as "Dansco 7070"</dd>
-          
-            <dt class="col-sm-2 text-truncate">Type</dt>
-            <dd class="col-sm-10">
-              <p>Types can represent tranitional Numismatic types such as "Morgan Dollar" or "Standing Liberty Quarter" but can also be used to represent non-Type groupings such as "90% quarter <strong>rolls</strong>.</p>
-              <p>You'll notice exiting Type entries into the application. We manage and provide you with over 5,000 unique types inclusive of US numismatics, junk 90%, and a growing list of bullion. You can edit and add to these as you need. When we do create new Types they will automatically be made available to you. If at any point you need to revert or refresh standard Numitory types, please <a href="mailto:contact@numitory.com">contact us</a>.
-            </dd>
-          
-            <dt class="col-sm-2 text-truncate">Item</dt>
-            <dd class="col-sm-10">The most granular representation of a collection, items should be thought of as the physical manifestation among your stack. The slab, the 2x2 coin, the bar. Or, the roll of quarters, the sheet of early Engelhards, etc.</dd>
-          
-            <dt class="col-sm-2 text-truncate">Truncated term is truncated</dt>
-            <dd class="col-sm-10">Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</dd>
-          
-            <dt class="col-sm-2">Nesting</dt>
-            <dd class="col-sm-10">
-              <dl class="row">
-                <dt class="col-sm-4">Nested definition list</dt>
-                <dd class="col-sm-8">Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc.</dd>
-              </dl>
-            </dd>
-          </dl>
+        {% comment %} <p>Numitory terms:</p> {% endcomment %}
+        <dl class="row">
+            <div class="col-md-7">
+                <dt class="col-4 text-truncate">
+                    Collection
+                </dt>
+                <dd class="col-md-12">
+                    <p>
+                        Collections represent the highest level of organization - groupings of any number and combination of Items and Types. Collections can be used singularly to represent an entire collection or stack, or, more dynamically segregate specific characteristics or goals, eg. "Dansco 7070" or "50 State Quarter" collections.
+                    </p>
+                </dd>
+            
+                <dt class="col-4 text-truncate">
+                    Type
+                </dt>
+                <dd class="col-md-12">
+                    <p>
+                        In the traditional sense, Types represent standard numismatic types such as "Morgan Dollar" or "Standing Liberty Quarter", but can also be used to represent non-Type groupings such as "90% quarter <text style="text-decoration: underline;">rolls</text>".
+                    </p>
+                    <p>
+                        Types are the one level in which Numitory will maintain our data for your use. Meaning, you have access to Numitory's Type catalog. We've compiled and provide you with over 15,000 unique types inclusive of US numismatics, junk 90%, and a growing list of bullion. You are free to incorporate these types into your collections and have the ability to edit and add as you need. When new types are added to the Numitory database, they will automatically be made available to you. If at any point you need to revert or refresh standard Numitory types, please <a href="mailto:contact@numitory.com">contact us</a>.
+                    </p>
+                </dd>
+            
+                <dt class="col-4 text-truncate">
+                    Item
+                </dt>
+                <dd class="col-md-12">
+                    <p>
+                        The most granular Numitory level, items should be thought of as the <text class="font-italic">physical</text> manifestation among your stack. The slab, the 2x2, the bar. Or, the roll of quarters, the sheet of early Engelhards, etc.
+                    </p>
+                    <p>
+                        The combination of Items and Types is where Numitory really shines and where we're confident you will, for the first time, be able to track and manage your collection more in line with the physical reality of numismatics and bullion, free of the confines of traditional 1:1 numismatic solutions.
+                    </p>
+                </dd>
+            </div>
+            <div class="col-md align-self-center text-center">
+                <a href="{% static 'inventory/landing_eg.png' %}">
+                    <img src={% static 'inventory/landing_eg.png' %} class="img-fluid rounded mx-auto d-block"></img>
+                </a>
+            </div>
+        </dl>
+        <div class="row mb-0 pb-0">
+            <div class="col">
+                <img src={% static 'inventory/landing_eg.png' %} class="img-thumbnail" width="400px" height="200px"></img>
+            </div>
+            <div class="col">
+                <img src={% static 'inventory/landing_eg.png' %} class="img-thumbnail" width="400px" height="200px"></img>
+            </div>
+            <div class="col">
+                <img src={% static 'inventory/landing_eg.png' %} class="img-thumbnail" width="400px" height="200px"></img>
+            </div>
+            <div class="col">
+                <img src={% static 'inventory/landing_eg.png' %} class="img-thumbnail" width="400px" height="200px"></img>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-pane fade writing" id="membership">
         <p>Membership Levels:</p>
-                    <section class="pricing">
-                        <div class="container">
-                            <div class="row pb-3">
-                                <!-- Monthly Tier -->
-                                <div class="col-md-4">
-                                    <div class="card mt-2">
-                                        <div class="card-body">
-                                            <h5 class="card-title text-uppercase text-center">Monthly</h5>
-                                            <h6 class="card-price text-center">$1<span class="period">/month</span></h6>
-                                            <ul class="list-unstyled mt-3 text-center">
-                                                <li>Unlimited Storage</li>
-                                                <li>Market Prices</li>
-                                                <li>P&L Tracking</li>
-                                                <li>Integrated Analytics</li>
-                                                <li>Curated Type Attributes</li>
-                                                <li>Inventory Export</li>
-                                                <li class="text-muted">Dead Man&apos;s Switch</li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                        {% comment %} <div class="container"> {% endcomment %}
+            <section class="pricing">
+                    <div class="row justify-content-center">
+                        <!-- Free Tier -->
+                        <div class="col-sm">
+                            <div class="card mt-2" style="width: 18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title text-uppercase text-center">Free!</h5>
+                                    <h6 class="card-price text-center">$0<span class="period">/month</span></h6>
+                                    <ul class="list-unstyled mt-3 text-center">
+                                        <li>500 Items & Images</li>
+                                        <li>Market Prices</li>
+                                        <li>P&L Tracking</li>
+                                        <li>Integrated Analytics</li>
+                                        <li>Curated Type Attributes</li>
+                                        <li class="text-muted">Inventory Export</li>
+                                        <li class="text-muted">Dead Man&apos;s Switch</li>
+                                    </ul>
                                 </div>
-                                <!-- Annual Tier -->
-                                <div class="col-md-4">
-                                    <div class="card mt-2">
-                                        <div class="card-body">
-                                            <h5 class="card-title text-uppercase text-center">Annual</h5>
-                                            <h6 class="card-price text-center">$10<span class="period">/year</span></h6>
-                                            <ul class="list-unstyled mt-3 text-center">
-                                                <li>Unlimited Storage</li>
-                                                <li>Market Prices</li>
-                                                <li>P&L Tracking</li>
-                                                <li>Integrated Analytics</li>
-                                                <li>Curated Type Attributes</li>
-                                                <li>Inventory Export</li>
-                                                <li class="text-muted">Dead Man&apos;s Switch</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Lifetime Tier -->
-                                <div class="col-md-4">
-                                    <div class="card mt-2">
-                                        <div class="card-body">
-                                            <h5 class="card-title text-uppercase text-center">Lifetime</h5>
-                                            <h6 class="card-price text-center">$50<span class="period">/lifetime</span></h6>
-                                            <ul class="list-unstyled mt-3 text-center">
-                                                <li>Unlimited Storage</li>
-                                                <li>Market Prices</li>
-                                                <li>P&L Tracking</li>
-                                                <li>Integrated Analytics</li>
-                                                <li>Curated Type Attributes</li>
-                                                <li>Inventory Export</li>
-                                                <li>Dead Man&apos;s Switch</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
-
                         </div>
-                    </section>
+                        <!-- Monthly Tier -->
+                        <div class="col-sm">
+                            <div class="card mt-2" style="width: 18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title text-uppercase text-center">Monthly</h5>
+                                    <h6 class="card-price text-center">$1<span class="period">/month</span></h6>
+                                    <ul class="list-unstyled mt-3 text-center">
+                                        <li>Unlimited Storage</li>
+                                        <li>Market Prices</li>
+                                        <li>P&L Tracking</li>
+                                        <li>Integrated Analytics</li>
+                                        <li>Curated Type Attributes</li>
+                                        <li>Inventory Export</li>
+                                        <li class="text-muted">Dead Man&apos;s Switch</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Annual Tier -->
+                        <div class="col-sm">
+                            <div class="card mt-2" style="width: 18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title text-uppercase text-center">Annual</h5>
+                                    <h6 class="card-price text-center">$10<span class="period">/year</span></h6>
+                                    <ul class="list-unstyled mt-3 text-center">
+                                        <li>Unlimited Storage</li>
+                                        <li>Market Prices</li>
+                                        <li>P&L Tracking</li>
+                                        <li>Integrated Analytics</li>
+                                        <li>Curated Type Attributes</li>
+                                        <li>Inventory Export</li>
+                                        <li class="text-muted">Dead Man&apos;s Switch</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Lifetime Tier -->
+                        <div class="col-sm">
+                            <div class="card mt-2" style="width: 18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title text-uppercase text-center">Lifetime</h5>
+                                    <h6 class="card-price text-center">$50<span class="period">/lifetime</span></h6>
+                                    <ul class="list-unstyled mt-3 text-center">
+                                        <li>Unlimited Storage</li>
+                                        <li>Market Prices</li>
+                                        <li>P&L Tracking</li>
+                                        <li>Integrated Analytics</li>
+                                        <li>Curated Type Attributes</li>
+                                        <li>Inventory Export</li>
+                                        <li>Dead Man&apos;s Switch</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
 
+                    {% comment %} </div> {% endcomment %}
+
+                </div>
+            </section>
     </div>
 
     <div class="tab-pane fade writing" id="faq">
         <dl class="row ml-4">
-            <dt class="col-sm-2">How do I enter transactions?</dt>
+            <dt class="col-md-2">How do I enter transactions?</dt>
             <dd class="col-sm-10">
                 <p>Transaction accounting - In and Out represent the metal flow, monetary values should be represented in the opposite. Eg. coin IN = -$ value</p>
                 <p>If you purchase an item - BUY -> +QUANTITY -> -VALUE. Purchases represent assets in and moneys out.</p>
             </dd>
           
-            <dt class="col-sm-2 ">What information do you provide?</dt>
+            <dt class="col-md-2 ">What information do you provide?</dt>
             <dd class="col-sm-10">
                 <p>Our curated information is mainted at only the TYPE level. Meaning, all US Coin Types are maintained and available to users from the start. As new meaningful types are added to the US catalog, and as we are able to mature our foreign coverage, all of that type data will too be available to all users.</p>
                 <p>Curated Type attributes include: Type Name, Varieties (over 600 in the catalog today), Physical coin characteristics such as diameter, weight, and composition.</p>
                 <p>An important feature to note is that you can add any Type you may like, or modify our types, within your catalog. This is where the flexibility of our database design really shines!
             </dd>
           
-            <dt class="col-sm-2">How can I pay for my subsription?</dt>
+            <dt class="col-md-2">How can I pay for my subsription?</dt>
             <dd class="col-sm-10">The most granular representation of a collection, items should be thought of as the physical manifestation among your stack. The slab, the 2x2 coin, the bar. Or, the roll of quarters, the sheet of early Engelhards, etc.</dd>
           
-            <dt class="col-sm-2">Does my information leave the site?</dt>
-            <dd class="col-sm-10">Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</dd>
-          
-        <ul>
-            <li>
-                Experiment with browser zoom to find the best viewing experience (Ctrl+Scroll)
-            </li>
-            <li>
-                Transaction accounting - In and Out represent the metal flow, monetary values should be represented in the opposite. Eg. coin IN = -$ value
-            </li>
-        </ul>
+            <dt class="col-md-2">What do you do with my information?</dt>
+            <dd class="col-sm-10">
+                <p>
+                    Currently, nothing.
+                </p>
+                <p>
+                    Eventually, we plan to leverage the Numitory database of collections to drive further analytics and valuation metrics.
+                </p>
+            </dd>
+            <dt class="col-md-2">How can I change the viewing?</dt>
+            <dd class="col-sm-10">
+                <p>
+                    Experiment with browser zoom to find the best viewing experience (Ctrl+Scroll)
+                </p>
+            </dd>
+            </dt>
+            <dt class="col-md-2">How do values and transactions work?</dt>
+            <dd class="col-sm-10">
+                <p>
+                    Transaction accounting - In and Out represent the metal flow, monetary values should be represented in the opposite. Eg. coin IN = -$ value
+                </p>
+            </dd>
+            </dt>
 
     </div>
 
     <div class="tab-pane fade writing" id="stack">
         <p>
-            You should never stack and tell - you know that!
-        </p>
-        <p>
-            But, we are pretty proud of our <text class="font-italic">technical</text> stack which makes this whole thing possible. Built from the ground up for simplicity and scale, a few key components:
+            We are quite proud of our <text class="font-italic">technical</text> stack which makes this whole thing possible. Built from the ground up for simplicity and scale, a few key components:
             <ul class="list-unstyled ml-4">
                 <li>Django at the core</li>
                 <li>MySQL database behind the scenes</li>
@@ -175,15 +239,38 @@
 
         <p>
             Other creative credits:
-            <ul>
-                <li>Favicon: https://commons.wikimedia.org/wiki/File:Coin_stack_icon_GOLD-01.svg -> Creative Commons Attribution-Share Alike 4.0 International</li>
+            <ul class="list-unstyled ml-4">
+                <li>
+                    Favicon: <A href="https://commons.wikimedia.org/wiki/File:Coin_stack_icon_GOLD-01.svg">Creative Commons Attribution-Share Alike 4.0 International</a>
+                </li>
             </ul>
         </p>
+
+        <p>
+            Releases:
+        </p>
+        <div class="card-deck">
+        {% comment %} <div class="col-md-3 align-self-center"> {% endcomment %}
+            <div class="card border-dark mb-2" style="max-width: 25rem;">
+                <div class="card-header">Forthcoming</div>
+                <div class="card-body">
+                    <h4 class="card-title">v1</h4>
+                    <p class="card-text">Planned feature list and enhancements here...</p>
+                </div>
+            </div>
+            <div class="card border-dark mb-2" style="max-width: 25rem;">
+                <div class="card-header">02/27/2021</div>
+                <div class="card-body">
+                    <h4 class="card-title">v0.5</h4>
+                    <p class="card-text">BETA release including core functionality, welcome Numitory!</p>
+                </div>
+            </div>
+        </div>
+
 
     </div>
 
     <div class="tab-pane fade writing" id="about">
-        {% comment %} <div class="writing"> {% endcomment %}
             <p>We started Numitory for one simple reason: we were disasistified with the collection management and tracking solutions available in the market today. Graded type sets are easy enough, junk rolls aren't too hard to track in a spreadsheet, even bullion coins are simple enough to tick off as the ounces accumulate.
             </p>
             <p>
@@ -193,9 +280,14 @@
             </p>
             <p>Our goal in creating Numitory is to simply solve these problems.
             </p>
-        {% comment %} </div> {% endcomment %}
-
     </div>
+
+    <div class="tab-pane fade writing" id="terms">
+        <p>
+            Our goal here is to keep it simple.
+        </p>
+    </div>
+
     <div class="tab-pane fade" id="dropdown1">
         <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork.</p>
     </div>

@@ -9,7 +9,7 @@
 
 <div class="row align-content-center">
 
-    <div class="card-columns pl-2 pr-2">
+    <div class="card-columns pl-1 pr-2">
         
         <div class="card bg-light">
             <div class="card-body pb-1">
@@ -81,7 +81,7 @@
                 <i class="fas fa-exchange-alt"  aria-hidden="true"></i>
                 Recent Transactions
             </div>
-            <div class="card-body">
+            <div class="card-body mt-0 pt-1 pb-1">
                 <table class="table-hover table_card">
                     <thead align="center">
                         <th>Item</th>
@@ -123,7 +123,7 @@
                     <i class="fas fa-newspaper"></i>
                     News & Headlines
                 </div>
-                <ul class="list-group-flush pb-0 pt-2 pl-2 pr-2">
+                <ul class="list-group-flush pb-0 mb-1 mt-1 pl-2 pr-2">
                     {% for headline in top_headlines.articles|slice:"10" %}
                         <li class="list-group-item p-0"><a href="{{ headline.url }}" target="_blank" rel="noopener noreferrer">{{ headline.title }}</a></lI>
                     {% endfor %}
@@ -136,7 +136,7 @@
                 <div class="row">
                     <div class="col">
                         <i class="fa fa-money" aria-hidden="true"></i>
-                        Inventory Value
+                        Inventory Stats
                         </div>
                     <div class="col text-right mr-0 pr-1">
                         <text class="text_basic">
@@ -342,13 +342,13 @@
 
     <div class="jumbotron jumbotron-fluid jumbo">
         <div class="p-3">
-            <h1 class="display-3">Numitory</h1>
-            <p class="lead">Bullion and Numismatic collection management on your terms.</p>
+            {% comment %} <h1 class="display-2">Numitory</h1> {% endcomment %}
+            <h1 class="display-3">Bullion and Numismatic collection management on your terms.</h1>
             <hr class="my-4">
-            <p>No more spreadsheet, handwritten ledgers, random notes, or guessing...</p>
-            <p>Numitory brings all of your collection management needs under one roof. Designed with simplicity and scale in mind - our proprietary <text style="color: success; text-transform: uppercase; font-weight: bold;">Item <i class="bi bi-arrow-left-right"></i> Type <i class="bi bi-arrow-left-right"></i> Collection</text> methodology seamlessly tracks and manages your bullion and numismatic collection - transactions, and cost basis.</p>
-            <p>Whatever your style: stacker, Type-set-guru, or anything in between, Numitory is customizable to adjust to your collection and maintain all the relevant attributes of your collection.
-            <p>We are purpose built. No stamps, no food labels, no baseball cards. We seek to do one thing and do it well.</p>
+            <p class="jumbo_p">No more spreadsheet, handwritten ledgers, random notes, multiple site logins, and guessing...</p>
+            <p class="jumbo_p2">Numitory brings all of your collection management needs under one roof. Purpose-built for simplicity and scale - our proprietary <text style="color: success; text-transform: uppercase; font-weight: bold;">Item <i class="bi bi-arrow-left-right"></i> Type <i class="bi bi-arrow-left-right"></i> Collection</text> methodology seamlessly tracks and manages your bullion and numismatic collection - transactions, and cost basis.</p>
+            <p class="jumbo_p2">Whatever your style: stacker, junk-hoarder, Type-set-guru, or anything in between, Numitory adjusts to your collection needs and maintains all the relevant attributes of your collection.
+            <p class="jumbo_p2">We are purpose built. No stamps, no food labels, no baseball cards. We seek to do one thing and do it well.</p>
             <p class="lead">
                 <a class="btn btn-primary btn-lg mt-3" href="{% url 'about' %}" role="button">Learn more</a>
                 <a class="btn btn-success btn-lg mt-3" href="{% url 'signupuser' %}" role="button">Sign Up</a>
@@ -361,87 +361,87 @@
         <div class="col-8">
 
             <div class="row justify-content-around">
-                <div class="col-1">
+                <div class="col-1 text-center align-self-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                     </svg>
                 </div>
                 <div class="col">
-                <p class="homelist">
-                    <ul>
-                        <li>First something</li>
-                        <li>Second something</li>
+                <p>
+                    <ul class="homelist">
+                        <li>Grader agnostic</li>
+                        <li>Precious-centric</li>
                     </ul>
                 </p>
                 </div>
     
-                <div class="col-1">
+                <div class="col-1 text-center align-self-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-view-list" viewBox="0 0 16 16">
                         <path d="M3 4.5h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H3zM1 2a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 2zm0 12a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 14z"/>
                     </svg>
                 </div>
                 <div class="col">
-                    <p class="homelist">
-                        <ul>
-                            <li>Third something</li>
-                            <li>Fourth something</li>
+                    <p>
+                        <ul class="homelist">
+                            <li>3rd Party Links</li>
+                            <li>Metal Prices</li>
                         </ul>
                     </p>
                 </div>
     
-                <div class="col-1">
+                <div class="col-1 text-center align-self-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-view-list" viewBox="0 0 16 16">
                         <path d="M3 4.5h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H3zM1 2a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 2zm0 12a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 14z"/>
                     </svg>
                 </div>
                 <div class="col">
-                    <p class="homelist">
-                        <ul>
-                            <li>Third something</li>
-                            <li>Fourth something</li>
+                    <p>
+                        <ul class="homelist">
+                            <li>Modern Design</li>
+                            <li>Intergrated Analytics</li>
                         </ul>
                     </p>
                 </div>
             </div>
     
             <div class="row justify-content-around">
-                <div class="col-1">
+                <div class="col-1 text-center align-self-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                     </svg>
                 </div>
                 <div class="col">
-                <p class="homelist">
-                    <ul>
-                        <li>First something</li>
+                <p>
+                    <ul class="homelist">
+                        <li>Images</li>
                         <li>Second something</li>
                     </ul>
                 </p>
                 </div>
     
-                <div class="col-1">
+                <div class="col-1 text-center align-self-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-view-list" viewBox="0 0 16 16">
                         <path d="M3 4.5h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H3zM1 2a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 2zm0 12a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 14z"/>
                     </svg>
                 </div>
                 <div class="col">
-                    <p class="homelist">
-                        <ul>
-                            <li>Third something</li>
-                            <li>Fourth something</li>
+                    <p>
+                        <ul class="homelist">
+                            <li>Charting</li>
+                            <li>Value Trends</li>
                         </ul>
                     </p>
                 </div>
     
-                <div class="col-1">
+                <div class="col-1 text-center align-self-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-view-list" viewBox="0 0 16 16">
                         <path d="M3 4.5h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H3zM1 2a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 2zm0 12a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 14z"/>
                     </svg>
                 </div>
                 <div class="col">
-                    <p class="homelist">
-                        <ul>
-                            <li>Third something</li>
+                    <p>
+                        <ul class="homelist">
+                            <li>Transaction Tracking</li>
                             <li>Fourth something</li>
                         </ul>
                     </p>
@@ -449,12 +449,12 @@
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3 align-self-center">
             <div class="card border-dark mb-2" style="max-width: 25rem;">
                 <div class="card-header">Latest Release Notes</div>
                 <div class="card-body">
                     <h4 class="card-title">v1_022721</h4>
-                    <p class="card-text">Some quick example text to build on the card title ...</p>
+                    <p class="card-text">BETA release including core functionality, welcome Numitory!</p>
                 </div>
             </div>
         </div>

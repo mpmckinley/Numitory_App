@@ -1,6 +1,6 @@
 body {
     height: 100%;
-    margin: 0;
+    /* margin: 3px; */
 }
 
 html {
@@ -12,14 +12,17 @@ html {
 }
 
 .container-fluid {
-    margin-top: 20px;
+    margin-top: 1em;
+    padding-left: 2em;
+    padding-right: 2em;
     padding-bottom: 3em;
     min-height: 90vh;
-    position: relative;
+    /* position: fixed; */
 }
 
 .writing {
     margin: 2em;
+    font-size: 1.2em;
 }
 
 .text_basic {
@@ -95,16 +98,46 @@ footer {
     font-weight: 700;
 }
 
+.p-3 {
+    padding: 1em;;
+}
 .jumbo {
-    padding-top: .5em;
-    padding-bottom: 1em;
-    margin-bottom: 1.5em;
+    padding-top: .4em;
+    padding-bottom: .5em;
+    margin-bottom: 1.52em;
     /* max-height: 45vh; */
+}
+
+.display-2 {
+    font-weight: 900;
+    margin-left: 0%;
+}
+
+.jumbo_p {
+    font-size: 2em;
+}
+
+.jumbo_p2 {
+    font-size: 1.5em;
+}
+
+.lead {
+    font-size: 2em;
+}
+
+.homelist {
+    font-size: 1.5em;
+    margin: 0em;
+    padding: 0em;
 }
   
 /* Item Image */
 .img-fluid.item-image {
     width: 15%;
+}
+
+.card-body {
+    padding: 5px;
 }
 
 .card-header {
@@ -153,6 +186,8 @@ td:first-child {
 .table_card {
     table-layout: fixed;
     width: 100%;
+    /* margin-top: 1px;
+    padding-top: 1px; */
     /* text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap; */

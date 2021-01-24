@@ -37,7 +37,7 @@ def home(request):
         typetotal = Type.objects.filter(user=request.user).aggregate(Count('id'))
         colltotal = Collection.objects.filter(user=request.user).aggregate(Count('id'))
         items = Item.objects.filter(user=request.user, status='Active').order_by('-created')[:10]
-        transactions = Transaction.objects.filter(user=request.user).order_by('-created')[:5]
+        transactions = Transaction.objects.filter(user=request.user).order_by('-created')[:6]
         images = Item.objects.filter(user=request.user, status='Active').exclude(item_image='')[:6]
         prices=MetalPrices.objects.order_by('-updated_at')[:1].values()
 
@@ -89,7 +89,9 @@ def home(request):
             'button': 'Create',
         })
     else:
-        return render(request, 'inventory/home.html')
+        return render(request, 'inventory/home.html', {
+            'page_title': 'Numitory - Home',
+        })
 
 
 def get_latest_prices(request):

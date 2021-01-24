@@ -16,7 +16,7 @@
             </div>
         {% endif %}
 
-    <div class="card-columns pl-3 pr-3">
+    <div class="card-columns">
 
         <div class="card border-dark">
             <div class="card-header text-white bg-secondary">
@@ -36,11 +36,11 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            {{ form.type|as_crispy_field }}
+                            <text style="color:rgba(236,27,20,0.96)">***Cond. Cat dropdown from Type***</text>
+                            {% comment %} {{ form.type_detl|as_crispy_field }} {% endcomment %}
                         </div>
                         <div class="col">
-                            <text style="color:rgba(236,27,20,0.96)">***Conditional Variety dropdown from Type***</text>
-                            {% comment %} {{ form.type_detl|as_crispy_field }} {% endcomment %}
+                            {{ form.type|as_crispy_field }}
                         </div>
                         <div class="col">
                             {{ form.mint|as_crispy_field }} 
@@ -166,7 +166,7 @@
                 <i class="far fa-chart-bar"></i>
                 Stats
             </div>
-            <div class="card-body">
+            <div class="card-body pl-3 pr-3">
                 <div class="row">
                     <canvas id="myChart" width="190"></canvas>
                 </div>
