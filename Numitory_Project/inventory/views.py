@@ -18,8 +18,14 @@ from .forms import (ItemCreateForm,
                     ExtendedUserForm,
                     ExportForm,
                     ExportFilterForm,
-)
-from .models import Transaction, Type, Collection, Item, UserExtended, MetalPrices
+                    )
+from .models import (Transaction,
+                     Type,
+                     Collection,
+                     Item,
+                     MetalPrices,
+                     UserExtended,
+                    )
 from django.contrib.auth.decorators import login_required
 from itertools import chain
 from decouple import config
@@ -55,7 +61,7 @@ def home(request):
         news_key = config("API_KEY")
         newsapi = NewsApiClient(api_key=news_key)
         
-        top_headlines = newsapi.get_everything(q='silver OR gold OR platinum OR palladium OR numismatic OR coin OR coins OR PCGS OR NGC OR ANACS OR bullion AND precious NOT witcher NOT movies NOT Rs',
+        top_headlines = newsapi.get_everything(q='silver OR gold OR platinum OR palladium OR numismatic OR coin OR coins OR PCGS OR NGC OR ANACS OR bullion OR precious AND metal NOT witcher NOT movies NOT Rs NOT Rolex NOT Disney NOT football NOT horology NOT massage',
             language='en',
             sort_by='publishedAt',
             page=1,

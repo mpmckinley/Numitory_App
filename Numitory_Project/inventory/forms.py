@@ -5,8 +5,12 @@ from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.hashers import make_password, check_password
 from django import forms
 from django.forms.widgets import HiddenInput, NumberInput
-from .models import Item, Collection, Transaction, Type, UserExtended
-
+from .models import(Item,
+                    Collection,
+                    Transaction,
+                    Type,
+                    UserExtended,
+                    )
 class UserChangeForm(forms.ModelForm):
     password_confirmation = forms.CharField(
         label='Confirm Password',

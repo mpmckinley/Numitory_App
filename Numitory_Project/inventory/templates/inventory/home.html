@@ -7,9 +7,7 @@
 
 {% if user.is_authenticated %}
 
-<div class="row align-content-center">
-
-    <div class="card-columns pl-1 pr-2">
+    <div class="card-columns">
         
         <div class="card bg-light">
             <div class="card-body pb-1">
@@ -56,22 +54,22 @@
             </div>
             <div class="card-body">
                 <div class="row text-center">
-                    <div class="col">
-                        <canvas id="silverChart" data-url="{% url 'silverChart' %}" width="60"></canvas>
+                    <div class="col-6">
+                        <canvas id="silverChart" data-url="{% url 'silverChart' %}" width="50"></canvas>
                         Silver: ${% if metalprices.silver_price %}{{metalprices.silver_price|intcomma}} {% else %} NA {% endif%}
                     </div>
-                    <div class="col">
-                        <canvas id="goldChart" data-url="{% url 'goldChart' %}"width="60"></canvas>
+                    <div class="col-6">
+                        <canvas id="goldChart" data-url="{% url 'goldChart' %}"width="50"></canvas>
                         Gold: ${% if metalprices.gold_price %}{{metalprices.gold_price|intcomma}} {% else %} NA {% endif%}
                     </div>
                 </div>
                 <div class="row text-center pt-1">
-                    <div class="col pt-1">
-                        <canvas id="platinumChart" data-url="{% url 'platinumChart' %}"width="60"></canvas>
+                    <div class="col-6 pt-1">
+                        <canvas id="platinumChart" data-url="{% url 'platinumChart' %}"width="50"></canvas>
                         Platinum: ${% if metalprices.platinum_price %}{{metalprices.platinum_price|intcomma}} {% else %} NA {% endif%}
                     </div>
-                    <div class="col pt-1">
-                        <canvas id="palladiumChart" data-url="{% url 'palladiumChart' %}"width="60"></canvas>
+                    <div class="col-6 pt-1">
+                        <canvas id="palladiumChart" data-url="{% url 'palladiumChart' %}"width="50"></canvas>
                         Palladium: ${% if metalprices.palladium_price %}{{metalprices.palladium_price|intcomma}} {% else %} NA {% endif%}
                     </div>
                 </div>
@@ -110,7 +108,7 @@
                         </tr>
                     {% endfor %}
                 </table>
-                <p class="mt-2 mb-0">
+                <p class="pt-2 mb-0">
                     Some quick example text to build on the card title...
                     <br>
                     <a href="#" class="card-link">Card link</a>
@@ -126,8 +124,8 @@
                     News & Headlines
                 </div>
                 <ul class="list-group-flush pb-0 mb-1 mt-1 pl-2 pr-2">
-                    {% for headline in top_headlines.articles|slice:"10" %}
-                        <li class="list-group-item p-0"><a href="{{ headline.url }}" target="_blank" rel="noopener noreferrer">{{ headline.title }}</a></lI>
+                    {% for headline in top_headlines.articles|slice:"12" %}
+                        <li class="list-group-item p-0 text-truncate"><a href="{{ headline.url }}" target="_blank" rel="noopener noreferrer">{{ headline.title }}</a></lI>
                     {% endfor %}
                 </ul>
             </div>
@@ -332,14 +330,10 @@
                         </div>
                     </div>
                 </form>
-
             </div>
         </div>
-        
     </div>
 
-</div>
-    
 {% else %}
 
     <div class="jumbotron jumbotron-fluid jumbo">
@@ -506,7 +500,8 @@
             },
             legend: {
                 display: false
-            }
+            },
+            responsive: true,
         }
     });
 

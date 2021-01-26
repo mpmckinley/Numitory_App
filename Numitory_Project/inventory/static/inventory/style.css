@@ -12,11 +12,13 @@ html {
 }
 
 .container-fluid {
-    margin-top: 1em;
-    padding-left: 2em;
-    padding-right: 2em;
+    padding: 1em;
     padding-bottom: 3em;
-    min-height: 90vh;
+    min-height: 92vh;
+    /* margin-bottom: 1em; */
+    /* margin-top: 1em; */
+    /* padding-right: 2em;
+    padding-bottom: 2em; */
     /* position: fixed; */
 }
 

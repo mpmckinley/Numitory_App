@@ -28,15 +28,12 @@ def getGroupNames():
     except:
         pass
         
-
 class MetalPrices(models.Model):
     gold_price=models.FloatField()
     silver_price=models.FloatField()
     platinum_price=models.FloatField()
     palladium_price=models.FloatField()
     updated_at=models.DateField(auto_now_add=True)
-    
-
 
 class UserExtended(models.Model):
     id=models.AutoField(primary_key=True)
@@ -194,7 +191,8 @@ class Type(models.Model):
     obv_desc = models.CharField("Obverse Desc.", max_length=100, blank=True, null=True)
     precious_purity = IntegerField("Precious Purity", blank=True, null=True)
     precious_type = IntegerField("Precious Type", blank=True, null=True)
-    precious_weight = IntegerField("Precious Weight", blank=True, null=True)
+    precious_weight_g = IntegerField("Precious Weight (g)", blank=True, null=True)
+    precious_weight_ozt = IntegerField("Precious Weight (ozt)", blank=True, null=True)
     recycled = models.BooleanField(default=False)
     refiner = models.CharField("Refiner", max_length=50, blank=True, null=True)
     rev_desc = models.CharField("Reverse Desc.", max_length=100, blank=True, null=True)
