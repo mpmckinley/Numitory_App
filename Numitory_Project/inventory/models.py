@@ -11,6 +11,7 @@ import uuid
 # User._meta.get_field('email').blank = False
 # User._meta.get_field('email').null = False
 
+
 def upload_location(instance, filename):
     filebase, extension = filename.split(".")
     return "%s/%s.%s" %(instance.item_name, instance.item_name, extension)

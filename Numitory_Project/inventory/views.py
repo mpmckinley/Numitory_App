@@ -45,10 +45,10 @@ def home(request):
         items = Item.objects.filter(user=request.user, status='Active').order_by('-created')[:10]
         transactions = Transaction.objects.filter(user=request.user).order_by('-created')[:6]
         images = Item.objects.filter(user=request.user, status='Active').exclude(item_image='')[:7]
-        prices=MetalPrices.objects.order_by('-updated_at')[:1].values()
+        prices = MetalPrices.objects.order_by('-updated_at')[:1].values()
 
-        metalprices=MetalPrices.objects.order_by('-updated_at')[:1].values()
-        if(not metalprices):
+        metalprices = MetalPrices.objects.order_by('-updated_at')[:1].values()
+        if not metalprices:
             metalprices=[]
         else:
             metalprices.get()
@@ -84,7 +84,7 @@ def home(request):
             'itemtotal': itemtotal,
             'typetotal': typetotal,
             'colltotal': colltotal,
-            'metalprices':metalprices[0],
+            'metalprices': metalprices[0] if metalprices else None,
             'items': items,
             'transactions': transactions,
             'page_title': 'Numitory - Home',

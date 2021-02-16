@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="django_numitory@localhost" uuid="d870e980-e02a-40a3-8f1e-dc485e449fb6">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/django_numitory</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="db" uuid="42bb6f41-c1f1-4d38-a7e3-8295a8c91b74">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/Numitory_Project/db.sqlite3</jdbc-url>
+    </data-source>
+  </component>
+</project>
