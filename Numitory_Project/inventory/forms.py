@@ -108,6 +108,7 @@ class ExtendedUserForm(forms.ModelForm):
         if (type==None or type=='' or type==0):
             raise forms.ValidationError("User Type is Required")
 
+
 class ItemCreateForm(ModelForm):
     class Meta:
         model = Item
@@ -140,6 +141,7 @@ class ItemCreateForm(ModelForm):
         # ***Mint conditional choices based on Type selection
         # self.fields['mint'].queryset = Type.objects.filter(id=Type.id)
 
+
 class QuickAddForm(ModelForm):
     class Meta:
         model = Item
@@ -166,6 +168,7 @@ class QuickAddForm(ModelForm):
         super(QuickAddForm, self).__init__(**kwargs)
         self.fields['item_desc'].widget.attrs = {'rows': 1}
 
+
 class TypeCreateForm(ModelForm):
     class Meta:
         model = Type
@@ -173,6 +176,7 @@ class TypeCreateForm(ModelForm):
             'classification',
             'country',
             'category',
+            "longname",
             # 'type_name',
             'type_desc',
             # 'type_dates',
@@ -204,6 +208,7 @@ class TypeCreateForm(ModelForm):
 #             'designer',
 #             'recycled',
 #         ]
+
 
 class CollectionCreateForm(ModelForm):
     class Meta:
