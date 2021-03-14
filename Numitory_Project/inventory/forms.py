@@ -218,9 +218,11 @@ class CollectionCreateForm(ModelForm):
             'coll_desc',
         ]
 
+
 class TransactionCreateForm(ModelForm):
 
     date = forms.DateField(widget=NumberInput(attrs={'type': 'date'}))
+
     class Meta:
         model = Transaction
         fields = [
@@ -233,6 +235,7 @@ class TransactionCreateForm(ModelForm):
     # def __init__(self, *args, **kwargs):
     #     super(TransactionCreateForm, self).__init__(**kwargs)
     #     self.fields['tran_value_currency'].widget = HiddenInput()
+
 
 class ExportForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):

@@ -2,6 +2,7 @@ Numitory_Project/migrations/
 Numitory_Project/media/
 Numitory_Project/.env
 Numitory_Project/venv/
+Numitory_Project/venv2/
 *.log
 *.pot
 *.pyc

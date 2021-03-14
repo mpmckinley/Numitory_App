@@ -283,30 +283,79 @@
                                 <td colspan="5">No Transactions</td>
                             </tr>
                         {% else %}
-                            {% for trans in page_obj %}
+                            {% for trans_with_form in page_obj %}
                                 <tr>
-                                    <td>{{ trans.direction }}</td>
-                                    <td>{{ trans.date }}</td>
-                                    <td>{{ trans.tran_quantity }}</td>
-                                    <td>{{ trans.tran_value }}</td>
+                                    <td>{{ trans_with_form.trans.direction }}</td>
+                                    <td>{{ trans_with_form.trans.date }}</td>
+                                    <td>{{ trans_with_form.trans.tran_quantity }}</td>
+                                    <td>{{ trans_with_form.trans.tran_value }}</td>
                                     <td align="right">
-                                        <form action="{% url 'inventory:itemdetail' item.id %}" method="POST">
-                                        {% csrf_token %}
-                                            <input type="hidden" value="{{ trans.id }}" name="pk">
-                                            <button type="submit" class="hidebtn" id="{{ trans.id }}" name="edit">
-                                                <i class="bi bi-pencil-square"></i>
-                                            </button>
-                                        </form>
+<!--                                        <form action="{% url 'inventory:itemdetail' item.id %}" method="POST">-->
+<!--                                        {% csrf_token %}-->
+<!--                                            <input type="hidden" value="{{ trans.id }}" name="pk">-->
+<!--                                            <button type="submit" class="hidebtn" id="{{ trans.id }}" name="edit">-->
+<!--                                                <i class="bi bi-pencil-square"></i>-->
+<!--                                            </button>-->
+<!--                                        </form>-->
+                                        <button
+                                            type="button"
+                                            class="hidebtn"
+                                            id="transaction-modal-btn"
+                                            data-toggle="modal"
+                                            data-target="#transaction-modal"
+                                        >
+                                            <i class="bi bi-pencil-square"></i>
+                                        </button>
                                     </td>
                                     <td align="center">
                                         <form action="{% url 'inventory:itemdetail' item.id %}" method="POST">
                                         {% csrf_token %}
-                                            <input type="hidden" value="{{ trans.id }}" name="pk">
-                                            <button type="submit" class="hidebtn" id="{{ trans.id }}" name="delete">
+                                            <input type="hidden" value="{{ trans_with_form.trans.id }}" name="pk">
+                                            <button type="submit" class="hidebtn" id="{{ trans_with_form.trans.id }}" name="delete">
                                                 <i class="bi bi-x-circle-fill" style="color: red;"></i>
                                             </button>
                                         </form>
                                     </td>
+                                    <div
+                                            class="modal"
+                                            tabindex="-1"
+                                            id="transaction-modal"
+                                            data-template-values='{{trans_with_form.trans.json_repr|safe|escape}}'
+                                    >
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Edit Transaction</h5>
+                                                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form method="POST" id="edit_transaction">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" value="{{ trans_with_form.trans.id }}" name="pk">
+                                                        <input type="hidden" value="{{ True }}" name="edit_tran">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                {{ trans_with_form.form.date|as_crispy_field }}
+                                                            </div>
+                                                            <div class="col">
+                                                                {{ trans_with_form.form.direction|as_crispy_field }}
+                                                            </div>
+                                                            <div class="col">
+                                                                {{ trans_with_form.form.tran_quantity|as_crispy_field }}
+                                                            </div>
+                                                            <div class="col">
+                                                                {{ trans_with_form.form.tran_value|as_crispy_field }}
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="submit" form="edit_transaction" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </tr>
                             {% endfor %}
                         {% endif %}
@@ -333,7 +382,6 @@
 
             </div>
         </div>
-
     </div>
 
 {% endblock content %}
@@ -389,5 +437,13 @@
             responsive: true,
         }
     });
+
+    // const transactionModal = document.getElementById("transaction-modal")
+    // $("#transaction-modal-btn").on("click", function(event) {
+    //     const transValues = JSON.parse(transactionModal.getAttribute("data-template-values"))
+    //     console.log("trans value", transValues, transValues.date)
+    //     const dateInput = document.querySelector("input:nth-child(1)")
+    //     dateInput.value = "20/03/2020";
+    // })
 </script>
 {% endblock scripts %}

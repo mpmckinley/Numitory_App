@@ -1,6 +1,9 @@
+import json
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.serializers.json import DjangoJSONEncoder
 from djmoney.models.fields import MoneyField
+from django.utils.safestring import mark_safe
 
 
 class Transaction(models.Model):
@@ -19,3 +22,12 @@ class Transaction(models.Model):
     tran_value = MoneyField("***VALUE***", max_digits=50, decimal_places=2, default_currency='USD',)
     #tran_value_currency is auto from MoneyField
     created = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def json_repr(self):
+        return mark_safe(json.dumps(dict(
+            date=self.date,
+            tran_value=self.tran_value.amount,
+            direction=self.direction,
+            tran_quantity=self.tran_quantity
+        ), cls=DjangoJSONEncoder))
