@@ -1,16 +1,18 @@
-from django.contrib.auth.models import User,Group
+from django.contrib.auth.models import User, Group
 from django.db.models import fields
 from django.forms import ModelForm
-from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.hashers import make_password, check_password
 from django import forms
 from django.forms.widgets import HiddenInput, NumberInput
-from .models import(Item,
-                    Collection,
-                    Transaction,
-                    Type,
-                    UserExtended,
-                    )
+from .models import (
+    Item,
+    Collection,
+    Transaction,
+    Type,
+    UserExtended,
+)
+
+
 class UserChangeForm(forms.ModelForm):
     password_confirmation = forms.CharField(
         label='Confirm Password',
@@ -106,6 +108,7 @@ class ExtendedUserForm(forms.ModelForm):
         if (type==None or type=='' or type==0):
             raise forms.ValidationError("User Type is Required")
 
+
 class ItemCreateForm(ModelForm):
     class Meta:
         model = Item
@@ -138,6 +141,7 @@ class ItemCreateForm(ModelForm):
         # ***Mint conditional choices based on Type selection
         # self.fields['mint'].queryset = Type.objects.filter(id=Type.id)
 
+
 class QuickAddForm(ModelForm):
     class Meta:
         model = Item
@@ -164,6 +168,7 @@ class QuickAddForm(ModelForm):
         super(QuickAddForm, self).__init__(**kwargs)
         self.fields['item_desc'].widget.attrs = {'rows': 1}
 
+
 class TypeCreateForm(ModelForm):
     class Meta:
         model = Type
@@ -171,6 +176,7 @@ class TypeCreateForm(ModelForm):
             'classification',
             'country',
             'category',
+            "longname",
             # 'type_name',
             'type_desc',
             # 'type_dates',
@@ -203,6 +209,7 @@ class TypeCreateForm(ModelForm):
 #             'recycled',
 #         ]
 
+
 class CollectionCreateForm(ModelForm):
     class Meta:
         model = Collection
@@ -211,9 +218,11 @@ class CollectionCreateForm(ModelForm):
             'coll_desc',
         ]
 
+
 class TransactionCreateForm(ModelForm):
 
     date = forms.DateField(widget=NumberInput(attrs={'type': 'date'}))
+
     class Meta:
         model = Transaction
         fields = [
@@ -226,6 +235,7 @@ class TransactionCreateForm(ModelForm):
     # def __init__(self, *args, **kwargs):
     #     super(TransactionCreateForm, self).__init__(**kwargs)
     #     self.fields['tran_value_currency'].widget = HiddenInput()
+
 
 class ExportForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
